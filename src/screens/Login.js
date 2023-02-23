@@ -9,6 +9,7 @@ const Login = () => {
     <View style={styles.mainContainer}>
       <Image source={doctorPic} style={styles.image} />
       <View style={styles.container}>
+        <Text>Adresse email</Text>
         <View style={{backgroundColor: colors.green, justifyContent: 'center'}}>
           <TextInput
             value={email}
@@ -16,9 +17,11 @@ const Login = () => {
             style={{padding: 10}}
           />
         </View>
+        <Text>Mot de passe</Text>
         <View style={{backgroundColor: colors.green, justifyContent: 'center'}}>
           <TextInput
             value={password}
+            secureTextEntry={true}
             onChangeText={setPassword}
             style={{padding: 10}}
           />
