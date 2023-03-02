@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.blue,
     flex: 1,
-    justifyContent: 'space-around',
+    padding: 16,
   },
 });

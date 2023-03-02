@@ -4,13 +4,12 @@ import React from 'react';
 function CustomInput(props) {
   return (
     <View>
-      <Text>{props.nameOfInpute}</Text>
-      <View style={{backgroundColor: colors.green, justifyContent: 'center'}}>
+      <View style={styles.container}>
         <TextInput
+          placeholder={props.nameOfInpute}
           value={props.value}
           onChangeText={props.onChangeText}
           secureTextEntry={props.secure}
-          style={{padding: 10}}
         />
       </View>
     </View>
@@ -19,4 +18,12 @@ function CustomInput(props) {
 
 export default CustomInput;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.green,
+
+    borderRadius: 10,
+    padding: 5,
+    marginVertical: 16,
+  },
+});
