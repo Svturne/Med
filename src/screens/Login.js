@@ -12,6 +12,7 @@ import doctorPic from '../../assets/images/doctor.png';
 import colors from '../../assets/colors';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
+import fonts from '../../assets/fonts/fonts';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -27,22 +28,20 @@ const Login = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <Image source={doctorPic} style={styles.image} />
 
         <View style={styles.container}>
           <Text
             style={{
               alignSelf: 'center',
-              fontWeight: 'bold',
-              fontSize: 30,
-              color: colors.black,
+              fontFamily: fonts.bold,
+              fontSize: 24,
+              color: colors.white,
             }}>
             Hello Doctor!
           </Text>
-          <Text style={{alignSelf: 'center', fontSize: 15}}>
-            please enter your information
-          </Text>
+
           <CustomInput
             nameOfInpute="Adresse email"
             value={email}

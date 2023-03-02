@@ -27,6 +27,7 @@ function CustomInput(props) {
           onChangeText={props.onChangeText}
           secureTextEntry={showEye}
           style={styles.inputText}
+          placeholderTextColor={'black'}
           onFocus={() => {
             setisFocused(true);
           }}
@@ -64,5 +65,6 @@ const styles = StyleSheet.create({
   },
   inputText: {
     flex: 1,
+    color: colors.black,
   },
 });
