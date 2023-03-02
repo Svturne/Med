@@ -1,13 +1,23 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 
 const CustomButton = props => {
   return (
-    <View style={[{backgroundColor: props.color}, styles.container]}>
-      <TouchableOpacity>
+    <TouchableOpacity
+      onPress={props.func}
+      style={[{backgroundColor: props.color}, styles.container]}>
+      {props.isLoading ? (
+        <ActivityIndicator />
+      ) : (
         <Text style={styles.text}>{props.text}</Text>
-      </TouchableOpacity>
-    </View>
+      )}
+    </TouchableOpacity>
   );
 };
 
@@ -16,7 +26,8 @@ export default CustomButton;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    padding: 10,
+    justifyContent: 'center',
+    height: 60,
     borderRadius: 16,
     marginVertical: 30,
   },
