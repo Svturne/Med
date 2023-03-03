@@ -13,6 +13,8 @@ import colors from '../../assets/colors';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import fonts from '../../assets/fonts/fonts';
+import {Icon} from '@rneui/base';
+import {useNavigation} from '@react-navigation/native';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -25,6 +27,11 @@ const Login = () => {
       setsignInLoading(false);
     }, 2000);
   }, [email, password]);
+
+  const navigation = useNavigation();
+  const handleQRPress = () => {
+    navigation.navigate('QrScaner');
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -65,6 +72,23 @@ const Login = () => {
             isLoading={signInLoading}
             func={signIn}
           />
+          <View style={styles.icon}>
+            <Text>
+              Vous êtes un patient?{' '}
+              <Text style={{color: 'lightgreen'}}>
+                Scannez votre code QR ->{' '}
+              </Text>
+            </Text>
+            <TouchableOpacity>
+              <Icon
+                name="qrcode-scan"
+                type="material-community"
+                color={colors.white}
+                size={45}
+                onPress={handleQRPress}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -86,5 +110,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
     flex: 1,
     padding: 16,
+  },
+  icon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

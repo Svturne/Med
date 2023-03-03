@@ -1,16 +1,37 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import Login from './src/screens/Login';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Login from './src/screens/Login';
+import QrScaner from './src/screens/QrScaner';
 
-const App = () => {
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    <SafeAreaProvider>
-      <View>
-        <Login />
-      </View>
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="QrScaner"
+          component={QrScaner}
+          options={{
+            headerTitle: '',
+            headerTintColor: 'white',
+            headerTransparent: true,
+            headerTitleStyle: {
+              color: 'white',
+            },
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-};
+}
 
 export default App;
