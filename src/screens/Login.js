@@ -13,8 +13,8 @@ import colors from '../../assets/colors';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import fonts from '../../assets/fonts/fonts';
-import {Icon} from '@rneui/base';
 import {useNavigation} from '@react-navigation/native';
+import {Icon} from '@rneui/themed';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -63,11 +63,11 @@ const Login = () => {
           />
           <TouchableOpacity>
             <Text style={{alignSelf: 'flex-end', fontSize: 12}}>
-              Recovery Password
+              Mot de passe oublié?
             </Text>
           </TouchableOpacity>
           <CustomButton
-            text="Sign In"
+            text="Se connecter"
             color="lightgreen"
             isLoading={signInLoading}
             func={signIn}
@@ -79,15 +79,13 @@ const Login = () => {
                 Scannez votre code QR ->{' '}
               </Text>
             </Text>
-            <TouchableOpacity>
-              <Icon
-                name="qrcode-scan"
-                type="material-community"
-                color={colors.white}
-                size={45}
-                onPress={handleQRPress}
-              />
-            </TouchableOpacity>
+            <Icon
+              name="qrcode-scan"
+              type="material-community"
+              color={colors.white}
+              size={45}
+              onPress={handleQRPress}
+            />
           </View>
         </View>
       </ScrollView>

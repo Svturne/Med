@@ -8,9 +8,7 @@ import fonts from '../../assets/fonts/fonts';
 
 const ScanScreen = () => {
   const onSuccess = e => {
-    Linking.openURL(e.data).catch(err =>
-      console.error('An error occurred', err),
-    );
+    console.log(e.data);
   };
 
   return (
