@@ -15,8 +15,10 @@ import CustomButton from '../components/CustomButton';
 import fonts from '../../assets/fonts/fonts';
 import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
+import {Linking} from 'react-native/Libraries/Linking/Linking';
 
 const Login = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signInLoading, setsignInLoading] = useState(false);
@@ -28,7 +30,6 @@ const Login = () => {
     }, 2000);
   }, [email, password]);
 
-  const navigation = useNavigation();
   const handleQRPress = () => {
     navigation.navigate('QrScaner');
   };
