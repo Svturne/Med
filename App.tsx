@@ -8,10 +8,21 @@ import QrScaner from './src/screens/QrScaner';
 import PatientScreen from './src/screens/PatientScreen';
 
 const Stack = createStackNavigator();
+const config = {
+  screens: {
+    PatientScreen: 'patient',
+    path: '/:id',
+  },
+};
+
+const linking = {
+  prefixes: ['med://'],
+  config,
+};
 
 function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
@@ -21,26 +32,12 @@ function App() {
         <Stack.Screen
           name="QrScaner"
           component={QrScaner}
-          options={{
-            headerTitle: '',
-            headerTintColor: 'white',
-            headerTransparent: true,
-            headerTitleStyle: {
-              color: 'white',
-            },
-          }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="PatientScreen"
           component={PatientScreen}
-          options={{
-            headerTitle: '',
-            headerTintColor: 'white',
-            headerTransparent: true,
-            headerTitleStyle: {
-              color: 'white',
-            },
-          }}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -4,7 +4,7 @@ import React from 'react';
 const PatientScreen = () => {
   return (
     <View>
-      <Text>PatientScreen</Text>
+      <Text style={{color: 'black'}}>PatientScreen ID:</Text>
     </View>
   );
 };

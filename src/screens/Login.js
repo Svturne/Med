@@ -13,9 +13,12 @@ import colors from '../../assets/colors';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import fonts from '../../assets/fonts/fonts';
-import {useNavigation} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useLinkTo,
+  useNavigation,
+} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
-import {Linking} from 'react-native/Libraries/Linking/Linking';
 
 const Login = () => {
   const navigation = useNavigation();
