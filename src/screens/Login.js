@@ -30,11 +30,16 @@ const Login = () => {
     setsignInLoading(true);
     setTimeout(() => {
       setsignInLoading(false);
+      handleLGPress();
     }, 2000);
   }, [email, password]);
 
   const handleQRPress = () => {
     navigation.navigate('QrScaner');
+  };
+
+  const handleLGPress = () => {
+    navigation.navigate('HomeScreen');
   };
 
   return (
