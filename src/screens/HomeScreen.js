@@ -24,6 +24,10 @@ const HomeScreen = () => {
   const handleIMGPress = () => {
     navigation.navigate('ProfileDoctor');
   };
+
+  const handlePLUSPress = () => {
+    navigation.navigate('CreatePatient');
+  };
   const patients = [
     {
       id: 1,
@@ -129,7 +133,8 @@ const HomeScreen = () => {
           position: 'absolute',
           right: 20,
           bottom: 20,
-        }}>
+        }}
+        onPress={handlePLUSPress}>
         <Icon name="plus" type="entypo" size={25} color={colors.black} />
       </TouchableOpacity>
     </View>

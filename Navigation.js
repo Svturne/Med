@@ -6,6 +6,7 @@ import QrScaner from './src/screens/QrScaner';
 import PatientScreen from './src/screens/PatientScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileDoctor from './src/screens/ProfileDoctor';
+import CreatePatient from './src/screens/CreatePatient';
 
 const Stack = createStackNavigator();
 const config = {
@@ -29,6 +30,7 @@ function App() {
         <Stack.Screen name="PatientScreen" component={PatientScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="ProfileDoctor" component={ProfileDoctor} />
+        <Stack.Screen name="CreatePatient" component={CreatePatient} />
       </Stack.Navigator>
     </NavigationContainer>
   );
