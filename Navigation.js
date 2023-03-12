@@ -7,6 +7,7 @@ import PatientScreen from './src/screens/PatientScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileDoctor from './src/screens/ProfileDoctor';
 import CreatePatient from './src/screens/CreatePatient';
+import ProfilePatient from './src/screens/ProfilePatient';
 
 const Stack = createStackNavigator();
 const config = {
@@ -31,6 +32,7 @@ function App() {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="ProfileDoctor" component={ProfileDoctor} />
         <Stack.Screen name="CreatePatient" component={CreatePatient} />
+        <Stack.Screen name="ProfilePatient" component={ProfilePatient} />
       </Stack.Navigator>
     </NavigationContainer>
   );

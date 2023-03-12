@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 const PatientsCard = props => {
   const navigation = useNavigation();
   const showPatient = () => {
-    navigation.navigate('CreatePatient');
+    navigation.navigate('ProfilePatient', {data: props.data});
   };
 
   return (

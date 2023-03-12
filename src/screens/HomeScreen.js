@@ -97,7 +97,6 @@ const HomeScreen = () => {
       <FlatList
         data={patients}
         renderItem={item => {
-          console.log(item);
           return <PatientsCard data={item.item} />;
         }}
       />
