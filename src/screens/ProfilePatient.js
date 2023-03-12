@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, Image, FlatList} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
@@ -6,6 +13,7 @@ import man_avatar from '../../assets/images/man_avatar.png';
 import MaladiesList from '../components/MaladiesList';
 
 const ProfilePatient = ({route}) => {
+  const windowWidth = Dimensions.get('window').width;
   const maladies = [
     {
       id: 1,
@@ -33,24 +41,85 @@ const ProfilePatient = ({route}) => {
       date: '22/05/2015',
     },
     {
-      id: 6,
+      id: 545,
       title: 'Mal au ventre',
       date: '22/05/2015',
     },
     {
-      id: 7,
+      id: 21212,
+      title: 'Vertige',
+      date: '26/12/2015',
+    },
+    {
+      id: 54545,
+      title: 'Vertige',
+      date: '26/12/2015',
+    },
+    {
+      id: 12,
       title: 'Mal au ventre',
       date: '22/05/2015',
     },
     {
-      id: 8,
+      id: 21212,
+      title: 'Vertige',
+      date: '26/12/2015',
+    },
+    {
+      id: 54545,
+      title: 'Vertige',
+      date: '26/12/2015',
+    },
+    {
+      id: 165465462,
+      title: 'Mal au ventre',
+      date: '22/05/2015',
+    },
+    {
+      id: 21656546212,
+      title: 'Vertige',
+      date: '26/12/2015',
+    },
+    {
+      id: 5454656545,
+      title: 'Vertige',
+      date: '26/12/2015',
+    },
+    {
+      id: 165465462,
+      title: 'Mal au ventre',
+      date: '22/05/2015',
+    },
+    {
+      id: 212655412,
+      title: 'Vertige',
+      date: '26/12/2015',
+    },
+    {
+      id: 65646,
+      title: 'Vertige',
+      date: '26/12/2015',
+    },
+    {
+      id: 456,
       title: 'Mal au ventre',
       date: '22/05/2015',
     },
   ];
   const data = route.params.data;
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor:
+            data.sexe === 'man'
+              ? colors.blue
+              : data.sexe === 'woman'
+              ? 'pink'
+              : 'white',
+        },
+      ]}>
       <Text style={styles.titleText}>Détails du patient</Text>
       <View>
         <Image source={man_avatar} style={styles.image} />
@@ -58,31 +127,65 @@ const ProfilePatient = ({route}) => {
       <View style={styles.infoContainer}>
         <Text style={styles.info}>
           Nom:{' '}
-          <Text style={styles.name}>
+          <Text
+            style={[
+              styles.name,
+              {color: data.sexe === 'woman' ? 'red' : 'white'},
+            ]}>
             {' '}
             {data.first_name} {data.last_name}
           </Text>
         </Text>
         <Text style={styles.info}>
-          Age: <Text style={styles.name}> {data.age} ans</Text>
+          Age:{' '}
+          <Text
+            style={[
+              styles.name,
+              {color: data.sexe === 'woman' ? 'red' : 'white'},
+            ]}>
+            {' '}
+            {data.age} ans
+          </Text>
         </Text>
         <Text style={styles.info}>
-          Sexe: <Text style={styles.name}> {data.sexe}</Text>
+          Sexe:{' '}
+          <Text
+            style={[
+              styles.name,
+              {color: data.sexe === 'woman' ? 'red' : 'white'},
+            ]}>
+            {' '}
+            {data.sexe}
+          </Text>
         </Text>
         <Text style={styles.info}>
-          Email: <Text style={styles.name}> {data.email}</Text>
+          Email:{' '}
+          <Text
+            style={[
+              styles.name,
+              {color: data.sexe === 'woman' ? 'red' : 'white'},
+            ]}>
+            {' '}
+            {data.email}
+          </Text>
         </Text>
       </View>
-      <View>
-        <Text style={styles.Subtitle}>Symptômes :</Text>
-        <FlatList
-          data={maladies}
-          numColumns={2}
-          renderItem={item => {
-            return <MaladiesList data={item.item} />;
-          }}
-        />
-      </View>
+
+      <Text
+        style={[
+          styles.Subtitle,
+          {color: data.sexe === 'woman' ? 'red' : 'white'},
+        ]}>
+        Symptômes :
+      </Text>
+      <FlatList
+        data={maladies}
+        contentContainerStyle={{alignItems: 'center'}}
+        numColumns={parseInt(windowWidth / 170)}
+        renderItem={item => {
+          return <MaladiesList data={item.item} />;
+        }}
+      />
     </View>
   );
 };
