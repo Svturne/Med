@@ -14,9 +14,13 @@ import {
   useLinkTo,
   useNavigation,
 } from '@react-navigation/native';
+import {Icon} from '@rneui/themed';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+
+  const iconDimension = 60;
+
   const handleIMGPress = () => {
     navigation.navigate('ProfileDoctor');
   };
@@ -114,6 +118,20 @@ const HomeScreen = () => {
       </Text>
 
       <FlatList data={patients} renderItem={renderItem} />
+      <TouchableOpacity
+        style={{
+          backgroundColor: colors.green,
+          borderRadius: iconDimension / 2,
+          width: iconDimension,
+          height: iconDimension,
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'absolute',
+          right: 20,
+          bottom: 20,
+        }}>
+        <Icon name="plus" type="entypo" size={25} color={colors.black} />
+      </TouchableOpacity>
     </View>
   );
 };
