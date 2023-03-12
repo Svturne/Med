@@ -8,13 +8,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import colors from '../../assets/colors';
-import fonts from '../../assets/fonts/fonts';
-import {
-  NavigationContainer,
-  useLinkTo,
-  useNavigation,
-} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
+import PatientsCard from '../components/PatientsCard';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -71,29 +67,6 @@ const HomeScreen = () => {
     },
   ];
 
-  const renderItem = ({item}) => (
-    <View
-      style={[
-        styles.card,
-        {
-          backgroundColor:
-            item.sexe === 'man'
-              ? '#85CDFD'
-              : item.sexe === 'woman'
-              ? 'pink'
-              : 'white',
-        },
-      ]}
-      key={item.id}>
-      <Text style={styles.cardTitle}>
-        {item.first_name} {item.last_name}
-      </Text>
-      <Text style={styles.cardText}>{item.email}</Text>
-      <Text style={styles.cardText}>{item.age} ans</Text>
-      <Text style={styles.cardText}>{item.sexe}</Text>
-    </View>
-  );
-
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center', margin: 25}}>
@@ -121,7 +94,13 @@ const HomeScreen = () => {
         Liste des patients:
       </Text>
 
-      <FlatList data={patients} renderItem={renderItem} />
+      <FlatList
+        data={patients}
+        renderItem={item => {
+          console.log(item);
+          return <PatientsCard data={item.item} />;
+        }}
+      />
       <TouchableOpacity
         style={{
           backgroundColor: colors.green,
@@ -148,21 +127,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
     width: '100%',
     height: '100%',
-  },
-  card: {
-    padding: 20,
-    marginHorizontal: 25,
-    marginVertical: 10,
-    borderRadius: 10,
-  },
-  cardTitle: {
-    color: colors.black,
-    fontSize: 20,
-    fontFamily: fonts.bold,
-    marginBottom: 10,
-  },
-  cardText: {
-    fontSize: 16,
-    marginBottom: 5,
   },
 });
