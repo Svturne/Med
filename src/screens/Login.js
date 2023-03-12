@@ -46,55 +46,56 @@ const Login = () => {
     <View style={styles.mainContainer}>
       <ScrollView keyboardShouldPersistTaps="handled">
         <Image source={doctorPic} style={styles.image} />
-
-        <View style={styles.container}>
-          <Text
-            style={{
-              alignSelf: 'center',
-              fontFamily: fonts.bold,
-              fontSize: 24,
-              color: colors.white,
-            }}>
-            Hello Doctor!
-          </Text>
-
-          <CustomInput
-            nameOfInpute="Adresse email"
-            value={email}
-            onChangeText={setEmail}
-            secure={false}
-          />
-          <CustomInput
-            nameOfInpute="Mot de passe"
-            value={password}
-            onChangeText={setPassword}
-            secure={true}
-          />
-          <TouchableOpacity>
-            <Text style={{alignSelf: 'flex-end', fontSize: 12}}>
-              Mot de passe oublié?
+        <View style={{maxWidth: 500, width: '100%', alignSelf: 'center'}}>
+          <View style={styles.container}>
+            <Text
+              style={{
+                alignSelf: 'center',
+                fontFamily: fonts.bold,
+                fontSize: 24,
+                color: colors.white,
+              }}>
+              Hello Doctor!
             </Text>
-          </TouchableOpacity>
-          <CustomButton
-            text="Se connecter"
-            color="lightgreen"
-            isLoading={signInLoading}
-            func={signIn}
-          />
-          <View style={styles.icon}>
-            <Text>
-              Vous êtes un patient?{' '}
-              <Text style={{color: 'lightgreen'}}>
-                Scannez votre code QR ->{' '}
-              </Text>
-            </Text>
-            <Icon
-              name="qrcode-scan"
-              type="material-community"
-              color={colors.white}
-              size={45}
-              onPress={handleQRPress}
+
+            <CustomInput
+              nameOfInpute="Adresse email"
+              value={email}
+              onChangeText={setEmail}
+              secure={false}
             />
+            <CustomInput
+              nameOfInpute="Mot de passe"
+              value={password}
+              onChangeText={setPassword}
+              secure={true}
+            />
+            <TouchableOpacity>
+              <Text style={{alignSelf: 'flex-end', fontSize: 12}}>
+                Mot de passe oublié?
+              </Text>
+            </TouchableOpacity>
+            <CustomButton
+              text="Se connecter"
+              color="lightgreen"
+              isLoading={signInLoading}
+              func={signIn}
+            />
+            <View style={styles.icon}>
+              <Text>
+                Vous êtes un patient?{' '}
+                <Text style={{color: 'lightgreen'}}>
+                  Scannez votre code QR ->{' '}
+                </Text>
+              </Text>
+              <Icon
+                name="qrcode-scan"
+                type="material-community"
+                color={colors.white}
+                size={45}
+                onPress={handleQRPress}
+              />
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -111,6 +112,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
   },
   image: {
+    maxWidth: 500,
+    alignSelf: 'center',
     width: '100%',
   },
   container: {
