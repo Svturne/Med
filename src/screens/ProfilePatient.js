@@ -10,10 +10,12 @@ import React from 'react';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
 import man_avatar from '../../assets/images/man_avatar.png';
+import woman_avatar from '../../assets/images/woman_avatar.png';
 import MaladiesList from '../components/MaladiesList';
 
 const ProfilePatient = ({route}) => {
   const windowWidth = Dimensions.get('window').width;
+  const data = route.params.data;
   const maladies = [
     {
       id: 1,
@@ -106,7 +108,7 @@ const ProfilePatient = ({route}) => {
       date: '22/05/2015',
     },
   ];
-  const data = route.params.data;
+
   return (
     <View
       style={[
@@ -122,7 +124,10 @@ const ProfilePatient = ({route}) => {
       ]}>
       <Text style={styles.titleText}>Détails du patient</Text>
       <View>
-        <Image source={man_avatar} style={styles.image} />
+        <Image
+          source={data.sexe == 'woman' ? woman_avatar : man_avatar}
+          style={styles.image}
+        />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.info}>
