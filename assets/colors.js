@@ -6,5 +6,5 @@ export default colors = {
   brow: '#A18667',
   white: '#FFFFFF',
   black: '#000000',
-  red: '#FFFF00',
+  red: 'red',
 };

@@ -19,6 +19,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
+import {showError, showInfo} from '../utils/messages';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -27,11 +28,9 @@ const Login = () => {
   const [signInLoading, setsignInLoading] = useState(false);
 
   const signIn = useCallback(() => {
-    setsignInLoading(true);
-    setTimeout(() => {
-      setsignInLoading(false);
-      handleLGPress();
-    }, 2000);
+    if (email == '' || password == '') {
+      showInfo('please enter a valid email');
+    }
   }, [email, password]);
 
   const handleQRPress = () => {
