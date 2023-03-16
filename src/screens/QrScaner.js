@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    backgroundColor: colors.blue2,
+    backgroundColor: colors.lightblue,
   },
   textT: {
     color: 'white',
