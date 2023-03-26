@@ -29,7 +29,8 @@ const Visites = ({route}) => {
     {
       id: 1,
       title: '1er visite',
-      remarque: 'amelioration',
+      remarque:
+        "Dans les textes non linéaires, généralement tabulaires, il est difficile de parler de paragraphes : la page est composée de tables ou de tableaux, de graphes et d'histogrammes, d'images (de photographies, de dessins, ou de schémas, etc.), où les informations textuelles figurent dans des pavés de type légende, commentaire, note, etc., chaque segment de texte étant plus ou moins indépendant des autres, et rattaché à un élément non textuel. Il vaut mieux dans ce cas parler de pavé(s), et envisager la composition du document sous l'angle de la topologie (de la mise en page(s))",
       date: '12/02/2015',
     },
     {
@@ -64,13 +65,10 @@ const Visites = ({route}) => {
         <Text style={styles.textTitle}>Date de création: {data.date}</Text>
       </View>
       <Text style={styles.Subtitle}>Visites: </Text>
-      <ScrollView>
-        <View
-          style={{flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 50}}>
-          {visitesDetails.map(item => (
-            <VisitesList key={item.id} data={item} />
-          ))}
-        </View>
+      <ScrollView contentContainerStyle={{alignItems: 'center'}}>
+        {visitesDetails.map(item => (
+          <VisitesList key={item.id} data={item} />
+        ))}
       </ScrollView>
       <TouchableOpacity
         style={{

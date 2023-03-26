@@ -11,7 +11,9 @@ const MaladiesList = props => {
   return (
     <TouchableOpacity onPress={showVisitesDetail} style={styles.card}>
       <Text style={styles.cardTitle}>{props.data.title}</Text>
-      <Text style={styles.desc}>{props.data.remarque}</Text>
+      <Text numberOfLines={1} style={styles.desc}>
+        {props.data.remarque}{' '}
+      </Text>
       <Text style={styles.date}>{props.data.date}</Text>
     </TouchableOpacity>
   );
