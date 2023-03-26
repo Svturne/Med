@@ -29,8 +29,17 @@ const Login = () => {
 
   const signIn = useCallback(() => {
     if (email == '' || password == '') {
-      showInfo('please enter a valid email');
+      showError('Remplissez tous les champs requis');
+      return;
     }
+
+    const regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+    if (regEmail.test(email) == false) {
+      showError("Mauvais format d'e-mail");
+      return;
+    }
+    handleLGPress();
   }, [email, password]);
 
   const handleQRPress = () => {
@@ -38,7 +47,7 @@ const Login = () => {
   };
 
   const handleLGPress = () => {
-    navigation.navigate('HomeScreen');
+    navigation.replace('HomeScreen');
   };
 
   return (
@@ -62,6 +71,7 @@ const Login = () => {
               value={email}
               onChangeText={setEmail}
               secure={false}
+              keyboardType="email-address"
             />
             <CustomInput
               nameOfInpute="Mot de passe"

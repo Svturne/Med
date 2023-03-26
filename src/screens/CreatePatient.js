@@ -36,8 +36,9 @@ const CreatePatient = () => {
         value={email}
         onChangeText={setEmail}
         secure={false}
+        keyboardType="email-address"
       />
-      <CustomInput nameOfInpute="Age" />
+      <CustomInput nameOfInpute="Age" keyboardType="numeric" />
 
       <CustomDropList
         title="Sexe"

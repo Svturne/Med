@@ -28,6 +28,7 @@ function CustomInput(props) {
           secureTextEntry={showEye}
           style={styles.inputText}
           placeholderTextColor={'black'}
+          keyboardType={props.keyboardType}
           onFocus={() => {
             setisFocused(true);
           }}

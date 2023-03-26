@@ -7,4 +7,7 @@ export default colors = {
   white: '#FFFFFF',
   black: '#000000',
   red: 'red',
+  whiteAlpha: '#f3f2f15e',
+  pink: 'pink',
+  yellow: 'yellow',
 };

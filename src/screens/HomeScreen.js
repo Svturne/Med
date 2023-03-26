@@ -6,14 +6,16 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import colors from '../../assets/colors';
 import {useNavigation} from '@react-navigation/native';
-import {Icon} from '@rneui/themed';
+import {Icon, SearchBar} from '@rneui/themed';
 import PatientsCard from '../components/PatientsCard';
+import fonts from '../../assets/fonts/fonts';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [search, setSearch] = useState('');
 
   const iconDimension = 60;
 
@@ -24,6 +26,7 @@ const HomeScreen = () => {
   const handlePLUSPress = () => {
     navigation.navigate('CreatePatient');
   };
+
   const patients = [
     {
       id: 1,
@@ -87,15 +90,21 @@ const HomeScreen = () => {
         style={{
           color: 'white',
           fontSize: 20,
-          textDecorationLine: 'underline',
           marginTop: 20,
           marginLeft: 25,
         }}>
         Liste des patients:
       </Text>
-
+      <SearchBar
+        placeholder="John Doe"
+        onChangeText={setSearch}
+        value={search}
+        containerStyle={styles.searchBarContainer}
+        inputContainerStyle={styles.searchBarContainerInput}
+        inputStyle={styles.searchBarInput}
+      />
       <FlatList
-        data={patients}
+        data={patients.filter(patients => patients.first_name.includes(search))}
         renderItem={item => {
           return <PatientsCard data={item.item} />;
         }}
@@ -126,5 +135,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
     width: '100%',
     height: '100%',
+  },
+  searchBarContainer: {
+    backgroundColor: colors.blue,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+  },
+  searchBarContainerInput: {
+    borderRadius: 16,
+    backgroundColor: colors.white,
+  },
+  searchBarInput: {
+    color: colors.white,
+    fontFamily: fonts.semiBold,
   },
 });
