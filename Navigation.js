@@ -10,6 +10,7 @@ import CreatePatient from './src/screens/CreatePatient';
 import ProfilePatient from './src/screens/ProfilePatient';
 import Visites from './src/screens/Visites';
 import VisitesDetail from './src/screens/VisitesDetail';
+import CameraScreen from './src/screens/CameraScreen';
 
 const Stack = createStackNavigator();
 const config = {
@@ -37,6 +38,7 @@ function App() {
         <Stack.Screen name="ProfilePatient" component={ProfilePatient} />
         <Stack.Screen name="Visites" component={Visites} />
         <Stack.Screen name="VisitesDetail" component={VisitesDetail} />
+        <Stack.Screen name="CameraScreen" component={CameraScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

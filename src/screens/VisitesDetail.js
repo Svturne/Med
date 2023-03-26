@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
@@ -22,6 +23,7 @@ const photos = [
 const iconDimension = 50;
 const VisitesDetail = ({route}) => {
   const data = route.params.data;
+  const navigation = useNavigation();
   return (
     <View>
       <ScrollView>
@@ -48,6 +50,9 @@ const VisitesDetail = ({route}) => {
           position: 'absolute',
           right: 20,
           bottom: 20,
+        }}
+        onPress={() => {
+          navigation.navigate('CameraScreen');
         }}>
         <Icon name="camera" type="foundation" size={25} color={colors.black} />
       </TouchableOpacity>
