@@ -18,6 +18,7 @@ import AsyncKeys from './src/constant/AsyncKeys';
 import ActionsName from './src/redux/reducers/ActionsName';
 import MailPassword from './src/screens/MailPassword';
 import CodePassword from './src/screens/CodePassword';
+import RestPassword from './src/screens/RestPassword';
 
 function Navigation() {
   const config = {
@@ -71,6 +72,7 @@ function Navigation() {
           <Stack.Screen name="QrScaner" component={QrScaner} />
           <Stack.Screen name="MailPassword" component={MailPassword} />
           <Stack.Screen name="CodePassword" component={CodePassword} />
+          <Stack.Screen name="RestPassword" component={RestPassword} />
         </Stack.Navigator>
       )}
     </NavigationContainer>
