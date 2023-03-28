@@ -50,11 +50,11 @@ function Navigation() {
   return (
     <NavigationContainer linking={linking}>
       {isSplash ? (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
         </Stack.Navigator>
       ) : isLogin ? (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="ProfileDoctor" component={ProfileDoctor} />
           <Stack.Screen name="CreatePatient" component={CreatePatient} />
@@ -64,7 +64,7 @@ function Navigation() {
           <Stack.Screen name="CameraScreen" component={CameraScreen} />
         </Stack.Navigator>
       ) : (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="QrScaner" component={QrScaner} />
         </Stack.Navigator>
