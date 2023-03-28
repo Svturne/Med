@@ -53,6 +53,10 @@ const Login = () => {
     dispatch({type: ActionsName.connecte});
   };
 
+  const resetPassword = () => {
+    navigation.navigate('MailPassword');
+  };
+
   return (
     <View style={styles.mainContainer}>
       <ScrollView keyboardShouldPersistTaps="handled">
@@ -82,7 +86,7 @@ const Login = () => {
               onChangeText={setPassword}
               secure={true}
             />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={resetPassword}>
               <Text style={{alignSelf: 'flex-end', fontSize: 12}}>
                 Mot de passe oublié?
               </Text>

@@ -16,6 +16,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsyncKeys from './src/constant/AsyncKeys';
 import ActionsName from './src/redux/reducers/ActionsName';
+import MailPassword from './src/screens/MailPassword';
+import CodePassword from './src/screens/CodePassword';
 
 function Navigation() {
   const config = {
@@ -67,6 +69,8 @@ function Navigation() {
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="QrScaner" component={QrScaner} />
+          <Stack.Screen name="MailPassword" component={MailPassword} />
+          <Stack.Screen name="CodePassword" component={CodePassword} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

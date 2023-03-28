@@ -11,7 +11,8 @@ const CustomButton = props => {
   return (
     <TouchableOpacity
       onPress={props.func}
-      style={[{backgroundColor: props.color}, styles.container]}>
+      style={[{backgroundColor: props.color}, styles.container]}
+      disabled={props.isLoading}>
       {props.isLoading ? (
         <ActivityIndicator />
       ) : (
