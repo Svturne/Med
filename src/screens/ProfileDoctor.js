@@ -1,8 +1,15 @@
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import colors from '../../assets/colors';
+import ActionsName from '../redux/reducers/ActionsName';
+import {useDispatch} from 'react-redux';
 
 const ProfileDoctor = () => {
+  const dispatch = useDispatch();
+
+  const disconnect = () => {
+    dispatch({type: ActionsName.disconnect});
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -19,7 +26,7 @@ const ProfileDoctor = () => {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Modifier votre mot de passe</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={disconnect}>
         <Text style={styles.buttonText}>Se déconnecter</Text>
       </TouchableOpacity>
     </View>

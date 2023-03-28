@@ -5,4 +5,7 @@ export default ActionsName = {
   setMaladieData: 'setMaladieData',
   addMaladieData: 'addMaladieData',
   resetMaladieData: 'resetMaladieData',
+  connecte: 'connect',
+  disconnect: 'disconnect',
+  finishSplash: 'finishSplash',
 };

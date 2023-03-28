@@ -20,12 +20,15 @@ import {
 } from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
 import {showError, showInfo} from '../utils/messages';
+import {useDispatch} from 'react-redux';
+import ActionsName from '../redux/reducers/ActionsName';
 
 const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signInLoading, setsignInLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const signIn = useCallback(() => {
     if (email == '' || password == '') {
@@ -47,7 +50,7 @@ const Login = () => {
   };
 
   const handleLGPress = () => {
-    navigation.replace('HomeScreen');
+    dispatch({type: ActionsName.connecte});
   };
 
   return (
