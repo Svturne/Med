@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {showError} from '../utils/messages';
@@ -8,7 +8,8 @@ const RestPassword = () => {
   const [password, setPassword] = useState('');
   const [passwordvalid, setPasswordValid] = useState('');
   const [sendMdpLoader, setSendMdpLoader] = useState(false);
-  const sendCode = () => {
+
+  const sendCode = useCallback(() => {
     if (password === '' || passwordvalid === '') {
       showError('Remplissez tous les champs requis');
     } else {
@@ -25,7 +26,7 @@ const RestPassword = () => {
         }
       }
     }
-  };
+  }, [password, passwordvalid]);
 
   return (
     <View style={styles.container}>

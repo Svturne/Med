@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import CustomButton from '../components/CustomButton';
 import fonts from '../../assets/fonts/fonts';
 import {TouchableHighlight} from 'react-native-gesture-handler';
@@ -24,7 +24,8 @@ const CodePassword = () => {
   const textInputRef2 = useRef(null);
   const textInputRef3 = useRef(null);
   const textInputRef4 = useRef(null);
-  const sendCode = () => {
+
+  const sendCode = useCallback(() => {
     if (
       firstInput === '' ||
       secondInput === '' ||
@@ -36,7 +37,8 @@ const CodePassword = () => {
       console.log(firstInput + secondInput + thirdInput + fourthInput);
       navigation.navigate('RestPassword');
     }
-  };
+  }, [firstInput, secondInput, thirdInput, fourthInput]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Entrer le code de sécuriter</Text>

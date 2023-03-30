@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {RNCamera} from 'react-native-camera';
 import {useCamera} from 'react-native-camera-hooks';
 import colors from '../../assets/colors';
@@ -7,14 +7,16 @@ import CustomButton from '../components/CustomButton';
 
 const CameraScreen = () => {
   const [{cameraRef}, {takePicture}] = useCamera(null);
-  const captureHandle = async () => {
+
+  const captureHandle = useCallback(async () => {
     try {
       const data = await takePicture();
       console.log(data.uri);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
+
   return (
     <View style={styles.body}>
       <RNCamera
@@ -25,7 +27,7 @@ const CameraScreen = () => {
           <CustomButton
             text="Prendre une photo"
             color="lightgreen"
-            func={() => captureHandle()}
+            func={captureHandle}
           />
         </View>
       </RNCamera>

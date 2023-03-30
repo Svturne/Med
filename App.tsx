@@ -1,10 +1,10 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
 import Navigation from './Navigation';
-import VisitesDetail from './src/screens/VisitesDetail';
+import OfflineScreen from './src/screens/OfflineScreen';
 
 const App = () => {
-  return <Navigation />;
+  return <OfflineScreen />;
 };
 
 export default App;

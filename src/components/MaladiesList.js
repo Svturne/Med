@@ -3,6 +3,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
 import colors from '../../assets/colors';
+import fonts from '../../assets/fonts/fonts';
 
 const MaladiesList = props => {
   const navigation = useNavigation();
