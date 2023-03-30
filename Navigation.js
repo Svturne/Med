@@ -19,6 +19,8 @@ import ActionsName from './src/redux/reducers/ActionsName';
 import MailPassword from './src/screens/MailPassword';
 import CodePassword from './src/screens/CodePassword';
 import RestPassword from './src/screens/RestPassword';
+import OfflineScreen from './src/screens/OfflineScreen';
+import NetInfo from '@react-native-community/netinfo';
 
 function Navigation() {
   const config = {
@@ -32,10 +34,13 @@ function Navigation() {
     prefixes: ['med://'],
     config,
   };
+
   const Stack = createStackNavigator();
 
   const isSplash = useSelector(state => state.AuthReducer.isSplash);
   const isLogin = useSelector(state => state.AuthReducer.isLogin);
+
+  const isConnect = useSelector(state => state.AuthReducer.isConnect);
 
   const dispatch = useDispatch();
 
@@ -50,11 +55,28 @@ function Navigation() {
         dispatch({type: ActionsName.finishSplash});
       });
   }, []);
+
+  useEffect(() => {
+    // Subscribe
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch({type: ActionsName.changeStatus, payload: state.isConnected});
+    });
+
+    return () => {
+      // Unsubscribe
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <NavigationContainer linking={linking}>
       {isSplash ? (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
+        </Stack.Navigator>
+      ) : !isConnect ? (
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="OfflineScreen" component={OfflineScreen} />
         </Stack.Navigator>
       ) : isLogin ? (
         <Stack.Navigator screenOptions={{headerShown: false}}>

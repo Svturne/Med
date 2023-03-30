@@ -8,4 +8,5 @@ export default ActionsName = {
   connecte: 'connect',
   disconnect: 'disconnect',
   finishSplash: 'finishSplash',
+  changeStatus: 'changeStatus',
 };

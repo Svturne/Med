@@ -3,6 +3,7 @@ import ActionsName from './ActionsName';
 const INITIAL_STATE = {
   isSplash: true,
   isLogin: false,
+  isConnect: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -22,6 +23,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isSplash: false,
+      };
+
+    case ActionsName.changeStatus:
+      return {
+        ...state,
+        isConnect: action.payload,
       };
 
     default:
