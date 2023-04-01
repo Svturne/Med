@@ -17,7 +17,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
 
-  const iconDimension = 60;
+  const iconDimension = 50;
 
   const handleIMGPress = () => {
     navigation.navigate('ProfileDoctor');
@@ -118,8 +118,9 @@ const HomeScreen = () => {
           alignItems: 'center',
           justifyContent: 'center',
           position: 'absolute',
-          right: 20,
-          bottom: 20,
+          alignSelf: 'center',
+
+          bottom: 10,
         }}
         onPress={handlePLUSPress}>
         <Icon name="plus" type="entypo" size={25} color={colors.black} />
