@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-
-import {StyleSheet, Linking, View, Text} from 'react-native';
-
+import React from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
@@ -15,7 +13,12 @@ const ScanScreen = () => {
     <View style={styles.container}>
       <Text style={styles.textT}>Bienvenue</Text>
       <View style={styles.cameraContainer}>
-        <QRCodeScanner cameraStyle={styles.camera} onRead={onSuccess} />
+        <QRCodeScanner
+          cameraStyle={styles.camera}
+          onRead={onSuccess}
+          showMarker={true}
+          customMarker={<View style={styles.marker}></View>}
+        />
       </View>
       <Text style={styles.text}>Scannez votre code QR</Text>
     </View>
@@ -55,6 +58,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     alignSelf: 'center',
+  },
+
+  marker: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    borderColor: colors.lightblue,
+    borderWidth: 2,
+    borderRadius: 10,
+    width: 250,
+    height: 250,
   },
 });
 

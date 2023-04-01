@@ -78,7 +78,9 @@ const ProfileDoctor = () => {
           color={colors.black}
           size={iconsize}
         />
-        <Text style={styles.buttonText}>Se déconnecter</Text>
+        <Text style={[styles.buttonText, {color: colors.red}]}>
+          Se déconnecter
+        </Text>
       </TouchableOpacity>
     </View>
   );
