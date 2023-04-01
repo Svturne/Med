@@ -87,6 +87,7 @@ function Navigation() {
           <Stack.Screen name="Visites" component={Visites} />
           <Stack.Screen name="VisitesDetail" component={VisitesDetail} />
           <Stack.Screen name="CameraScreen" component={CameraScreen} />
+          <Stack.Screen name="RestPassword" component={RestPassword} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator screenOptions={{headerShown: false}}>

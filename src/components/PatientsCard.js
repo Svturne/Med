@@ -1,11 +1,27 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
+import fonts from '../../assets/fonts/fonts';
+import Dialog from 'react-native-dialog';
+import colors from '../../assets/colors';
 
 const PatientsCard = props => {
   const iconeSize = 28;
   const navigation = useNavigation();
+  const [visible, setVisible] = useState(false);
+
+  const showDialog = () => {
+    setVisible(true);
+  };
+  const handleDelete = () => {
+    //TODO: delete patient
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
   const showPatient = () => {
     navigation.navigate('ProfilePatient', {data: props.data});
   };
@@ -34,24 +50,47 @@ const PatientsCard = props => {
         <Text style={styles.cardText}>{props.data.sexe}</Text>
       </View>
       <View style={styles.icon}>
-        <Icon
-          name="edit"
-          type="feather"
-          color={colors.yellow}
-          size={iconeSize}
-        />
-        <Icon
-          name="page-delete"
-          type="foundation"
-          color={colors.red}
-          size={iconeSize}
-        />
-        <Icon
-          name="qrcode-scan"
-          type="material-community"
-          color={colors.black}
-          size={iconeSize}
-        />
+        <TouchableOpacity>
+          <Icon
+            name="edit"
+            type="feather"
+            color={colors.yellow}
+            size={iconeSize}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={showDialog}>
+          <Icon
+            name="page-delete"
+            type="foundation"
+            color={colors.red}
+            size={iconeSize}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Icon
+            name="qrcode-scan"
+            type="material-community"
+            color={colors.black}
+            size={iconeSize}
+          />
+        </TouchableOpacity>
+        <Dialog.Container visible={visible}>
+          <Dialog.Title>
+            Êtes-vous sûr de vouloir supprimer le patient ?
+          </Dialog.Title>
+
+          <Dialog.Button
+            label="Annuler"
+            color={colors.grey}
+            onPress={handleCancel}
+          />
+          <Dialog.Button
+            label="Supprimer"
+            bold={true}
+            color={colors.red}
+            onPress={handleDelete}
+          />
+        </Dialog.Container>
       </View>
     </TouchableOpacity>
   );
@@ -75,6 +114,8 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
+    fontFamily: fonts.regular,
+    color: colors.black,
     marginBottom: 5,
   },
   icon: {

@@ -13,8 +13,10 @@ const ScanScreen = () => {
 
   return (
     <View style={styles.container}>
-      <QRCodeScanner onRead={onSuccess} />
-      <Text style={styles.textT}>Côté patient</Text>
+      <Text style={styles.textT}>Bienvenue</Text>
+      <View style={styles.cameraContainer}>
+        <QRCodeScanner cameraStyle={styles.camera} onRead={onSuccess} />
+      </View>
       <Text style={styles.text}>Scannez votre code QR</Text>
     </View>
   );
@@ -22,23 +24,37 @@ const ScanScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    backgroundColor: colors.lightblue,
+    justifyContent: 'center',
+    backgroundColor: colors.blue,
   },
   textT: {
     color: 'white',
     position: 'absolute',
     fontSize: 30,
     fontFamily: fonts.semiBold,
-    top: 60,
+    top: 45,
   },
   text: {
     color: 'white',
-    position: 'relative',
     fontFamily: fonts.regular,
     bottom: 70,
+  },
+  cameraContainer: {
+    marginTop: 'auto',
+    height: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  camera: {
+    height: '90%',
+    width: '90%',
+    borderRadius: 10,
+    overflow: 'hidden',
+    alignSelf: 'center',
   },
 });
 

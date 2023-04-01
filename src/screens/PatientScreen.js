@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image} from '@rneui/themed';
 import colors from '../../assets/colors';
 import MaladiesList from '../components/MaladiesList';
@@ -32,10 +32,47 @@ const PatientScreen = ({route}) => {
       date: '22/05/2015',
     },
   ];
+
+  function useBackGroundColor(sexe) {
+    const [bgColor, setBgColor] = useState('bleu');
+
+    useEffect(() => {
+      if (sexe === 'woman') {
+        setBgColor(colors.pink);
+      } else {
+        setBgColor(colors.blue);
+      }
+    }, [sexe]);
+
+    return bgColor;
+  }
+
+  function useTextColor(sexe) {
+    const [textColor, setTextColor] = useState('white');
+
+    useEffect(() => {
+      if (sexe === 'woman') {
+        setTextColor('red');
+      } else {
+        setTextColor('white');
+      }
+    }, [sexe]);
+
+    return textColor;
+  }
+
+  const bgColor = useBackGroundColor('man'); //TODO: add man or woman
+  const textColor = useTextColor('man');
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: bgColor,
+        },
+      ]}>
       <View style={{flexDirection: 'row', alignItems: 'center', margin: 25}}>
-        <Text style={{color: 'white', fontSize: 30, flex: 6}}>
+        <Text style={{color: textColor, fontSize: 30, flex: 6}}>
           Bonjour, Rafik
         </Text>
         <TouchableOpacity onPress={console.log('Picture Pressed')}>
@@ -47,11 +84,11 @@ const PatientScreen = ({route}) => {
           />
         </TouchableOpacity>
       </View>
-      <Text style={[styles.doctitle, {color: colors.white}]}>
+      <Text style={[styles.doctitle, {color: textColor}]}>
         Vous êtes suivi par le médecin:{' '}
       </Text>
       <View style={styles.listContainer}>
-        <Text style={[styles.Subtitle, {color: colors.white}]}>
+        <Text style={[styles.Subtitle, {color: textColor}]}>
           Voici la liste de vos maladies:{' '}
         </Text>
         <FlatList

@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   searchBarInput: {
-    color: colors.white,
+    color: colors.black,
     fontFamily: fonts.semiBold,
   },
 });

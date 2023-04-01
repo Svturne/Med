@@ -25,9 +25,9 @@ const VisitesDetail = ({route}) => {
   const data = route.params.data;
   const navigation = useNavigation();
   return (
-    <View>
-      <ScrollView>
-        <View style={styles.container}>
+    <View style={styles.container}>
+      <View>
+        <ScrollView>
           <Text style={styles.title}>{data.title}</Text>
           <Text style={styles.remarque}>{data.remarque}</Text>
           {photos.map((photo, index) => (
@@ -36,9 +36,8 @@ const VisitesDetail = ({route}) => {
               <Text style={styles.description}>{photo.description}</Text>
             </View>
           ))}
-        </View>
-      </ScrollView>
-
+        </ScrollView>
+      </View>
       <TouchableOpacity
         style={{
           backgroundColor: colors.green,
@@ -66,6 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.blue,
+    width: '100%',
   },
   title: {
     fontSize: 24,
