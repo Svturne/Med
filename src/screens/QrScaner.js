@@ -6,6 +6,7 @@ import fonts from '../../assets/fonts/fonts';
 
 const ScanScreen = () => {
   const onSuccess = e => {
+    //TODO: if e.data.contain med://
     console.log(e.data);
   };
 
@@ -16,6 +17,8 @@ const ScanScreen = () => {
         <QRCodeScanner
           cameraStyle={styles.camera}
           onRead={onSuccess}
+          reactivate={true}
+          reactivateTimeout={500}
           showMarker={true}
           customMarker={<View style={styles.marker}></View>}
         />

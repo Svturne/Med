@@ -5,6 +5,7 @@ import {Icon} from '@rneui/themed';
 import fonts from '../../assets/fonts/fonts';
 import Dialog from 'react-native-dialog';
 import colors from '../../assets/colors';
+import {showInfo} from '../utils/messages';
 
 const PatientsCard = props => {
   const iconeSize = 28;
@@ -24,6 +25,11 @@ const PatientsCard = props => {
   };
   const showPatient = () => {
     navigation.navigate('ProfilePatient', {data: props.data});
+  };
+
+  const qrCodeHandled = () => {
+    //TODO: Send Qr code
+    showInfo('Un nouveau QR code a été envoyé au patient.');
   };
 
   return (
@@ -66,7 +72,7 @@ const PatientsCard = props => {
             size={iconeSize}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={qrCodeHandled}>
           <Icon
             name="qrcode-scan"
             type="material-community"

@@ -73,7 +73,13 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center', margin: 25}}>
-        <Text style={{color: 'white', fontSize: 30, flex: 6}}>
+        <Text
+          style={{
+            color: colors.white,
+            fontFamily: fonts.bold,
+            fontSize: 30,
+            flex: 6,
+          }}>
           Bonjour, Mehdi
         </Text>
         <TouchableOpacity onPress={handleIMGPress}>
@@ -88,7 +94,8 @@ const HomeScreen = () => {
 
       <Text
         style={{
-          color: 'white',
+          color: colors.white,
+          fontFamily: fonts.semiBold,
           fontSize: 20,
           marginTop: 20,
           marginLeft: 25,
@@ -104,6 +111,7 @@ const HomeScreen = () => {
         inputStyle={styles.searchBarInput}
       />
       <FlatList
+        contentContainerStyle={{paddingBottom: 60}}
         data={patients.filter(patients => patients.first_name.includes(search))}
         renderItem={item => {
           return <PatientsCard data={item.item} />;
@@ -118,9 +126,8 @@ const HomeScreen = () => {
           alignItems: 'center',
           justifyContent: 'center',
           position: 'absolute',
-          alignSelf: 'center',
-
           bottom: 10,
+          right: 30,
         }}
         onPress={handlePLUSPress}>
         <Icon name="plus" type="entypo" size={25} color={colors.black} />

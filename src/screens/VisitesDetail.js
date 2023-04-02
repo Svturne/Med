@@ -27,7 +27,7 @@ const VisitesDetail = ({route}) => {
   return (
     <View style={styles.container}>
       <View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.title}>{data.title}</Text>
           <Text style={styles.remarque}>{data.remarque}</Text>
           {photos.map((photo, index) => (
@@ -66,14 +66,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.blue,
     width: '100%',
+    padding: 16,
   },
   title: {
     fontSize: 24,
     fontFamily: fonts.bold,
     marginBottom: 20,
+    color: colors.black,
+    alignSelf: 'center',
   },
   photoContainer: {
     marginBottom: 20,
+    alignItems: 'center',
   },
   photo: {
     width: 170,
@@ -85,6 +89,10 @@ const styles = StyleSheet.create({
     color: colors.white,
     padding: 20,
     marginVertical: 20,
+    fontFamily: fonts.regular,
+    backgroundColor: colors.whiteAlpha,
+    borderRadius: 20,
+    marginHorizontal: 10,
   },
   description: {
     marginTop: 10,

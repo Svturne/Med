@@ -20,7 +20,7 @@ function showError(message) {
 function showInfo(message) {
   Snackbar.show({
     text: message,
-    backgroundColor: colors.blue,
+    backgroundColor: colors.lightblue,
     duration: Snackbar.LENGTH_SHORT,
   });
 }

@@ -90,8 +90,9 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
-    paddingTop: 50,
+
     backgroundColor: colors.blue,
+    justifyContent: 'center',
   },
   profilePicture: {
     width: 150,
@@ -103,17 +104,17 @@ const styles = StyleSheet.create({
   username: {
     color: colors.white,
     fontSize: 25,
-    marginTop: 20,
+    marginBottom: 50,
     fontFamily: fonts.bold,
   },
   button: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    alignSelf: 'flex-start',
-    marginTop: 30,
+
+    alignSelf: 'center',
+    marginTop: 40,
     backgroundColor: colors.whiteAlpha,
     borderRadius: 16,
-    marginLeft: 20,
     flexDirection: 'row',
     width: 300,
   },

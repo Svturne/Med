@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -13,13 +12,9 @@ import colors from '../../assets/colors';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import fonts from '../../assets/fonts/fonts';
-import {
-  NavigationContainer,
-  useLinkTo,
-  useNavigation,
-} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
-import {showError, showInfo} from '../utils/messages';
+import {showError} from '../utils/messages';
 import {useDispatch} from 'react-redux';
 import ActionsName from '../redux/reducers/ActionsName';
 
