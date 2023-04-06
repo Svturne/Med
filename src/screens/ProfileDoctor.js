@@ -47,7 +47,7 @@ const ProfileDoctor = () => {
         });
         axios
           .patch(
-            'http://localhost:3000/api/medecin/6429c1abce76ef5ff4073836/picture',
+            'http://10.0.2.2:3000/api/medecin/6429c1abce76ef5ff4073836/picture',
             formData,
             {
               headers: {
