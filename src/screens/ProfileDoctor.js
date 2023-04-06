@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
+import axios from 'axios';
 
 const ProfileDoctor = () => {
   const iconsize = 25;
@@ -34,7 +35,33 @@ const ProfileDoctor = () => {
         console.log('ImagePicker Error: ', response.error);
       } else {
         setSelectedImage(response.assets[0].uri);
-        console.log(response.assets[0].uri);
+        const name = response.assets[0].fileName;
+        const uri = response.assets[0].uri;
+        const type = response.assets[0].type;
+
+        const formData = new FormData();
+        formData.append('picture', {
+          name,
+          uri,
+          type,
+        });
+        axios
+          .patch(
+            'http://localhost:3000/api/medecin/6429c1abce76ef5ff4073836/picture',
+            formData,
+            {
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data',
+              },
+            },
+          )
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error.message);
+          });
       }
     });
   };
