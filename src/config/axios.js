@@ -21,9 +21,14 @@ axiosPrivate.interceptors.response.use(
     return response;
   },
   error => {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
+
     if (error.response.status === 401 || error.response.status === 403) {
       console.log('error in response');
       refresh();
+      originalRequest._retry = true;
     }
     return error;
   },
