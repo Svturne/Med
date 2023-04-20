@@ -7,6 +7,7 @@ import CustomDropList from '../components/CustomDropList';
 import CustomButton from '../components/CustomButton';
 import instance, {axiosPrivate} from '../config/axios';
 import {useNavigation} from '@react-navigation/native';
+import {showError} from '../utils/messages';
 
 const CreatePatient = () => {
   const [sexe, setsexe] = useState('');
@@ -22,6 +23,18 @@ const CreatePatient = () => {
   ];
 
   const create = useCallback(() => {
+    if (name == '' || email == '' || !age || sexe == '') {
+      showError('Remplissez tous les champs requis');
+      return;
+    }
+
+    const regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+    if (regEmail.test(email) == false) {
+      showError("Mauvais format d'e-mail");
+      return;
+    }
+
     setCreatePatientLoader(true);
     axiosPrivate
       .post('/patient/', {

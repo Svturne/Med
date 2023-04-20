@@ -33,7 +33,7 @@ const HomeScreen = () => {
     .get('/patient/643df4de712b093516b2829e')
     .then(response => {
       setTimeout(() => {
-        console.log(response.data);
+        //console.log(response.data);
         setPatients(response.data);
       }, 5000);
     })

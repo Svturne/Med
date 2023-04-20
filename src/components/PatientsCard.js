@@ -5,17 +5,29 @@ import {Icon} from '@rneui/themed';
 import fonts from '../../assets/fonts/fonts';
 import Dialog from 'react-native-dialog';
 import colors from '../../assets/colors';
-import {showInfo} from '../utils/messages';
+import {showInfo, showSuccess} from '../utils/messages';
 import {axiosPrivate} from '../config/axios';
+import {TextInput} from 'react-native-gesture-handler';
+import {color} from '@rneui/base';
 
 const PatientsCard = props => {
   const iconeSize = 28;
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
+  const [visibleEdite, setVisibleEdit] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [age, setAge] = useState('');
+  const [sexe, setSexe] = useState('');
 
   const showDialog = () => {
     setVisible(true);
   };
+
+  const showEdit = () => {
+    setVisibleEdit(true);
+  };
+
   const handleDelete = () => {
     console.log();
     axiosPrivate
@@ -32,13 +44,48 @@ const PatientsCard = props => {
   const handleCancel = () => {
     setVisible(false);
   };
+
+  const handleCancelEdit = () => {
+    setVisibleEdit(false);
+  };
+
+  const handleEdit = () => {
+    axiosPrivate
+      .put(`/patient/${props.data._id}`, {
+        name: name,
+        email: email,
+        age: age,
+        sexe: sexe,
+      })
+      .then(response => {
+        console.log(response.data);
+        showSuccess('Patient mise à jour');
+        setVisibleEdit(false);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const showPatient = () => {
     navigation.navigate('ProfilePatient', {data: props.data});
   };
 
   const qrCodeHandled = () => {
-    //TODO: Send Qr code
-    showInfo('Un nouveau QR code a été envoyé au patient.');
+    axiosPrivate
+      .post(`/patient/resendqr/${props.data._id}`, {
+        name: props.data.name,
+        email: props.data.email,
+        age: props.data.age,
+        sexe: props.data.sexe,
+      })
+      .then(response => {
+        console.log(response.data);
+        showInfo('Un nouveau QR code a été envoyé au patient.');
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -63,13 +110,39 @@ const PatientsCard = props => {
         <Text style={styles.cardText}>{props.data.sexe}</Text>
       </View>
       <View style={styles.icon}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={showEdit}>
           <Icon
             name="edit"
             type="feather"
             color={colors.yellow}
             size={iconeSize}
           />
+          <Dialog.Container visible={visibleEdite}>
+            <Dialog.Title>Modification du patient</Dialog.Title>
+            <TextInput style={styles.edit} onChangeText={setName}>
+              {props.data.name}
+            </TextInput>
+            <TextInput style={styles.edit} onChangeText={setEmail}>
+              {props.data.email}
+            </TextInput>
+            <TextInput style={styles.edit} onChangeText={setAge}>
+              {props.data.age}
+            </TextInput>
+            <TextInput style={styles.edit} onChangeText={setSexe}>
+              {props.data.sexe}
+            </TextInput>
+            <Dialog.Button
+              label="Annuler"
+              color={colors.grey}
+              onPress={handleCancelEdit}
+            />
+            <Dialog.Button
+              label="Valider"
+              bold={true}
+              color={colors.blue}
+              onPress={handleEdit}
+            />
+          </Dialog.Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={showDialog}>
           <Icon
@@ -135,5 +208,13 @@ const styles = StyleSheet.create({
     width: 45,
 
     justifyContent: 'space-between',
+  },
+  edit: {
+    backgroundColor: colors.lightblue,
+    color: colors.white,
+    fontFamily: fonts.bold,
+    borderRadius: 16,
+    paddingLeft: 16,
+    marginVertical: 5,
   },
 });
