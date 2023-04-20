@@ -17,7 +17,7 @@ import {Icon} from '@rneui/themed';
 import {showError} from '../utils/messages';
 import {useDispatch} from 'react-redux';
 import ActionsName from '../redux/reducers/ActionsName';
-import {axiosInstance} from '../config/axios';
+import {axiosInstance, axiosPrivate} from '../config/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsyncKeys from '../constant/AsyncKeys';
 
@@ -59,15 +59,14 @@ const Login = () => {
             AsyncKeys.refreshToken,
             response.data.refreshToken,
           );
+          dispatch({type: ActionsName.connecte});
         } catch (e) {
           console.log(e);
         }
-        dispatch({type: ActionsName.connecte});
       })
       .catch(error => {
-        showError(error.response.data.message);
-        console.log('erreur in login');
-        console.log(error);
+        showError('Identifiant invalide');
+        console.log(error.response.data.message);
       })
       .finally(() => {
         setsignInLoading(false);

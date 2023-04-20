@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import {showError} from '../utils/messages';
+import {showError, showInfo} from '../utils/messages';
 import {useNavigation} from '@react-navigation/native';
 import {axiosInstance} from '../config/axios';
 
@@ -33,10 +33,13 @@ const MailPassword = () => {
       .then(response => {
         console.log(response.data);
         navigation.navigate('CodePassword', {email});
+        showInfo(
+          "Un code de confirmation vient d'être envoyé sur votre boite mail",
+        );
       })
       .catch(error => {
-        console.log(error);
-        //console.log(error.response.status);
+        showError("Aucun compte n'est lié à cette adresse mail");
+        console.log(error.response.data);
       })
       .finally(() => {
         setSendEmailLoading(false);

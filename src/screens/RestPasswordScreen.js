@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import {showError} from '../utils/messages';
+import {showError, showInfo, showSuccess} from '../utils/messages';
 import {axiosInstance} from '../config/axios';
 import {useNavigation} from '@react-navigation/native';
 
@@ -38,6 +38,7 @@ const RestPassword = ({route}) => {
             .then(response => {
               console.log(response.data);
               navigation.navigate('Login');
+              showSuccess('Votre mot de passe a été modifié avec succès.');
             })
             .catch(error => {
               console.log(error);

@@ -54,7 +54,8 @@ const CodePassword = ({route}) => {
           });
         })
         .catch(error => {
-          console.log(error);
+          showError("Ce n'est pas le bon code");
+          console.log(error.response.data);
         })
         .finally(() => {
           setSendEmailCodeLoader(false);

@@ -6,7 +6,8 @@ import {useDispatch} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
-import instance from '../config/axios';
+import {axiosPrivate} from '../config/axios';
+import {showSuccess} from '../utils/messages';
 
 const ProfileDoctor = () => {
   const iconsize = 25;
@@ -34,26 +35,28 @@ const ProfileDoctor = () => {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        setSelectedImage(response.assets[0].uri);
         const name = response.assets[0].fileName;
         const uri = response.assets[0].uri;
         const type = response.assets[0].type;
-
+        console.log(uri);
         const formData = new FormData();
         formData.append('picture', {
           name,
           uri,
           type,
         });
-        instance
-          .patch('/medecin/6429c1abce76ef5ff4073836/picture', formData, {
+
+        axiosPrivate
+          .patch('/medecin/picture', formData, {
             headers: {
               Accept: 'application/json',
               'Content-Type': 'multipart/form-data',
             },
           })
           .then(response => {
-            console.log(response.data);
+            console.log(response.data.user.profilePicture);
+            setSelectedImage(uri); //TODO: Display picture
+            showSuccess('Votre photo a été upload avec succès.');
           })
           .catch(error => {
             console.log(error.message);

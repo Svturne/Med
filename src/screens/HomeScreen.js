@@ -12,7 +12,6 @@ import {useNavigation} from '@react-navigation/native';
 import {Icon, SearchBar} from '@rneui/themed';
 import PatientsCard from '../components/PatientsCard';
 import fonts from '../../assets/fonts/fonts';
-import {axiosPrivate} from '../config/axios';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -71,16 +70,6 @@ const HomeScreen = () => {
     },
   ];
 
-  const getMed = () => {
-    axiosPrivate
-      .get('/medecin')
-      .then(respone => {
-        console.log(respone);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center', margin: 25}}>
@@ -93,7 +82,7 @@ const HomeScreen = () => {
           }}>
           Bonjour, Mehdi
         </Text>
-        <TouchableOpacity onPress={getMed}>
+        <TouchableOpacity onPress={handleIMGPress}>
           <Image
             source={{
               uri: 'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg',
