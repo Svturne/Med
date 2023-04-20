@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Icon, SearchBar} from '@rneui/themed';
 import PatientsCard from '../components/PatientsCard';
 import fonts from '../../assets/fonts/fonts';
+import {axiosPrivate} from '../config/axios';
 
 const HomeScreen = () => {
   const navigation = useNavigation();

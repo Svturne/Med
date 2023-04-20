@@ -19,6 +19,7 @@ import {useDispatch} from 'react-redux';
 import ActionsName from '../redux/reducers/ActionsName';
 import {axiosInstance} from '../config/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncKeys from '../constant/AsyncKeys';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -50,8 +51,14 @@ const Login = () => {
       .then(response => {
         console.log(response.data);
         try {
-          AsyncStorage.setItem('access_token', response.data.accessToken);
-          AsyncStorage.setItem('refresh_token', response.data.refreshToken);
+          AsyncStorage.setItem(
+            AsyncKeys.accessToken,
+            response.data.accessToken,
+          );
+          AsyncStorage.setItem(
+            AsyncKeys.refreshToken,
+            response.data.refreshToken,
+          );
         } catch (e) {
           console.log(e);
         }
