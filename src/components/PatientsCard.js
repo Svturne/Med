@@ -6,6 +6,7 @@ import fonts from '../../assets/fonts/fonts';
 import Dialog from 'react-native-dialog';
 import colors from '../../assets/colors';
 import {showInfo} from '../utils/messages';
+import {axiosPrivate} from '../config/axios';
 
 const PatientsCard = props => {
   const iconeSize = 28;
@@ -16,7 +17,15 @@ const PatientsCard = props => {
     setVisible(true);
   };
   const handleDelete = () => {
-    //TODO: delete patient
+    console.log();
+    axiosPrivate
+      .delete(`patient/${props.data._id}`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     setVisible(false);
   };
 

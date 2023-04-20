@@ -35,7 +35,7 @@ const HomeScreen = () => {
       setTimeout(() => {
         console.log(response.data);
         setPatients(response.data);
-      }, 10000);
+      }, 5000);
     })
     .catch(e => {
       console.log(e);
