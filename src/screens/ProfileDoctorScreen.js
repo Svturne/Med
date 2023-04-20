@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
-import instance from '../config/instance';
+import instance from '../config/axios';
 
 const ProfileDoctor = () => {
   const iconsize = 25;

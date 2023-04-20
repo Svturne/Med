@@ -5,7 +5,7 @@ import fonts from '../../assets/fonts/fonts';
 import CustomInput from '../components/CustomInput';
 import CustomDropList from '../components/CustomDropList';
 import CustomButton from '../components/CustomButton';
-import instance from '../config/instance';
+import instance from '../config/axios';
 
 const CreatePatient = () => {
   const [selected, setSelected] = useState('');

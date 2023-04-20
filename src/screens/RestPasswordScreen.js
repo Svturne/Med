@@ -3,9 +3,11 @@ import React, {useCallback, useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {showError} from '../utils/messages';
-import instance from '../config/instance';
+import {axiosInstance} from '../config/axios';
+import {useNavigation} from '@react-navigation/native';
 
 const RestPassword = ({route}) => {
+  const navigation = useNavigation();
   const [password, setPassword] = useState('');
   const [passwordvalid, setPasswordValid] = useState('');
   const [sendMdpLoader, setSendMdpLoader] = useState(false);
@@ -27,7 +29,7 @@ const RestPassword = ({route}) => {
           showError('Mauvais format de mot de passe');
         } else {
           setSendMdpLoader(true);
-          instance
+          axiosInstance
             .post('/medecin/resetpassword', {
               email,
               code,
@@ -35,7 +37,7 @@ const RestPassword = ({route}) => {
             })
             .then(response => {
               console.log(response.data);
-              //TODO:go to home page
+              navigation.navigate('Login');
             })
             .catch(error => {
               console.log(error);

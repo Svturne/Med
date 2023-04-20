@@ -4,7 +4,7 @@ import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {showError} from '../utils/messages';
 import {useNavigation} from '@react-navigation/native';
-import instance from '../config/instance';
+import {axiosInstance} from '../config/axios';
 
 const MailPassword = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +26,7 @@ const MailPassword = () => {
 
     setSendEmailLoading(true);
 
-    instance
+    axiosInstance
       .post('/medecin/sendcode', {
         email,
       })

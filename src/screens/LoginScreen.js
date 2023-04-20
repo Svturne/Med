@@ -17,7 +17,7 @@ import {Icon} from '@rneui/themed';
 import {showError} from '../utils/messages';
 import {useDispatch} from 'react-redux';
 import ActionsName from '../redux/reducers/ActionsName';
-import instance from '../config/instance';
+import {axiosInstance} from '../config/axios';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -41,7 +41,7 @@ const Login = () => {
 
     setsignInLoading(true);
 
-    instance
+    axiosInstance
       .post('/medecin/login', {
         email,
         password,

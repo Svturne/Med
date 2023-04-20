@@ -10,8 +10,8 @@ import CustomButton from '../components/CustomButton';
 import fonts from '../../assets/fonts/fonts';
 import {useNavigation} from '@react-navigation/native';
 import {showError, showInfo} from '../utils/messages';
-import axios from 'axios';
-import instance from '../config/instance';
+
+import {axiosInstance} from '../config/axios';
 
 const CodePassword = ({route}) => {
   const navigation = useNavigation();
@@ -41,7 +41,7 @@ const CodePassword = ({route}) => {
       console.log(code);
 
       setSendEmailCodeLoader(true);
-      instance
+      axiosInstance
         .post('/medecin/verifycode', {
           email,
           code,
@@ -63,7 +63,7 @@ const CodePassword = ({route}) => {
   }, [firstInput, secondInput, thirdInput, fourthInput]);
 
   const resendEmail = () => {
-    instance
+    axiosInstance
       .post('/medecin/sendcode', {
         email,
       })
