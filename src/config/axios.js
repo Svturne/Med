@@ -16,4 +16,40 @@ axiosPrivate.interceptors.request.use(async function (config) {
   return config;
 });
 
-export {axiosInstance, axiosPrivate};
+axiosPrivate.interceptors.response.use(
+  async response => {
+    return response;
+  },
+  error => {
+    if (error.response.status === 401 || error.response.status === 403) {
+      console.log('error in response');
+      refresh();
+    }
+    return error;
+  },
+);
+
+const axiosRefresh = axios.create({
+  baseURL: 'http://10.0.2.2:3000/api',
+});
+
+axiosRefresh.interceptors.request.use(async function (config) {
+  const refreshToken = await AsyncStorage.getItem(AsyncKeys.refreshToken);
+  config.headers['Authorization'] = `Bearer ${refreshToken}`;
+  return config;
+});
+
+const refresh = () => {
+  console.log('Refreshing');
+  axiosRefresh
+    .post('/medecin/refreshtoken')
+    .then(response => {
+      console.log(response.data);
+      AsyncStorage.setItem(AsyncKeys.accessToken, response.data.accessToken);
+      AsyncStorage.setItem(AsyncKeys.refreshToken, response.data.refreshToken);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+export {axiosInstance, axiosPrivate, axiosRefresh, refresh};
