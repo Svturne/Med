@@ -17,6 +17,7 @@ import {Icon} from '@rneui/themed';
 import {showError} from '../utils/messages';
 import {useDispatch} from 'react-redux';
 import ActionsName from '../redux/reducers/ActionsName';
+import instance from '../config/instance';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -37,7 +38,24 @@ const Login = () => {
       showError("Mauvais format d'e-mail");
       return;
     }
-    handleLGPress();
+
+    setsignInLoading(true);
+
+    instance
+      .post('/medecin/login', {
+        email,
+        password,
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      .finally(() => {
+        setsignInLoading(false);
+        handleLGPress();
+      });
   }, [email, password]);
 
   const handleQRPress = () => {
@@ -82,7 +100,12 @@ const Login = () => {
               secure={true}
             />
             <TouchableOpacity onPress={resetPassword}>
-              <Text style={{alignSelf: 'flex-end', fontSize: 12}}>
+              <Text
+                style={{
+                  alignSelf: 'flex-end',
+                  fontSize: 12,
+                  color: colors.white,
+                }}>
                 Mot de passe oublié?
               </Text>
             </TouchableOpacity>

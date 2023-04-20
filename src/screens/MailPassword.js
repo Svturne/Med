@@ -4,6 +4,7 @@ import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {showError} from '../utils/messages';
 import {useNavigation} from '@react-navigation/native';
+import instance from '../config/instance';
 
 const MailPassword = () => {
   const [email, setEmail] = useState('');
@@ -22,8 +23,24 @@ const MailPassword = () => {
       showError("Mauvais format d'e-mail");
       return;
     }
-    console.log('Sending email...');
-    navigation.navigate('CodePassword');
+
+    setSendEmailLoading(true);
+
+    instance
+      .post('/medecin/sendcode', {
+        email,
+      })
+      .then(response => {
+        console.log(response.data);
+        navigation.navigate('CodePassword', {email});
+      })
+      .catch(error => {
+        console.log(error);
+        //console.log(error.response.status);
+      })
+      .finally(() => {
+        setSendEmailLoading(false);
+      });
   }, [email]);
 
   return (

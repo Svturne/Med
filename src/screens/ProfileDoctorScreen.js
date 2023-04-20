@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
-import axios from 'axios';
+import instance from '../config/instance';
 
 const ProfileDoctor = () => {
   const iconsize = 25;
@@ -45,17 +45,13 @@ const ProfileDoctor = () => {
           uri,
           type,
         });
-        axios
-          .patch(
-            'http://10.0.2.2:3000/api/medecin/6429c1abce76ef5ff4073836/picture',
-            formData,
-            {
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
-              },
+        instance
+          .patch('/medecin/6429c1abce76ef5ff4073836/picture', formData, {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'multipart/form-data',
             },
-          )
+          })
           .then(response => {
             console.log(response.data);
           })

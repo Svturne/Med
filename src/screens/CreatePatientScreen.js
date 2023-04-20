@@ -5,6 +5,7 @@ import fonts from '../../assets/fonts/fonts';
 import CustomInput from '../components/CustomInput';
 import CustomDropList from '../components/CustomDropList';
 import CustomButton from '../components/CustomButton';
+import instance from '../config/instance';
 
 const CreatePatient = () => {
   const [selected, setSelected] = useState('');
@@ -19,7 +20,25 @@ const CreatePatient = () => {
   ];
 
   const create = useCallback(() => {
-    //TODO: send create patient request
+    setCreatePatientLoader(true);
+    instance
+      .post('/patient/', {
+        //TODO: Add token
+        fullname,
+        email,
+        age,
+        selected,
+      })
+      .then(response => {
+        console.log(response.data);
+        //TODO: return to home
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      .finally(() => {
+        setCreatePatientLoader(false);
+      });
   }, [fullname, email, age, selected]);
 
   return (

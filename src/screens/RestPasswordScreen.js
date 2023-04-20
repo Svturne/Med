@@ -3,11 +3,15 @@ import React, {useCallback, useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {showError} from '../utils/messages';
+import instance from '../config/instance';
 
-const RestPassword = () => {
+const RestPassword = ({route}) => {
   const [password, setPassword] = useState('');
   const [passwordvalid, setPasswordValid] = useState('');
   const [sendMdpLoader, setSendMdpLoader] = useState(false);
+
+  const email = route.params.email;
+  const code = route.params.code;
 
   const sendCode = useCallback(() => {
     if (password === '' || passwordvalid === '') {
@@ -22,7 +26,23 @@ const RestPassword = () => {
         if (regularMdp.test(password) == false) {
           showError('Mauvais format de mot de passe');
         } else {
-          console.log(password, passwordvalid);
+          setSendMdpLoader(true);
+          instance
+            .post('/medecin/resetpassword', {
+              email,
+              code,
+              password,
+            })
+            .then(response => {
+              console.log(response.data);
+              //TODO:go to home page
+            })
+            .catch(error => {
+              console.log(error);
+            })
+            .finally(() => {
+              setSendMdpLoader(false);
+            });
         }
       }
     }

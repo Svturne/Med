@@ -8,11 +8,12 @@ import {
 import React, {useCallback, useRef, useState} from 'react';
 import CustomButton from '../components/CustomButton';
 import fonts from '../../assets/fonts/fonts';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
-import {showError} from '../utils/messages';
+import {showError, showInfo} from '../utils/messages';
+import axios from 'axios';
+import instance from '../config/instance';
 
-const CodePassword = () => {
+const CodePassword = ({route}) => {
   const navigation = useNavigation();
   const [selectFocus, setSelectFocus] = useState(0);
   const [firstInput, setFirstInput] = useState('');
@@ -25,6 +26,8 @@ const CodePassword = () => {
   const textInputRef3 = useRef(null);
   const textInputRef4 = useRef(null);
 
+  const email = route.params.email;
+
   const sendCode = useCallback(() => {
     if (
       firstInput === '' ||
@@ -34,10 +37,45 @@ const CodePassword = () => {
     ) {
       showError('Remplissez tous les champs requis');
     } else {
-      console.log(firstInput + secondInput + thirdInput + fourthInput);
-      navigation.navigate('RestPassword');
+      const code = firstInput + secondInput + thirdInput + fourthInput;
+      console.log(code);
+
+      setSendEmailCodeLoader(true);
+      instance
+        .post('/medecin/verifycode', {
+          email,
+          code,
+        })
+        .then(response => {
+          console.log(response.data);
+          navigation.navigate('RestPassword', {
+            email,
+            code,
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          setSendEmailCodeLoader(false);
+        });
     }
   }, [firstInput, secondInput, thirdInput, fourthInput]);
+
+  const resendEmail = () => {
+    instance
+      .post('/medecin/sendcode', {
+        email,
+      })
+      .then(response => {
+        console.log(response.data);
+        showInfo("Un nouveau Email vient d'être envoyé.");
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      .finally(() => {});
+  };
 
   return (
     <View style={styles.container}>
@@ -134,7 +172,7 @@ const CodePassword = () => {
         isLoading={sendEmailCodeLoader}
         func={sendCode}
       />
-      <TouchableOpacity>
+      <TouchableOpacity onPress={resendEmail}>
         <Text style={styles.desc}>Renvoyer le code</Text>
       </TouchableOpacity>
     </View>
@@ -177,5 +215,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     textAlign: 'right',
     fontSize: 15,
+    color: colors.white,
   },
 });
