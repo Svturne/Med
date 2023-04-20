@@ -45,7 +45,7 @@ function Navigation() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    AsyncStorage.getItem(AsyncKeys.isLogin)
+    AsyncStorage.getItem('access_token')
       .then(value => {
         if (value) {
           dispatch({type: ActionsName.connecte});

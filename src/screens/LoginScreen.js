@@ -18,6 +18,7 @@ import {showError} from '../utils/messages';
 import {useDispatch} from 'react-redux';
 import ActionsName from '../redux/reducers/ActionsName';
 import {axiosInstance} from '../config/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -48,22 +49,26 @@ const Login = () => {
       })
       .then(response => {
         console.log(response.data);
+        try {
+          AsyncStorage.setItem('access_token', response.data.accessToken);
+          AsyncStorage.setItem('refresh_token', response.data.refreshToken);
+        } catch (e) {
+          console.log(e);
+        }
+        dispatch({type: ActionsName.connecte});
       })
       .catch(error => {
+        showError(error.response.data.message);
+        console.log('erreur in login');
         console.log(error);
       })
       .finally(() => {
         setsignInLoading(false);
-        handleLGPress();
       });
   }, [email, password]);
 
   const handleQRPress = () => {
     navigation.navigate('QrScaner');
-  };
-
-  const handleLGPress = () => {
-    dispatch({type: ActionsName.connecte});
   };
 
   const resetPassword = () => {
