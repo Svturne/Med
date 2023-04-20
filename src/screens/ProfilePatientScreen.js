@@ -36,7 +36,7 @@ const ProfilePatient = ({route}) => {
     const [textColor, setTextColor] = useState('white');
 
     useEffect(() => {
-      if (sexe === 'woman') {
+      if (sexe === 'Féminin') {
         setTextColor('red');
       } else {
         setTextColor('white');
@@ -50,7 +50,7 @@ const ProfilePatient = ({route}) => {
     const [bgColor, setBgColor] = useState('bleu');
 
     useEffect(() => {
-      if (sexe === 'woman') {
+      if (sexe === 'Féminin') {
         setBgColor(colors.pink);
       } else {
         setBgColor(colors.blue);
@@ -185,17 +185,14 @@ const ProfilePatient = ({route}) => {
         <Text style={styles.titleText}>Détails du patient</Text>
         <View>
           <Image
-            source={data.sexe == 'woman' ? woman_avatar : man_avatar}
+            source={data.sexe == 'Féminin' ? woman_avatar : man_avatar}
             style={styles.image}
           />
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.info}>
             Nom:{' '}
-            <Text style={[styles.name, {color: textColor}]}>
-              {' '}
-              {data.first_name} {data.last_name}
-            </Text>
+            <Text style={[styles.name, {color: textColor}]}> {data.name}</Text>
           </Text>
           <Text style={styles.info}>
             Age:{' '}

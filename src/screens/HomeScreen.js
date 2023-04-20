@@ -12,10 +12,12 @@ import {useNavigation} from '@react-navigation/native';
 import {Icon, SearchBar} from '@rneui/themed';
 import PatientsCard from '../components/PatientsCard';
 import fonts from '../../assets/fonts/fonts';
+import {axiosPrivate} from '../config/axios';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
+  const [patients, setPatients] = useState([]);
 
   const iconDimension = 50;
 
@@ -27,48 +29,17 @@ const HomeScreen = () => {
     navigation.navigate('CreatePatient');
   };
 
-  const patients = [
-    {
-      id: 1,
-      first_name: 'John',
-      last_name: 'Doe',
-      email: 'jhon@gmail.com',
-      age: 12,
-      sexe: 'man',
-    },
-    {
-      id: 2,
-      first_name: 'Samira',
-      last_name: 'Abdelkader',
-      email: 'samira@gmail.com',
-      age: 23,
-      sexe: 'woman',
-    },
-    {
-      id: 3,
-      first_name: 'Riad',
-      last_name: 'Benkesra',
-      email: 'riad@gmail.com',
-      age: 32,
-      sexe: 'man',
-    },
-    {
-      id: 4,
-      first_name: 'Karima',
-      last_name: 'Ghali',
-      email: 'Samira@gmail.com',
-      age: 45,
-      sexe: 'woman',
-    },
-    {
-      id: 6,
-      first_name: 'Rafik',
-      last_name: 'Zali',
-      email: 'rafik@gmail.com',
-      age: 19,
-      sexe: 'man',
-    },
-  ];
+  axiosPrivate
+    .get('/patient/643df4de712b093516b2829e')
+    .then(response => {
+      setTimeout(() => {
+        console.log(response.data);
+        setPatients(response.data);
+      }, 10000);
+    })
+    .catch(e => {
+      console.log(e);
+    });
 
   return (
     <View style={styles.container}>
@@ -112,7 +83,7 @@ const HomeScreen = () => {
       />
       <FlatList
         contentContainerStyle={{paddingBottom: 60}}
-        data={patients.filter(patients => patients.first_name.includes(search))}
+        data={patients.filter(patients => patients.name.includes(search))}
         renderItem={item => {
           return <PatientsCard data={item.item} />;
         }}

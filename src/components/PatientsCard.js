@@ -39,18 +39,16 @@ const PatientsCard = props => {
         styles.card,
         {
           backgroundColor:
-            props.data.sexe === 'man'
+            props.data.sexe === 'Masculin'
               ? '#85CDFD'
-              : props.data.sexe === 'woman'
+              : props.data.sexe === 'Féminin'
               ? 'pink'
               : 'white',
         },
       ]}
       key={props.data.id}>
       <View style={{flex: 1}}>
-        <Text style={styles.cardTitle}>
-          {props.data.first_name} {props.data.last_name}
-        </Text>
+        <Text style={styles.cardTitle}>{props.data.name}</Text>
         <Text style={styles.cardText}>{props.data.email}</Text>
         <Text style={styles.cardText}>{props.data.age} ans</Text>
         <Text style={styles.cardText}>{props.data.sexe}</Text>

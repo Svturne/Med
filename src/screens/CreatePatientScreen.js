@@ -5,14 +5,16 @@ import fonts from '../../assets/fonts/fonts';
 import CustomInput from '../components/CustomInput';
 import CustomDropList from '../components/CustomDropList';
 import CustomButton from '../components/CustomButton';
-import instance from '../config/axios';
+import instance, {axiosPrivate} from '../config/axios';
+import {useNavigation} from '@react-navigation/native';
 
 const CreatePatient = () => {
-  const [selected, setSelected] = useState('');
+  const [sexe, setsexe] = useState('');
   const [createPatientLoader, setCreatePatientLoader] = useState(false);
-  const [fullname, setFullname] = useState('');
+  const [name, setname] = useState('');
   const [email, setEmail] = useState('');
   const [age, setAge] = useState(0);
+  const navigation = useNavigation();
 
   const data = [
     {key: '1', value: 'Masculin'},
@@ -21,17 +23,16 @@ const CreatePatient = () => {
 
   const create = useCallback(() => {
     setCreatePatientLoader(true);
-    instance
+    axiosPrivate
       .post('/patient/', {
-        //TODO: Add token
-        fullname,
+        name,
         email,
         age,
-        selected,
+        sexe,
       })
       .then(response => {
         console.log(response.data);
-        //TODO: return to home
+        navigation.navigate('HomeScreen');
       })
       .catch(error => {
         console.log(error);
@@ -39,15 +40,15 @@ const CreatePatient = () => {
       .finally(() => {
         setCreatePatientLoader(false);
       });
-  }, [fullname, email, age, selected]);
+  }, [name, email, age, sexe]);
 
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.titleText}>Ajouter un nouveau patient</Text>
       <CustomInput
         nameOfInpute="Nom"
-        value={fullname}
-        onChangeText={setFullname}
+        value={name}
+        onChangeText={setname}
         secure={false}
       />
       <CustomInput
@@ -57,13 +58,13 @@ const CreatePatient = () => {
         secure={false}
         keyboardType="email-address"
       />
-      <CustomInput nameOfInpute="Age" keyboardType="numeric" />
-
-      <CustomDropList
-        title="Sexe"
-        data={data}
-        onSelect={val => setSelected(val)}
+      <CustomInput
+        nameOfInpute="Age"
+        keyboardType="numeric"
+        onChangeText={setAge}
       />
+
+      <CustomDropList title="Sexe" data={data} onSelect={val => setsexe(val)} />
       <CustomButton
         text="Enregistrer"
         color="lightgreen"
