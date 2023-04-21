@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
@@ -15,22 +8,47 @@ import MaladiesList from '../components/MaladiesList';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Icon} from '@rneui/themed';
 import Dialog from 'react-native-dialog';
+import {axiosPrivate} from '../config/axios';
 
 const ProfilePatient = ({route}) => {
   const [visible, setVisible] = useState(false);
+  const [maladies, setMaladies] = useState([]);
+  const [maladieName, setMaladieName] = useState('');
 
   const showDialog = () => {
     setVisible(true);
   };
 
   const handleValidate = () => {
-    //TODO: Add new maladie in BDD
+    axiosPrivate
+      .post('/maladie', {
+        patientId: route.params.data._id,
+        maladie: maladieName,
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
     setVisible(false);
   };
 
   const handleCancel = () => {
     setVisible(false);
   };
+
+  axiosPrivate
+    .get(`/patient/allmaladie/${route.params.data._id}`) //TODO: Check Spam
+    .then(response => {
+      setTimeout(() => {
+        //console.log(response.data);
+        setMaladies(response.data);
+      }, 5000);
+    })
+    .catch(e => {
+      console.log(e);
+    });
 
   function useTextColor(sexe) {
     const [textColor, setTextColor] = useState('white');
@@ -64,114 +82,6 @@ const ProfilePatient = ({route}) => {
   const data = route.params.data;
   const textColor = useTextColor(data.sexe);
   const bgColor = useBackGroundColor(data.sexe);
-
-  const maladies = [
-    {
-      id: 1,
-      title: 'Migraine',
-      date: '12/02/2015',
-    },
-    {
-      id: 2,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-    {
-      id: 3,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 4,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 5,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-    {
-      id: 545,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-    {
-      id: 21212,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 54545,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 12,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-    {
-      id: 212512,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 545245,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 165465462,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-    {
-      id: 216565461212,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 54546526545,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 165465145462,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-    {
-      id: 2126552412,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 6565246,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 45565,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-    {
-      id: 21265525412,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 65655246,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 45556,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-  ];
 
   return (
     <View>
@@ -216,7 +126,7 @@ const ProfilePatient = ({route}) => {
         <View
           style={{flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 50}}>
           {maladies.map(item => (
-            <MaladiesList key={item.id} data={item} />
+            <MaladiesList key={item._id} data={item} />
           ))}
         </View>
       </ScrollView>
@@ -238,7 +148,10 @@ const ProfilePatient = ({route}) => {
 
       <Dialog.Container visible={visible}>
         <Dialog.Title>Ajout d'une nouvelle maladie</Dialog.Title>
-        <Dialog.Input label="Nom de la maladie:" />
+        <Dialog.Input
+          onChangeText={setMaladieName}
+          label="Nom de la maladie:"
+        />
 
         <Dialog.Button label="Annuler" color={'red'} onPress={handleCancel} />
         <Dialog.Button label="Valider" bold={true} onPress={handleValidate} />

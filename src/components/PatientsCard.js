@@ -52,7 +52,7 @@ const PatientsCard = props => {
   const handleEdit = () => {
     axiosPrivate
       .put(`/patient/${props.data._id}`, {
-        name: name,
+        name: name ? name : props.data.name,
         email: email,
         age: age,
         sexe: sexe,

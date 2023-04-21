@@ -1,7 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Icon} from '@rneui/themed';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
 
@@ -12,8 +11,8 @@ const MaladiesList = props => {
   };
   return (
     <TouchableOpacity onPress={showVisites} style={styles.card}>
-      <Text style={styles.cardTitle}>{props.data.title}</Text>
-      <Text style={styles.date}>{props.data.date}</Text>
+      <Text style={styles.cardTitle}>{props.data.maladie}</Text>
+      <Text style={styles.date}>{props.data.createdAt}</Text>
     </TouchableOpacity>
   );
 };

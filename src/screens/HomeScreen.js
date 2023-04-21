@@ -30,7 +30,7 @@ const HomeScreen = () => {
   };
 
   axiosPrivate
-    .get('/patient/643df4de712b093516b2829e')
+    .get('/patient/643df4de712b093516b2829e') //Todo: add real id
     .then(response => {
       setTimeout(() => {
         //console.log(response.data);

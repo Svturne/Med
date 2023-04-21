@@ -8,13 +8,14 @@ const MaladiesList = props => {
   const showVisitesDetail = () => {
     navigation.navigate('VisitesDetail', {data: props.data});
   };
+  //TODO: change date format
   return (
     <TouchableOpacity onPress={showVisitesDetail} style={styles.card}>
-      <Text style={styles.cardTitle}>{props.data.title}</Text>
+      <Text style={styles.cardTitle}>{props.data.remarque}</Text>
       <Text numberOfLines={1} style={styles.desc}>
-        {props.data.remarque}{' '}
+        {props.data.desc}{' '}
       </Text>
-      <Text style={styles.date}>{props.data.date}</Text>
+      <Text style={styles.date}>{props.data.createdAt}</Text>
     </TouchableOpacity>
   );
 };

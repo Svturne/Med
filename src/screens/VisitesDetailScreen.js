@@ -28,8 +28,8 @@ const VisitesDetail = ({route}) => {
     <View style={styles.container}>
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>{data.title}</Text>
-          <Text style={styles.remarque}>{data.remarque}</Text>
+          <Text style={styles.title}>{data.remarque}</Text>
+          <Text style={styles.remarque}>{data.desc}</Text>
           {photos.map((photo, index) => (
             <View key={index} style={styles.photoContainer}>
               <Image source={{uri: photo.uri}} style={styles.photo} />

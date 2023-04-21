@@ -59,7 +59,9 @@ const Login = () => {
             AsyncKeys.refreshToken,
             response.data.refreshToken,
           );
-          dispatch({type: ActionsName.connecte});
+          dispatch({
+            type: ActionsName.connecte,
+          });
         } catch (e) {
           console.log(e);
         }

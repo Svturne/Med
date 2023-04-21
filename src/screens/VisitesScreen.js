@@ -6,68 +6,72 @@ import VisitesList from '../components/VisitesList';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Icon} from '@rneui/themed';
 import Dialog from 'react-native-dialog';
+import {axiosPrivate} from '../config/axios';
+import {showError, showSuccess} from '../utils/messages';
 
 const Visites = ({route}) => {
   const data = route.params.data;
+  const iconDimension = 50;
+
   const [visible, setVisible] = useState(false);
+  const [visitesDetails, setVisitesDetails] = useState([]);
+  const [title, setTitle] = useState('');
+  const [remarque, setRemarque] = useState('');
+
+  axiosPrivate
+    .get(`/visite/${data._id}`)
+    .then(response => {
+      setTimeout(() => {
+        setVisitesDetails(response.data);
+        //console.log(response.data);
+      }, 5000); // TODO: Check spam
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
   const showDialog = () => {
     setVisible(true);
   };
 
   const handleValidate = () => {
-    //TODO: Add new visite in BDD
-    setVisible(false);
+    if (!title || !remarque) {
+      console.log(data);
+      return showError('Information manquante');
+    }
+    axiosPrivate
+      .post('/visite', {
+        maladieId: data._id,
+        remarque: title,
+        desc: remarque,
+      })
+      .then(response => {
+        console.log(response);
+        setVisible(false);
+        showSuccess('Visite ajoutée avec succès');
+        setTitle('');
+        setRemarque('');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const handleCancel = () => {
     setVisible(false);
   };
 
-  const iconDimension = 50;
-  const visitesDetails = [
-    {
-      id: 1,
-      title: '1er visite',
-      remarque:
-        "Dans les textes non linéaires, généralement tabulaires, il est difficile de parler de paragraphes : la page est composée de tables ou de tableaux, de graphes et d'histogrammes, d'images (de photographies, de dessins, ou de schémas, etc.), où les informations textuelles figurent dans des pavés de type légende, commentaire, note, etc., chaque segment de texte étant plus ou moins indépendant des autres, et rattaché à un élément non textuel. Il vaut mieux dans ce cas parler de pavé(s), et envisager la composition du document sous l'angle de la topologie (de la mise en page(s))",
-      date: '12/02/2015',
-    },
-    {
-      id: 2,
-      title: '2eme visite',
-      remarque: 'amelioration',
-      date: '22/05/2015',
-    },
-    {
-      id: 3,
-      title: '3eme visite',
-      remarque: 'amelioration',
-      date: '26/12/2015',
-    },
-    {
-      id: 4,
-      title: '4eme visite',
-      remarque: 'amelioration',
-      date: '26/12/2015',
-    },
-    {
-      id: 5,
-      title: '5eme visite',
-      remarque: 'amelioration',
-      date: '22/05/2015',
-    },
-  ];
+  //TODO: Change date format
   return (
     <View style={styles.container}>
       <View style={styles.head}>
-        <Text style={styles.textTitle}>Maladie: {data.title}</Text>
-        <Text style={styles.textTitle}>Date de création: {data.date}</Text>
+        <Text style={styles.textTitle}>Maladie: {data.maladie}</Text>
+        <Text style={styles.textTitle}>Date de création: {data.createdAt}</Text>
       </View>
       <Text style={styles.Subtitle}>Visites: </Text>
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
         {visitesDetails.map(item => (
-          <VisitesList key={item.id} data={item} />
+          <VisitesList key={item._id} data={item} />
         ))}
       </ScrollView>
       <TouchableOpacity
@@ -88,8 +92,8 @@ const Visites = ({route}) => {
 
       <Dialog.Container visible={visible}>
         <Dialog.Title>Ajout d'une nouvelle visite</Dialog.Title>
-        <Dialog.Input label="Titre:" />
-        <Dialog.Input label="Remarque:" />
+        <Dialog.Input onChangeText={setTitle} label="Titre:" />
+        <Dialog.Input onChangeText={setRemarque} label="Remarque:" />
         <Dialog.Button label="Annuler" color={'red'} onPress={handleCancel} />
         <Dialog.Button label="Valider" bold={true} onPress={handleValidate} />
       </Dialog.Container>
