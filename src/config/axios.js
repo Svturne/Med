@@ -45,11 +45,9 @@ axiosRefresh.interceptors.request.use(async function (config) {
 });
 
 const refresh = () => {
-  console.log('Refreshing');
   axiosRefresh
     .post('/medecin/refreshtoken')
     .then(response => {
-      console.log(response.data);
       AsyncStorage.setItem(AsyncKeys.accessToken, response.data.accessToken);
       AsyncStorage.setItem(AsyncKeys.refreshToken, response.data.refreshToken);
     })

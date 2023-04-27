@@ -38,17 +38,16 @@ const ProfilePatient = ({route}) => {
     setVisible(false);
   };
 
-  axiosPrivate
-    .get(`/patient/allmaladie/${route.params.data._id}`) //TODO: Check Spam
-    .then(response => {
-      setTimeout(() => {
-        //console.log(response.data);
+  useEffect(() => {
+    axiosPrivate
+      .get(`/patient/allmaladie/${route.params.data._id}`)
+      .then(response => {
         setMaladies(response.data);
-      }, 5000);
-    })
-    .catch(e => {
-      console.log(e);
-    });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, []);
 
   function useTextColor(sexe) {
     const [textColor, setTextColor] = useState('white');

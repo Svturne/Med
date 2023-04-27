@@ -31,9 +31,8 @@ const HomeScreen = () => {
 
   useEffect(() => {
     axiosPrivate
-      .get('/patient/643df4de712b093516b2829e') //TODO: add real id
+      .get('/patient/643df4de712b093516b2829e')
       .then(response => {
-        console.log('fetch');
         setPatients(response.data);
       })
       .catch(e => {

@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
 import VisitesList from '../components/VisitesList';
@@ -18,17 +18,17 @@ const Visites = ({route}) => {
   const [title, setTitle] = useState('');
   const [remarque, setRemarque] = useState('');
 
-  axiosPrivate
-    .get(`/visite/${data._id}`)
-    .then(response => {
-      setTimeout(() => {
+  useEffect(() => {
+    axiosPrivate
+      .get(`/visite/${data._id}`)
+      .then(response => {
         setVisitesDetails(response.data);
-        //console.log(response.data);
-      }, 5000); // TODO: Check spam
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      })
+      .catch(err => {
+        console.log('erreur in get visite from medecin');
+        console.log(err);
+      });
+  }, []);
 
   const showDialog = () => {
     setVisible(true);
@@ -46,7 +46,6 @@ const Visites = ({route}) => {
         desc: remarque,
       })
       .then(response => {
-        console.log(response);
         setVisible(false);
         showSuccess('Visite ajoutée avec succès');
         setTitle('');
@@ -70,9 +69,9 @@ const Visites = ({route}) => {
       </View>
       <Text style={styles.Subtitle}>Visites: </Text>
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
-        {visitesDetails.map(item => (
-          <VisitesList key={item._id} data={item} />
-        ))}
+        {visitesDetails.map(item => {
+          return <VisitesList key={item._id} data={item} />;
+        })}
       </ScrollView>
       <TouchableOpacity
         style={{
