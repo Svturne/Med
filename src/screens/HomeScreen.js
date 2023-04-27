@@ -13,14 +13,19 @@ import {Icon, SearchBar} from '@rneui/themed';
 import PatientsCard from '../components/PatientsCard';
 import fonts from '../../assets/fonts/fonts';
 import {axiosPrivate} from '../config/axios';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [search, setSearch] = useState('');
   const [patients, setPatients] = useState([]);
 
   const name = useSelector(state => state.MedecinReducer.name);
+  const profilePicture = useSelector(
+    state => state.MedecinReducer.profilePicture,
+  );
 
   const iconDimension = 50;
 
@@ -34,9 +39,26 @@ const HomeScreen = () => {
 
   useEffect(() => {
     axiosPrivate
-      .get('/patient/643df4de712b093516b2829e')
+      .get('/medecin')
       .then(response => {
-        setPatients(response.data);
+        dispatch({
+          type: ActionsName.setMedecinData,
+          payload: {
+            id: response.data._id,
+            name: response.data.name,
+            email: response.data.email,
+            profilePicture: response.data.profilePicture,
+          },
+        });
+
+        axiosPrivate
+          .get('/patient/' + response.data._id)
+          .then(response => {
+            setPatients(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       })
       .catch(e => {
         console.log(e);
@@ -56,12 +78,14 @@ const HomeScreen = () => {
           Bonjour, {name}
         </Text>
         <TouchableOpacity onPress={handleIMGPress}>
-          <Image
-            source={{
-              uri: 'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg',
-            }}
-            style={{width: 60, height: 70, borderRadius: 20}}
-          />
+          {profilePicture && (
+            <Image
+              source={{
+                uri: profilePicture,
+              }}
+              style={{width: 60, height: 70, borderRadius: 20}}
+            />
+          )}
         </TouchableOpacity>
       </View>
 

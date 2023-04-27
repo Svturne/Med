@@ -9,7 +9,7 @@ import {
 import React, {useState} from 'react';
 import colors from '../../assets/colors';
 import ActionsName from '../redux/reducers/ActionsName';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -29,6 +29,11 @@ const ProfileDoctor = () => {
   const [oldPass, setOldPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
+
+  const name = useSelector(state => state.MedecinReducer.name);
+  const profilePicture = useSelector(
+    state => state.MedecinReducer.profilePicture,
+  );
 
   const disconnect = () => {
     //TODO: disconnect
@@ -87,9 +92,21 @@ const ProfileDoctor = () => {
               'Content-Type': 'multipart/form-data',
             },
           })
+
           .then(response => {
-            console.log(response.data.user.profilePicture);
-            setSelectedImage(uri); //TODO: Display picture
+            axiosPrivate.get('/medecin').then(response => {
+              dispatch({
+                type: ActionsName.setMedecinData,
+                payload: {
+                  id: response.data._id,
+                  name: response.data.name,
+                  email: response.data.email,
+                  profilePicture: response.data.profilePicture,
+                },
+              });
+            });
+
+            setSelectedImage(uri);
             showSuccess('Votre photo a été upload avec succès.');
           })
           .catch(error => {
@@ -106,13 +123,13 @@ const ProfileDoctor = () => {
           selectedImage
             ? {uri: selectedImage}
             : {
-                uri: 'https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg',
+                uri: profilePicture,
               }
         }
         style={styles.profilePicture}
       />
 
-      <Text style={styles.username}>Mehdi Doe</Text>
+      <Text style={styles.username}>{name}</Text>
       <TouchableOpacity style={styles.button} onPress={chooseImage}>
         <Icon
           name="face-man-profile"
