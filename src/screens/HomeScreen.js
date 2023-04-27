@@ -13,11 +13,14 @@ import {Icon, SearchBar} from '@rneui/themed';
 import PatientsCard from '../components/PatientsCard';
 import fonts from '../../assets/fonts/fonts';
 import {axiosPrivate} from '../config/axios';
+import {useSelector} from 'react-redux';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const [patients, setPatients] = useState([]);
+
+  const name = useSelector(state => state.MedecinReducer.name);
 
   const iconDimension = 50;
 
@@ -50,7 +53,7 @@ const HomeScreen = () => {
             fontSize: 30,
             flex: 6,
           }}>
-          Bonjour, Mehdi
+          Bonjour, {name}
         </Text>
         <TouchableOpacity onPress={handleIMGPress}>
           <Image

@@ -1,10 +1,10 @@
 import ActionsName from './ActionsName';
 
 const INITIAL_STATE = {
-  id: 0,
-  firstName: '',
-  lastName: '',
+  id: '',
+  name: '',
   email: '',
+  profilePicture: '',
 };
 
 export default (state = INITIAL_STATE, actions) => {
@@ -13,17 +13,17 @@ export default (state = INITIAL_STATE, actions) => {
       return {
         ...state,
         id: actions.payload.id,
-        firstName: actions.payload.firstName,
-        lastName: actions.payload.lastName,
+        name: actions.payload.name,
         email: actions.payload.email,
+        profilePicture: actions.payload.profilePicture,
       };
     case ActionsName.resetMedecinData:
       return {
         ...state,
-        id: 0,
-        firstName: '',
-        lastName: '',
+        id: '',
+        name: '',
         email: '',
+        profilePicture: '',
       };
     default:
       return state;

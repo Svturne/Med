@@ -62,6 +62,16 @@ const Login = () => {
           dispatch({
             type: ActionsName.connecte,
           });
+
+          dispatch({
+            type: ActionsName.setMedecinData,
+            payload: {
+              id: response.data.user.id,
+              name: response.data.user.name,
+              email: response.data.user.email,
+              profilePicture: response.data.user.profilePicture,
+            },
+          });
         } catch (e) {
           console.log(e);
         }
