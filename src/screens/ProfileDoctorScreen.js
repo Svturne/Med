@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from 'react-native';
 import React, {useState} from 'react';
 import colors from '../../assets/colors';
 import ActionsName from '../redux/reducers/ActionsName';
@@ -8,6 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {axiosPrivate} from '../config/axios';
 import {showSuccess} from '../utils/messages';
+import Dialog from 'react-native-dialog';
 
 const ProfileDoctor = () => {
   const iconsize = 25;
@@ -15,13 +23,32 @@ const ProfileDoctor = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [visibleEdite, setVisibleEdit] = useState(false);
+  const [oldPass, setOldPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
 
   const disconnect = () => {
     dispatch({type: ActionsName.disconnect});
   };
 
   const passwordPressed = () => {
-    navigation.navigate('RestPassword');
+    setVisibleEdit(true);
+  };
+
+  const handleCancelEdit = () => {
+    setVisibleEdit(false);
+  };
+
+  const handleEdit = () => {
+    axiosPrivate
+      .post('/medecin/newpassword', {password: oldPass, newPassword: newPass})
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const chooseImage = () => {
@@ -97,6 +124,39 @@ const ProfileDoctor = () => {
         />
         <Text style={styles.buttonText}>Modifier votre mot de passe</Text>
       </TouchableOpacity>
+      <Dialog.Container visible={visibleEdite}>
+        <Dialog.Title>Modification de votre mot de passe</Dialog.Title>
+
+        <TextInput
+          style={styles.editPass}
+          onChangeText={setOldPass}
+          placeholder={'Ancien mot de passe'}
+          secureTextEntry={true}></TextInput>
+
+        <TextInput
+          style={styles.editPass}
+          onChangeText={setNewPass}
+          placeholder={'Nouveau mot de passe'}
+          secureTextEntry={true}></TextInput>
+
+        <TextInput
+          style={styles.editPass}
+          onChangeText={setConfirmPass}
+          placeholder={'Confirmer votre mot de passe'}
+          secureTextEntry={true}></TextInput>
+
+        <Dialog.Button
+          label="Annuler"
+          color={colors.grey}
+          onPress={handleCancelEdit}
+        />
+        <Dialog.Button
+          label="Valider"
+          bold={true}
+          color={colors.blue}
+          onPress={handleEdit}
+        />
+      </Dialog.Container>
       <TouchableOpacity style={styles.button} onPress={disconnect}>
         <Icon
           name="logout"
@@ -149,6 +209,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: fonts.regular,
     marginLeft: 20,
+  },
+  editPass: {
+    backgroundColor: colors.lightblue,
+    color: colors.white,
+    fontFamily: fonts.bold,
+    borderRadius: 16,
+    paddingLeft: 16,
+    marginVertical: 5,
   },
 });
 

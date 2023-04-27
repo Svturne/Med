@@ -28,7 +28,7 @@ axiosPrivate.interceptors.response.use(
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
-      console.log('error in response');
+
       refresh();
     }
     return error;
