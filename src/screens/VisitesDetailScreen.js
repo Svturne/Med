@@ -24,6 +24,7 @@ const iconDimension = 50;
 const VisitesDetail = ({route}) => {
   const data = route.params.data;
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View>

@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import colors from '../../assets/colors';
 import {useNavigation} from '@react-navigation/native';
 import {Icon, SearchBar} from '@rneui/themed';
@@ -29,17 +29,17 @@ const HomeScreen = () => {
     navigation.navigate('CreatePatient');
   };
 
-  axiosPrivate
-    .get('/patient/643df4de712b093516b2829e') //Todo: add real id
-    .then(response => {
-      setTimeout(() => {
-        //console.log(response.data);
+  useEffect(() => {
+    axiosPrivate
+      .get('/patient/643df4de712b093516b2829e') //TODO: add real id
+      .then(response => {
+        console.log('fetch');
         setPatients(response.data);
-      }, 5000);
-    })
-    .catch(e => {
-      console.log(e);
-    });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>

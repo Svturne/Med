@@ -3,11 +3,18 @@ import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
+import {axiosPrivatePatient} from '../config/axios';
+import {showError} from '../utils/messages';
 
 const ScanScreen = () => {
   const onSuccess = e => {
-    //TODO: if e.data.contain med://
-    console.log(e.data);
+    if (e.data.includes('med://')) {
+      token = e.data.replace('med://token=', '');
+      console.log({token});
+    } else {
+      showError("Ce n'est pas le bon code QR");
+      console.log(e.data);
+    }
   };
 
   return (
