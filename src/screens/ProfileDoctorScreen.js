@@ -16,6 +16,8 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {axiosPrivate} from '../config/axios';
 import {showSuccess} from '../utils/messages';
 import Dialog from 'react-native-dialog';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncKeys from '../constant/AsyncKeys';
 
 const ProfileDoctor = () => {
   const iconsize = 25;
@@ -29,7 +31,12 @@ const ProfileDoctor = () => {
   const [confirmPass, setConfirmPass] = useState('');
 
   const disconnect = () => {
+    //TODO: disconnect
+
+    dispatch({type: ActionsName.resetMedecinData});
     dispatch({type: ActionsName.disconnect});
+    AsyncStorage.removeItem(AsyncKeys.accessToken);
+    AsyncStorage.removeItem(AsyncKeys.refreshToken);
   };
 
   const passwordPressed = () => {
