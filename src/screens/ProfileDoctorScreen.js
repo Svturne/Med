@@ -14,7 +14,7 @@ import {Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {axiosPrivate} from '../config/axios';
-import {showSuccess} from '../utils/messages';
+import {showError, showSuccess} from '../utils/messages';
 import Dialog from 'react-native-dialog';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsyncKeys from '../constant/AsyncKeys';
@@ -53,14 +53,32 @@ const ProfileDoctor = () => {
   };
 
   const handleEdit = () => {
-    axiosPrivate
-      .post('/medecin/newpassword', {password: oldPass, newPassword: newPass})
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (oldPass === '' || newPass === '' || confirmPass === '') {
+      return showError('Remplissez tous les champs requis');
+    }
+    if (newPass != confirmPass) {
+      showError('Les deux mots de passe ne correspondant pas');
+    } else {
+      var regularMdp = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+
+      if (regularMdp.test(newPass) == false) {
+        showError('Mauvais format de mot de passe');
+      } else {
+        axiosPrivate
+          .post('/medecin/newpassword', {
+            password: oldPass,
+            newPassword: newPass,
+          })
+          .then(response => {
+            console.log(response.data);
+            disconnect();
+          })
+          .catch(error => {
+            console.log('erreur in update password');
+            console.log(error);
+          });
+      }
+    }
   };
 
   const chooseImage = () => {
@@ -115,20 +133,17 @@ const ProfileDoctor = () => {
       }
     });
   };
-  // TODO: add real name
+
   return (
     <View style={styles.container}>
-      <Image
-        source={
-          selectedImage
-            ? {uri: selectedImage}
-            : {
-                uri: profilePicture,
-              }
-        }
-        style={styles.profilePicture}
-      />
-
+      {profilePicture && (
+        <Image
+          source={{
+            uri: profilePicture,
+          }}
+          style={styles.profilePicture}
+        />
+      )}
       <Text style={styles.username}>{name}</Text>
       <TouchableOpacity style={styles.button} onPress={chooseImage}>
         <Icon
