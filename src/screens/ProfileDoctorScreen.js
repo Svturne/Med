@@ -64,7 +64,7 @@ const ProfileDoctor = () => {
       }
     });
   };
-
+  // TODO: add real name
   return (
     <View style={styles.container}>
       <Image
@@ -72,7 +72,7 @@ const ProfileDoctor = () => {
           selectedImage
             ? {uri: selectedImage}
             : {
-                uri: 'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg',
+                uri: 'https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg',
               }
         }
         style={styles.profilePicture}
