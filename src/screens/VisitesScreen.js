@@ -8,6 +8,7 @@ import {Icon} from '@rneui/themed';
 import Dialog from 'react-native-dialog';
 import {axiosPrivate} from '../config/axios';
 import {showError, showSuccess} from '../utils/messages';
+import {format} from 'fecha';
 
 const Visites = ({route}) => {
   const data = route.params.data;
@@ -60,12 +61,14 @@ const Visites = ({route}) => {
     setVisible(false);
   };
 
+  const date = format(new Date(data.createdAt), 'DD-MM-YYYY');
+
   //TODO: Change date format
   return (
     <View style={styles.container}>
       <View style={styles.head}>
         <Text style={styles.textTitle}>Maladie: {data.maladie}</Text>
-        <Text style={styles.textTitle}>Date de création: {data.createdAt}</Text>
+        <Text style={styles.textTitle}>Date de création: {date}</Text>
       </View>
       <Text style={styles.Subtitle}>Visites: </Text>
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>

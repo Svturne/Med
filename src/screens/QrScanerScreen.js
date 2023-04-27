@@ -7,10 +7,22 @@ import {axiosPrivatePatient} from '../config/axios';
 import {showError} from '../utils/messages';
 
 const ScanScreen = () => {
+  const getProfile = () => {
+    axiosPrivatePatient
+      .get('/patient')
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log('error in get profile patient');
+        console.log(error);
+      });
+  };
   const onSuccess = e => {
     if (e.data.includes('med://')) {
       token = e.data.replace('med://token=', '');
       console.log({token});
+      getProfile();
     } else {
       showError("Ce n'est pas le bon code QR");
       console.log(e.data);

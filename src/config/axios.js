@@ -57,4 +57,60 @@ const refresh = () => {
       console.log(error);
     });
 };
-export {axiosInstance, axiosPrivate, axiosRefresh, refresh};
+
+const axiosPrivateUser = axios.create({
+  baseURL: 'http://10.0.2.2:3000/api',
+});
+
+axiosPrivateUser.interceptors.request.use(async function (config) {
+  const accessToken = await AsyncStorage.getItem(AsyncKeys.accessTokenUser);
+  config.headers['Authorization'] = `Bearer ${accessToken}`;
+  return config;
+});
+
+axiosPrivateUser.interceptors.response.use(
+  async response => {
+    return response;
+  },
+  error => {
+    const originalRequest = error.config;
+    if (error.response) {
+      if (
+        (error.response.status === 401 || error.response.status === 403) &&
+        !originalRequest._retry
+      ) {
+        originalRequest._retry = true;
+
+        refreshUser();
+      }
+    }
+    return error;
+  },
+);
+
+const refreshUser = () => {
+  axiosRefresh
+    .post('/medecin/refreshtoken')
+    .then(response => {
+      AsyncStorage.setItem(
+        AsyncKeys.accessTokenUser,
+        response.data.accessToken,
+      );
+      AsyncStorage.setItem(
+        AsyncKeys.refreshTokenUser,
+        response.data.refreshToken,
+      );
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+
+export {
+  axiosInstance,
+  axiosPrivate,
+  axiosRefresh,
+  refresh,
+  axiosPrivateUser,
+  refreshUser,
+};

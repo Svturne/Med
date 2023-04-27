@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../assets/colors';
+import {format} from 'fecha';
 
 const MaladiesList = props => {
   const navigation = useNavigation();
@@ -9,13 +10,14 @@ const MaladiesList = props => {
     navigation.navigate('VisitesDetail', {data: props.data});
   };
   //TODO: change date format
+  const date = format(new Date(props.data.createdAt), 'DD-MM-YYYY');
   return (
     <TouchableOpacity onPress={showVisitesDetail} style={styles.card}>
       <Text style={styles.cardTitle}>{props.data.remarque}</Text>
       <Text numberOfLines={1} style={styles.desc}>
         {props.data.desc}{' '}
       </Text>
-      <Text style={styles.date}>{props.data.createdAt}</Text>
+      <Text style={styles.date}>{date}</Text>
     </TouchableOpacity>
   );
 };
