@@ -13,7 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {axiosPrivate} from '../config/axios';
+import {axiosPrivate, axiosRefresh} from '../config/axios';
 import {showError, showSuccess} from '../utils/messages';
 import Dialog from 'react-native-dialog';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,8 +35,8 @@ const ProfileDoctor = () => {
     state => state.MedecinReducer.profilePicture,
   );
 
-  const disconnect = () => {
-    //TODO: disconnect
+  const disconnect = async () => {
+    await axiosRefresh.post('/medecin/logout');
 
     dispatch({type: ActionsName.resetMedecinData});
     dispatch({type: ActionsName.disconnect});

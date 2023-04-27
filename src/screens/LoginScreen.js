@@ -49,7 +49,6 @@ const Login = () => {
         password,
       })
       .then(response => {
-        console.log(response.data);
         try {
           AsyncStorage.setItem(
             AsyncKeys.accessToken,
