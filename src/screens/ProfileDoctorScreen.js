@@ -95,7 +95,7 @@ const ProfileDoctor = () => {
         const name = response.assets[0].fileName;
         const uri = response.assets[0].uri;
         const type = response.assets[0].type;
-        console.log(uri);
+
         const formData = new FormData();
         formData.append('picture', {
           name,

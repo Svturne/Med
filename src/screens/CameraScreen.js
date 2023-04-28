@@ -2,16 +2,41 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useCallback} from 'react';
 import {RNCamera} from 'react-native-camera';
 import {useCamera} from 'react-native-camera-hooks';
-import colors from '../../assets/colors';
 import CustomButton from '../components/CustomButton';
+import {axiosPrivate} from '../config/axios';
 
-const CameraScreen = () => {
+const CameraScreen = ({route}) => {
   const [{cameraRef}, {takePicture}] = useCamera(null);
 
   const captureHandle = useCallback(async () => {
     try {
       const data = await takePicture();
-      console.log(data.uri);
+      const uri = data.uri;
+      const name = 'test.jpg';
+      const type = 'image/jpeg';
+      const formData = new FormData();
+
+      formData.append('picture', {
+        name,
+        uri,
+        type,
+      });
+      formData.append('description', 'oui non');
+      axiosPrivate
+        .patch('/visite/' + route.params.data._id + '/picture', formData, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+            description: 'test',
+          },
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      console.log(JSON.stringify(formData));
     } catch (error) {
       console.log(error);
     }

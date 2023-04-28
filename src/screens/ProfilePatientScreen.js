@@ -47,7 +47,7 @@ const ProfilePatient = ({route}) => {
       .catch(e => {
         console.log(e);
       });
-  }, []);
+  }, [handleValidate]);
 
   function useTextColor(sexe) {
     const [textColor, setTextColor] = useState('white');

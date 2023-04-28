@@ -9,7 +9,6 @@ const MaladiesList = props => {
   const showVisitesDetail = () => {
     navigation.navigate('VisitesDetail', {data: props.data});
   };
-  //TODO: change date format
   const date = format(new Date(props.data.createdAt), 'DD-MM-YYYY');
   return (
     <TouchableOpacity onPress={showVisitesDetail} style={styles.card}>

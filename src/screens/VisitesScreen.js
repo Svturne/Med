@@ -19,18 +19,6 @@ const Visites = ({route}) => {
   const [title, setTitle] = useState('');
   const [remarque, setRemarque] = useState('');
 
-  useEffect(() => {
-    axiosPrivate
-      .get(`/visite/${data._id}`)
-      .then(response => {
-        setVisitesDetails(response.data);
-      })
-      .catch(err => {
-        console.log('erreur in get visite from medecin');
-        console.log(err);
-      });
-  }, []);
-
   const showDialog = () => {
     setVisible(true);
   };
@@ -56,6 +44,18 @@ const Visites = ({route}) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    axiosPrivate
+      .get(`/visite/${data._id}`)
+      .then(response => {
+        setVisitesDetails(response.data);
+      })
+      .catch(err => {
+        console.log('erreur in get visite from medecin');
+        console.log(err);
+      });
+  }, [handleValidate]);
 
   const handleCancel = () => {
     setVisible(false);

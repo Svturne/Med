@@ -6,23 +6,10 @@ import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
 
-const photos = [
-  {
-    uri: 'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg',
-    description: 'Description de la photo 1',
-  },
-  {
-    uri: 'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg',
-    description: 'Description de la photo 2',
-  },
-  {
-    uri: 'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg',
-    description: 'Description de la photo 3',
-  },
-];
 const iconDimension = 50;
 const VisitesDetail = ({route}) => {
   const data = route.params.data;
+  const photos = data.pictures;
   const navigation = useNavigation();
 
   return (
@@ -52,7 +39,7 @@ const VisitesDetail = ({route}) => {
           bottom: 20,
         }}
         onPress={() => {
-          navigation.navigate('CameraScreen');
+          navigation.navigate('CameraScreen', {data: data});
         }}>
         <Icon name="camera" type="foundation" size={25} color={colors.black} />
       </TouchableOpacity>
