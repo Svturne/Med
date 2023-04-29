@@ -2,9 +2,10 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import {showError, showInfo, showSuccess} from '../utils/messages';
+import {showError, showSuccess} from '../utils/messages';
 import {axiosInstance} from '../config/axios';
 import {useNavigation} from '@react-navigation/native';
+import colors from '../../assets/colors';
 
 const RestPassword = ({route}) => {
   const navigation = useNavigation();
@@ -69,7 +70,7 @@ const RestPassword = ({route}) => {
 
       <CustomButton
         text="Valider"
-        color="lightgreen"
+        color={colors.lightgreen}
         isLoading={sendMdpLoader}
         func={sendCode}
       />

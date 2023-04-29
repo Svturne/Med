@@ -8,7 +8,7 @@ import colors from '../../assets/colors';
 import {showInfo, showSuccess} from '../utils/messages';
 import {axiosPrivate} from '../config/axios';
 import {TextInput} from 'react-native-gesture-handler';
-import {color} from '@rneui/base';
+import {SelectList} from 'react-native-dropdown-select-list';
 
 const PatientsCard = props => {
   const iconeSize = 28;
@@ -19,7 +19,10 @@ const PatientsCard = props => {
   const [email, setEmail] = useState('');
   const [age, setAge] = useState('');
   const [sexe, setSexe] = useState('');
-
+  const data = [
+    {key: '1', value: 'Masculin'},
+    {key: '2', value: 'Féminin'},
+  ];
   const showDialog = () => {
     setVisible(true);
   };
@@ -53,9 +56,9 @@ const PatientsCard = props => {
     axiosPrivate
       .put(`/patient/${props.data._id}`, {
         name: name ? name : props.data.name,
-        email: email,
-        age: age,
-        sexe: sexe,
+        email: email ? email : props.data.email,
+        age: age ? age : props.data.age,
+        sexe: sexe ? sexe : props.data.sexe,
       })
       .then(response => {
         console.log(response.data);
@@ -96,10 +99,10 @@ const PatientsCard = props => {
         {
           backgroundColor:
             props.data.sexe === 'Masculin'
-              ? '#85CDFD'
+              ? colors.cardbleu
               : props.data.sexe === 'Féminin'
-              ? 'pink'
-              : 'white',
+              ? colors.pink
+              : colors.white,
         },
       ]}
       key={props.data.id}>
@@ -122,15 +125,31 @@ const PatientsCard = props => {
             <TextInput style={styles.edit} onChangeText={setName}>
               {props.data.name}
             </TextInput>
-            <TextInput style={styles.edit} onChangeText={setEmail}>
+            <TextInput
+              style={styles.edit}
+              onChangeText={setEmail}
+              keyboardType={'email-address'}>
               {props.data.email}
             </TextInput>
-            <TextInput style={styles.edit} onChangeText={setAge}>
+            <TextInput
+              style={styles.edit}
+              onChangeText={setAge}
+              keyboardType={'number-pad'}>
               {props.data.age}
             </TextInput>
-            <TextInput style={styles.edit} onChangeText={setSexe}>
-              {props.data.sexe}
-            </TextInput>
+            <SelectList
+              title="Sexe"
+              save="value"
+              data={data}
+              placeholder={props.data.sexe}
+              search={false}
+              boxStyles={styles.boxStyles}
+              setSelected={val => setSexe(val)}
+              fontFamily={fonts.semiBold}
+              inputStyles={{color: colors.white}}
+              maxHeight={100}
+            />
+
             <Dialog.Button
               label="Annuler"
               color={colors.grey}
@@ -214,6 +233,13 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fonts.bold,
     borderRadius: 16,
+    paddingLeft: 16,
+    marginVertical: 5,
+  },
+  boxStyles: {
+    backgroundColor: colors.lightblue,
+    borderRadius: 16,
+    borderColor: colors.white,
     paddingLeft: 16,
     marginVertical: 5,
   },

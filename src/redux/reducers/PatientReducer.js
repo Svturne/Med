@@ -15,8 +15,7 @@ export default (state = INITIAL_STATE, actions) => {
       return {
         ...state,
         id: actions.payload.id,
-        firstName: actions.payload.firstName,
-        lastName: actions.payload.lastName,
+        name: actions.payload.name,
         email: actions.payload.email,
         age: actions.payload.age,
         sex: actions.payload.sex,

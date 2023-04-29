@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {showError, showInfo} from '../utils/messages';
 
 import {axiosInstance} from '../config/axios';
+import colors from '../../assets/colors';
 
 const CodePassword = ({route}) => {
   const navigation = useNavigation();
@@ -169,7 +170,7 @@ const CodePassword = ({route}) => {
 
       <CustomButton
         text="Valider"
-        color="lightgreen"
+        color={colors.lightgreen}
         isLoading={sendEmailCodeLoader}
         func={sendCode}
       />

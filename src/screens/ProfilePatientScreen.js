@@ -131,7 +131,7 @@ const ProfilePatient = ({route}) => {
       </ScrollView>
       <TouchableOpacity
         style={{
-          backgroundColor: colors.green,
+          backgroundColor: colors.lightgreen,
           borderRadius: iconDimension / 2,
           width: iconDimension,
           height: iconDimension,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     borderWidth: 5,
-    borderColor: 'grey',
+    borderColor: colors.grey,
     alignSelf: 'center',
     marginVertical: 60,
   },

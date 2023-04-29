@@ -57,6 +57,7 @@ const HomeScreen = () => {
             setPatients(response.data);
           })
           .catch(e => {
+            console.log('erreur in get patient');
             console.log(e);
           });
       })
@@ -116,7 +117,7 @@ const HomeScreen = () => {
       />
       <TouchableOpacity
         style={{
-          backgroundColor: colors.green,
+          backgroundColor: colors.lightgreen,
           borderRadius: iconDimension / 2,
           width: iconDimension,
           height: iconDimension,

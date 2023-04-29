@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     marginVertical: 10,
     borderRadius: 10,
-    backgroundColor: colors.green,
+    backgroundColor: colors.lightgreen,
     width: '80%',
   },
   cardTitle: {

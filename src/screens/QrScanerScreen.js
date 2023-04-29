@@ -57,14 +57,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
   },
   textT: {
-    color: 'white',
+    color: colors.white,
     position: 'absolute',
     fontSize: 30,
     fontFamily: fonts.semiBold,
     top: 45,
   },
   text: {
-    color: 'white',
+    color: colors.white,
     fontFamily: fonts.regular,
     bottom: 70,
   },

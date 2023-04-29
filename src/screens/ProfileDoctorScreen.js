@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     borderWidth: 5,
-    borderColor: 'grey',
+    borderColor: colors.grey,
   },
   username: {
     color: colors.white,

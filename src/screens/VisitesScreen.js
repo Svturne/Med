@@ -63,7 +63,6 @@ const Visites = ({route}) => {
 
   const date = format(new Date(data.createdAt), 'DD-MM-YYYY');
 
-  //TODO: Change date format
   return (
     <View style={styles.container}>
       <View style={styles.head}>
@@ -78,7 +77,7 @@ const Visites = ({route}) => {
       </ScrollView>
       <TouchableOpacity
         style={{
-          backgroundColor: colors.green,
+          backgroundColor: colors.lightgreen,
           borderRadius: iconDimension / 2,
           width: iconDimension,
           height: iconDimension,

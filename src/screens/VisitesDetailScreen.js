@@ -28,7 +28,7 @@ const VisitesDetail = ({route}) => {
       </View>
       <TouchableOpacity
         style={{
-          backgroundColor: colors.green,
+          backgroundColor: colors.lightgreen,
           borderRadius: iconDimension / 2,
           width: iconDimension,
           height: iconDimension,

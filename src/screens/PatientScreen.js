@@ -34,7 +34,7 @@ const PatientScreen = ({route}) => {
   ];
 
   function useBackGroundColor(sexe) {
-    const [bgColor, setBgColor] = useState('bleu');
+    const [bgColor, setBgColor] = useState(colors.blue);
 
     useEffect(() => {
       if (sexe === 'woman') {
@@ -48,13 +48,13 @@ const PatientScreen = ({route}) => {
   }
 
   function useTextColor(sexe) {
-    const [textColor, setTextColor] = useState('white');
+    const [textColor, setTextColor] = useState(colors.white);
 
     useEffect(() => {
       if (sexe === 'woman') {
-        setTextColor('red');
+        setTextColor(colors.red);
       } else {
-        setTextColor('white');
+        setTextColor(colors.white);
       }
     }, [sexe]);
 

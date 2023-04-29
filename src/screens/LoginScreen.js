@@ -133,14 +133,14 @@ const Login = () => {
             </TouchableOpacity>
             <CustomButton
               text="Se connecter"
-              color="lightgreen"
+              color={colors.lightgreen}
               isLoading={signInLoading}
               func={signIn}
             />
             <View style={styles.icon}>
               <Text>
                 Vous êtes un patient?{' '}
-                <Text style={{color: 'lightgreen'}}>
+                <Text style={{color: colors.lightgreen}}>
                   Scannez votre code QR ->{' '}
                 </Text>
               </Text>

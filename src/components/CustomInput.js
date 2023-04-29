@@ -1,10 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import {Icon} from '@rneui/themed';
 import {TouchableOpacity} from 'react-native';
@@ -19,7 +13,7 @@ function CustomInput(props) {
       <View
         style={[
           styles.container,
-          {borderColor: isFocused ? 'green' : 'white', borderWidth: 2},
+          {borderColor: isFocused ? 'green' : 'white', borderWidth: 3},
         ]}>
         <TextInput
           placeholder={props.nameOfInpute}
@@ -27,7 +21,7 @@ function CustomInput(props) {
           onChangeText={props.onChangeText}
           secureTextEntry={showEye}
           style={styles.inputText}
-          placeholderTextColor={'black'}
+          placeholderTextColor={colors.black}
           keyboardType={props.keyboardType}
           onFocus={() => {
             setisFocused(true);
@@ -58,7 +52,7 @@ export default CustomInput;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.white,
     borderRadius: 10,
     padding: 5,
     marginVertical: 16,

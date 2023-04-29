@@ -5,6 +5,7 @@ import CustomButton from '../components/CustomButton';
 import {showError, showInfo} from '../utils/messages';
 import {useNavigation} from '@react-navigation/native';
 import {axiosInstance} from '../config/axios';
+import colors from '../../assets/colors';
 
 const MailPassword = () => {
   const [email, setEmail] = useState('');
@@ -58,7 +59,7 @@ const MailPassword = () => {
       />
       <CustomButton
         text="Valider"
-        color="lightgreen"
+        color={colors.lightgreen}
         isLoading={sendEmailLoading}
         func={sendEmail}
       />

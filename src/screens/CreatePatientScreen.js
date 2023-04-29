@@ -5,7 +5,7 @@ import fonts from '../../assets/fonts/fonts';
 import CustomInput from '../components/CustomInput';
 import CustomDropList from '../components/CustomDropList';
 import CustomButton from '../components/CustomButton';
-import instance, {axiosPrivate} from '../config/axios';
+import axiosPrivate from '../config/axios';
 import {useNavigation} from '@react-navigation/native';
 import {showError} from '../utils/messages';
 
@@ -48,6 +48,7 @@ const CreatePatient = () => {
         navigation.navigate('HomeScreen');
       })
       .catch(error => {
+        console.log('erreur in adding patient');
         console.log(error);
       })
       .finally(() => {
@@ -80,7 +81,7 @@ const CreatePatient = () => {
       <CustomDropList title="Sexe" data={data} onSelect={val => setsexe(val)} />
       <CustomButton
         text="Enregistrer"
-        color="lightgreen"
+        color={colors.lightgreen}
         isLoading={createPatientLoader}
         func={create}
       />
