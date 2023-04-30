@@ -5,7 +5,7 @@ import fonts from '../../assets/fonts/fonts';
 import CustomInput from '../components/CustomInput';
 import CustomDropList from '../components/CustomDropList';
 import CustomButton from '../components/CustomButton';
-import axiosPrivate from '../config/axios';
+import {axiosPrivate} from '../config/axios';
 import {useNavigation} from '@react-navigation/native';
 import {showError} from '../utils/messages';
 
