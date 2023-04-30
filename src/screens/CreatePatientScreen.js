@@ -8,6 +8,7 @@ import CustomButton from '../components/CustomButton';
 import {axiosPrivate} from '../config/axios';
 import {useNavigation} from '@react-navigation/native';
 import {showError} from '../utils/messages';
+import {useDispatch} from 'react-redux';
 
 const CreatePatient = () => {
   const [sexe, setsexe] = useState('');
@@ -16,6 +17,7 @@ const CreatePatient = () => {
   const [email, setEmail] = useState('');
   const [age, setAge] = useState(0);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const data = [
     {key: '1', value: 'Masculin'},
@@ -44,7 +46,15 @@ const CreatePatient = () => {
         sexe,
       })
       .then(response => {
-        console.log(response.data);
+        axiosPrivate.get('/patient/').then(response => {
+          dispatch({
+            type: ActionsName.setPatientsListData,
+            payload: {
+              patientsList: response.data,
+            },
+          });
+        });
+
         navigation.navigate('HomeScreen');
       })
       .catch(error => {

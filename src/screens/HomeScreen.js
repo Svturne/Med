@@ -52,7 +52,7 @@ const HomeScreen = () => {
         });
 
         axiosPrivate
-          .get('/patient/' + response.data._id)
+          .get('/patient/')
           .then(response => {
             dispatch({
               type: ActionsName.setPatientsListData,

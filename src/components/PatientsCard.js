@@ -9,10 +9,12 @@ import {showInfo, showSuccess} from '../utils/messages';
 import {axiosPrivate} from '../config/axios';
 import {TextInput} from 'react-native-gesture-handler';
 import {SelectList} from 'react-native-dropdown-select-list';
+import {useDispatch} from 'react-redux';
 
 const PatientsCard = props => {
   const iconeSize = 28;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [visibleEdite, setVisibleEdit] = useState(false);
   const [name, setName] = useState('');
@@ -36,6 +38,14 @@ const PatientsCard = props => {
     axiosPrivate
       .delete(`patient/${props.data._id}`)
       .then(response => {
+        axiosPrivate.get('/patient/').then(response => {
+          dispatch({
+            type: ActionsName.setPatientsListData,
+            payload: {
+              patientsList: response.data,
+            },
+          });
+        });
         console.log(response.data);
       })
       .catch(error => {
@@ -61,9 +71,17 @@ const PatientsCard = props => {
         sexe: sexe ? sexe : props.data.sexe,
       })
       .then(response => {
+        axiosPrivate.get('/patient/').then(response => {
+          dispatch({
+            type: ActionsName.setPatientsListData,
+            payload: {
+              patientsList: response.data,
+            },
+          });
+        });
         console.log(response.data);
-        showSuccess('Patient mise à jour');
         setVisibleEdit(false);
+        showSuccess('Patient mise à jour');
       })
       .catch(error => {
         console.log(error);
