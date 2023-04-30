@@ -20,8 +20,8 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState('');
-  const [patients, setPatients] = useState([]);
-
+  const patients = useSelector(state => state.PatientListReducer.patientsList);
+  console.log({patients});
   const name = useSelector(state => state.MedecinReducer.name);
   const profilePicture = useSelector(
     state => state.MedecinReducer.profilePicture,
@@ -54,8 +54,14 @@ const HomeScreen = () => {
         axiosPrivate
           .get('/patient/' + response.data._id)
           .then(response => {
-            setPatients(response.data);
+            dispatch({
+              type: ActionsName.setPatientsListData,
+              payload: {
+                patientsList: response.data,
+              },
+            });
           })
+
           .catch(e => {
             console.log('erreur in get patient');
             console.log(e);
