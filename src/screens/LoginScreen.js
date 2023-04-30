@@ -59,7 +59,7 @@ const Login = () => {
             response.data.refreshToken,
           );
           dispatch({
-            type: ActionsName.connecte,
+            type: ActionsName.connecteMed,
           });
 
           dispatch({

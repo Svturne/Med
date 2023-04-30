@@ -78,7 +78,7 @@ const ProfilePatientScreen = ({route}) => {
   }
 
   const iconDimension = 50;
-  const data = route.params.data;
+  //const data = route.params.data;
   const textColor = useTextColor(data.sexe);
   const bgColor = useBackGroundColor(data.sexe);
 

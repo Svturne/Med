@@ -59,16 +59,12 @@ const PatientScreen = ({route}) => {
           },
         });
 
-        if (isLogin === 0 || isLogin === 1) {
-          dispatch({
-            type: ActionsName.connectePatient,
-          });
-        } else {
+        dispatch({
+          type: ActionsName.connectePatient,
+        });
+        setTimeout(() => {
           navigation.navigate('ProfilePatientScreen');
-        }
-        console.log({isLogin});
-
-        console.log(response.data.user.patient);
+        }, 1000);
       })
       .catch(err => {
         console.log(err);
