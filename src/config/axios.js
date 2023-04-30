@@ -46,6 +46,16 @@ axiosRefresh.interceptors.request.use(async function (config) {
   return config;
 });
 
+const axiosRefreshPatient = axios.create({
+  baseURL: 'http://10.0.2.2:3000/api',
+});
+
+axiosRefreshPatient.interceptors.request.use(async function (config) {
+  const refreshToken = await AsyncStorage.getItem(AsyncKeys.refreshTokenUser);
+  config.headers['Authorization'] = `Bearer ${refreshToken}`;
+  return config;
+});
+
 const refresh = () => {
   console.log('refreshing');
   axiosRefresh
@@ -64,8 +74,8 @@ const axiosPrivateUser = axios.create({
 });
 
 axiosPrivateUser.interceptors.request.use(async function (config) {
-  const refreshToken = await AsyncStorage.getItem(AsyncKeys.refreshTokenUser);
-  config.headers['Authorization'] = `Bearer ${refreshToken}`;
+  const accessToken = await AsyncStorage.getItem(AsyncKeys.accessTokenUser);
+  config.headers['Authorization'] = `Bearer ${accessToken}`;
   return config;
 });
 
@@ -75,6 +85,7 @@ axiosPrivateUser.interceptors.response.use(
   },
   error => {
     const originalRequest = error.config;
+
     if (error.response) {
       if (
         (error.response.status === 401 || error.response.status === 403) &&
@@ -90,7 +101,7 @@ axiosPrivateUser.interceptors.response.use(
 );
 
 const refreshUser = () => {
-  axiosRefresh
+  axiosRefreshPatient
     .post('/patient/user/refresh')
     .then(response => {
       AsyncStorage.setItem(

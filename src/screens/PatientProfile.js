@@ -3,35 +3,25 @@ import React, {useEffect, useState} from 'react';
 import {Image} from '@rneui/themed';
 import colors from '../../assets/colors';
 import MaladiesList from '../components/MaladiesList';
+import {useSelector} from 'react-redux';
+import {axiosPrivateUser} from '../config/axios';
 
-const PatientScreen = ({route}) => {
-  const maladies = [
-    {
-      id: 1,
-      title: 'Migraine',
-      date: '12/02/2015',
-    },
-    {
-      id: 2,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-    {
-      id: 3,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 4,
-      title: 'Vertige',
-      date: '26/12/2015',
-    },
-    {
-      id: 5,
-      title: 'Mal au ventre',
-      date: '22/05/2015',
-    },
-  ];
+const PatientProfile = () => {
+  const name = useSelector(state => state.PatientReducer.name);
+  const [maladies, setMaladies] = useState([]);
+
+  useEffect(() => {
+    axiosPrivateUser
+      .get('/patient/user/allmaladie')
+      .then(res => {
+        setMaladies(res.data);
+        console.log(res.data);
+      })
+
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   function useBackGroundColor(sexe) {
     const [bgColor, setBgColor] = useState(colors.blue);
@@ -73,7 +63,7 @@ const PatientScreen = ({route}) => {
       ]}>
       <View style={{flexDirection: 'row', alignItems: 'center', margin: 25}}>
         <Text style={{color: textColor, fontSize: 30, flex: 6}}>
-          Bonjour, Rafik
+          Bonjour, {name}
         </Text>
         <TouchableOpacity onPress={console.log('Picture Pressed')}>
           <Image
@@ -85,7 +75,7 @@ const PatientScreen = ({route}) => {
         </TouchableOpacity>
       </View>
       <Text style={[styles.doctitle, {color: textColor}]}>
-        Vous êtes suivi par le médecin:{' '}
+        Vous êtes suivi par le médecin:{' ' + name}
       </Text>
       <View style={styles.listContainer}>
         <Text style={[styles.Subtitle, {color: textColor}]}>
@@ -102,7 +92,7 @@ const PatientScreen = ({route}) => {
   );
 };
 
-export default PatientScreen;
+export default PatientProfile;
 
 const styles = StyleSheet.create({
   container: {

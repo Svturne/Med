@@ -18,7 +18,7 @@ export default (state = INITIAL_STATE, actions) => {
         name: actions.payload.name,
         email: actions.payload.email,
         age: actions.payload.age,
-        sex: actions.payload.sex,
+        sexe: actions.payload.sexe,
       };
     case ActionsName.resetPatientData:
       return {

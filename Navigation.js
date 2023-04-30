@@ -22,6 +22,7 @@ import RestPassword from './src/screens/RestPasswordScreen';
 import OfflineScreen from './src/screens/OfflineScreen';
 import NetInfo from '@react-native-community/netinfo';
 import ProfilePatientScreen from './src/screens/ProfilePatientScreen';
+import PatientProfile from './src/screens/PatientProfile';
 
 function Navigation() {
   const config = {
@@ -89,6 +90,10 @@ function Navigation() {
           <Stack.Screen name="VisitesDetail" component={VisitesDetail} />
           <Stack.Screen name="CameraScreen" component={CameraScreen} />
           <Stack.Screen name="RestPassword" component={RestPassword} />
+          <Stack.Screen
+            name="ProfilePatientScreen"
+            component={ProfilePatientScreen}
+          />
           <Stack.Screen name="PatientScreen" component={PatientScreen} />
         </Stack.Navigator>
       ) : isLogin == 0 ? (
@@ -102,10 +107,7 @@ function Navigation() {
         </Stack.Navigator>
       ) : (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen
-            name="ProfilePatientScreen"
-            component={ProfilePatientScreen}
-          />
+          <Stack.Screen name="PatientProfile" component={PatientProfile} />
           <Stack.Screen name="PatientScreen" component={PatientScreen} />
         </Stack.Navigator>
       )}

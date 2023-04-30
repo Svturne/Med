@@ -10,7 +10,7 @@ import {Icon} from '@rneui/themed';
 import Dialog from 'react-native-dialog';
 import {axiosPrivate} from '../config/axios';
 
-const ProfilePatientScreen = ({route}) => {
+const ProfilePatient = ({route}) => {
   const [visible, setVisible] = useState(false);
   const [maladies, setMaladies] = useState([]);
   const [maladieName, setMaladieName] = useState('');
@@ -78,7 +78,7 @@ const ProfilePatientScreen = ({route}) => {
   }
 
   const iconDimension = 50;
-  //const data = route.params.data;
+  const data = route.params.data;
   const textColor = useTextColor(data.sexe);
   const bgColor = useBackGroundColor(data.sexe);
 
@@ -159,7 +159,7 @@ const ProfilePatientScreen = ({route}) => {
   );
 };
 
-export default ProfilePatientScreen;
+export default ProfilePatient;
 
 const styles = StyleSheet.create({
   container: {

@@ -54,6 +54,7 @@ const PatientScreen = ({route}) => {
           payload: {
             id: response.data.user.patient._id,
             name: response.data.user.patient.name,
+            email: response.data.user.patient.email,
             age: response.data.user.patient.age,
             sexe: response.data.user.patient.sexe,
           },
@@ -63,7 +64,7 @@ const PatientScreen = ({route}) => {
           type: ActionsName.connectePatient,
         });
         setTimeout(() => {
-          navigation.navigate('ProfilePatientScreen');
+          navigation.navigate('PatientProfile');
         }, 1000);
       })
       .catch(err => {
@@ -75,12 +76,6 @@ const PatientScreen = ({route}) => {
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenue sur l'application Med</Text>
       <ActivityIndicator size={60} color={colors.white} />
-      <TouchableOpacity
-        onPress={() => {
-          console.log(isLogin);
-        }}>
-        <Text>LOGIIIN</Text>
-      </TouchableOpacity>
     </View>
   );
 };
