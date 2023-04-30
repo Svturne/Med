@@ -26,7 +26,7 @@ function Navigation() {
   const config = {
     screens: {
       PatientScreen: 'patient',
-      path: '/:id',
+      path: '/:token',
     },
   };
 
@@ -78,7 +78,7 @@ function Navigation() {
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="OfflineScreen" component={OfflineScreen} />
         </Stack.Navigator>
-      ) : isLogin ? (
+      ) : isLogin == 1 ? (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="ProfileDoctor" component={ProfileDoctor} />
@@ -88,14 +88,20 @@ function Navigation() {
           <Stack.Screen name="VisitesDetail" component={VisitesDetail} />
           <Stack.Screen name="CameraScreen" component={CameraScreen} />
           <Stack.Screen name="RestPassword" component={RestPassword} />
+          <Stack.Screen name="PatientScreen" component={PatientScreen} />
         </Stack.Navigator>
-      ) : (
+      ) : isLogin == 0 ? (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="QrScaner" component={QrScaner} />
           <Stack.Screen name="MailPassword" component={MailPassword} />
           <Stack.Screen name="CodePassword" component={CodePassword} />
           <Stack.Screen name="RestPassword" component={RestPassword} />
+          <Stack.Screen name="PatientScreen" component={PatientScreen} />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="PatientScreen" component={PatientScreen} />
         </Stack.Navigator>
       )}
     </NavigationContainer>
