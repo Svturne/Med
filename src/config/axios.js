@@ -64,8 +64,8 @@ const axiosPrivateUser = axios.create({
 });
 
 axiosPrivateUser.interceptors.request.use(async function (config) {
-  const accessToken = await AsyncStorage.getItem(AsyncKeys.accessTokenUser);
-  config.headers['Authorization'] = `Bearer ${accessToken}`;
+  const refreshToken = await AsyncStorage.getItem(AsyncKeys.refreshTokenUser);
+  config.headers['Authorization'] = `Bearer ${refreshToken}`;
   return config;
 });
 
@@ -91,7 +91,7 @@ axiosPrivateUser.interceptors.response.use(
 
 const refreshUser = () => {
   axiosRefresh
-    .post('/medecin/refreshtoken')
+    .post('/patient/user/refresh')
     .then(response => {
       AsyncStorage.setItem(
         AsyncKeys.accessTokenUser,

@@ -2,21 +2,26 @@ import ActionsName from './ActionsName';
 
 const INITIAL_STATE = {
   isSplash: true,
-  isLogin: false,
+  isLogin: 0,
   isConnect: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case ActionsName.connecte:
+    case ActionsName.connecteMed:
       return {
         ...state,
-        isLogin: true,
+        isLogin: 1,
+      };
+    case ActionsName.connectePatient:
+      return {
+        ...state,
+        isLogin: 2,
       };
     case ActionsName.disconnect:
       return {
         ...state,
-        isLogin: false,
+        isLogin: 0,
       };
 
     case ActionsName.finishSplash:

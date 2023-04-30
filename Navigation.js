@@ -21,6 +21,7 @@ import CodePassword from './src/screens/CodePasswordScreen';
 import RestPassword from './src/screens/RestPasswordScreen';
 import OfflineScreen from './src/screens/OfflineScreen';
 import NetInfo from '@react-native-community/netinfo';
+import ProfilePatientScreen from './src/screens/ProfilePatientScreen';
 
 function Navigation() {
   const config = {
@@ -48,7 +49,7 @@ function Navigation() {
     AsyncStorage.getItem(AsyncKeys.accessToken)
       .then(value => {
         if (value) {
-          dispatch({type: ActionsName.connecte});
+          dispatch({type: ActionsName.connecteMed});
         }
       })
       .finally(() => {
@@ -67,7 +68,7 @@ function Navigation() {
       unsubscribe();
     };
   }, []);
-
+  console.log({isLogin});
   return (
     <NavigationContainer linking={linking}>
       {isSplash ? (
@@ -101,6 +102,10 @@ function Navigation() {
         </Stack.Navigator>
       ) : (
         <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen
+            name="ProfilePatientScreen"
+            component={ProfilePatientScreen}
+          />
           <Stack.Screen name="PatientScreen" component={PatientScreen} />
         </Stack.Navigator>
       )}

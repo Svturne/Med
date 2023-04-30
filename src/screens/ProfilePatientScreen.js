@@ -10,7 +10,7 @@ import {Icon} from '@rneui/themed';
 import Dialog from 'react-native-dialog';
 import {axiosPrivate} from '../config/axios';
 
-const ProfilePatient = ({route}) => {
+const ProfilePatientScreen = ({route}) => {
   const [visible, setVisible] = useState(false);
   const [maladies, setMaladies] = useState([]);
   const [maladieName, setMaladieName] = useState('');
@@ -159,7 +159,7 @@ const ProfilePatient = ({route}) => {
   );
 };
 
-export default ProfilePatient;
+export default ProfilePatientScreen;
 
 const styles = StyleSheet.create({
   container: {
