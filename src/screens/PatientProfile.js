@@ -65,7 +65,7 @@ const PatientProfile = () => {
         <Text style={{color: textColor, fontSize: 30, flex: 6}}>
           Bonjour, {name}
         </Text>
-        <TouchableOpacity onPress={console.log('Picture Pressed')}>
+        <TouchableOpacity onPress={() => console.log('Picture Pressed')}>
           <Image
             source={{
               uri: 'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg',
@@ -112,7 +112,5 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
     fontSize: 22,
   },
-  listContainer: {
-    marginTop: 'auto',
-  },
+  listContainer: {},
 });

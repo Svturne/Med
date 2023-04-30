@@ -75,6 +75,7 @@ const axiosPrivateUser = axios.create({
 
 axiosPrivateUser.interceptors.request.use(async function (config) {
   const accessToken = await AsyncStorage.getItem(AsyncKeys.accessTokenUser);
+  console.log(accessToken);
   config.headers['Authorization'] = `Bearer ${accessToken}`;
   return config;
 });
@@ -101,6 +102,7 @@ axiosPrivateUser.interceptors.response.use(
 );
 
 const refreshUser = () => {
+  console.log('refreshing');
   axiosRefreshPatient
     .post('/patient/user/refresh')
     .then(response => {

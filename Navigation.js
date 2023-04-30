@@ -108,6 +108,7 @@ function Navigation() {
       ) : (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="PatientProfile" component={PatientProfile} />
+
           <Stack.Screen name="PatientScreen" component={PatientScreen} />
         </Stack.Navigator>
       )}
