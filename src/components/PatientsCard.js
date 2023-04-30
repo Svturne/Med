@@ -34,7 +34,6 @@ const PatientsCard = props => {
   };
 
   const handleDelete = () => {
-    console.log();
     axiosPrivate
       .delete(`patient/${props.data._id}`)
       .then(response => {

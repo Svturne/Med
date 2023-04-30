@@ -21,7 +21,7 @@ const HomeScreen = () => {
 
   const [search, setSearch] = useState('');
   const patients = useSelector(state => state.PatientListReducer.patientsList);
-  console.log({patients});
+
   const name = useSelector(state => state.MedecinReducer.name);
   const profilePicture = useSelector(
     state => state.MedecinReducer.profilePicture,
