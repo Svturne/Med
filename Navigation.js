@@ -25,6 +25,7 @@ import ProfilePatientScreen from './src/screens/ProfilePatientScreen';
 import PatientProfile from './src/screens/PatientProfile';
 import PatientVisite from './src/screens/PatientVisite';
 import PatientProfileScreen from './src/screens/PatientProfileScreen';
+import PatientVisiteDetailScreen from './src/screens/PatientVisiteDetailScreen';
 
 function Navigation() {
   const config = {
@@ -115,6 +116,10 @@ function Navigation() {
           <Stack.Screen
             name="PatientProfileScreen"
             component={PatientProfileScreen}
+          />
+          <Stack.Screen
+            name="PatientVisiteDetailScreen"
+            component={PatientVisiteDetailScreen}
           />
           <Stack.Screen name="PatientScreen" component={PatientScreen} />
         </Stack.Navigator>

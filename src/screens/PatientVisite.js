@@ -7,6 +7,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {axiosPrivateUser} from '../config/axios';
 
 import {format} from 'fecha';
+import PatientVisiteList from '../components/PatientVisiteList';
 
 const PatientVisite = ({route}) => {
   const data = route.params.data;
@@ -35,7 +36,7 @@ const PatientVisite = ({route}) => {
       <Text style={styles.Subtitle}>Visites: </Text>
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
         {visitesDetails.map(item => {
-          return <VisitesList key={item._id} data={item} />;
+          return <PatientVisiteList key={item._id} data={item} />;
         })}
       </ScrollView>
     </View>
