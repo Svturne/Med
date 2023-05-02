@@ -46,16 +46,6 @@ axiosRefresh.interceptors.request.use(async function (config) {
   return config;
 });
 
-const axiosRefreshPatient = axios.create({
-  baseURL: 'http://10.0.2.2:3000/api',
-});
-
-axiosRefreshPatient.interceptors.request.use(async function (config) {
-  const refreshToken = await AsyncStorage.getItem(AsyncKeys.refreshTokenUser);
-  config.headers['Authorization'] = `Bearer ${refreshToken}`;
-  return config;
-});
-
 const refresh = () => {
   console.log('refreshing');
   axiosRefresh
@@ -101,8 +91,20 @@ axiosPrivateUser.interceptors.response.use(
   },
 );
 
+const axiosRefreshPatient = axios.create({
+  baseURL: 'http://10.0.2.2:3000/api',
+});
+
+axiosRefreshPatient.interceptors.request.use(async function (config) {
+  const refreshToken = await AsyncStorage.getItem(AsyncKeys.refreshTokenUser);
+  config.headers['Authorization'] = `Bearer ${refreshToken}`;
+  return config;
+});
+
 const refreshUser = () => {
-  console.log('refreshing');
+  console.log('====================================');
+  console.log('Refreshing patient token');
+  console.log('====================================');
   axiosRefreshPatient
     .post('/patient/user/refresh')
     .then(response => {
@@ -124,6 +126,7 @@ export {
   axiosInstance,
   axiosPrivate,
   axiosRefresh,
+  axiosRefreshPatient,
   refresh,
   axiosPrivateUser,
   refreshUser,

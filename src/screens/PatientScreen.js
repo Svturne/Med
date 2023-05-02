@@ -2,39 +2,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import React, {useEffect} from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-elements';
 import {useDispatch, useSelector} from 'react-redux';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
 import AsyncKeys from '../constant/AsyncKeys';
 import ActionsName from '../redux/reducers/ActionsName';
+import {axiosRefreshPatient} from '../config/axios';
 
 const PatientScreen = ({route}) => {
   const token = route.params.token;
   const isLogin = useSelector(state => state.AuthReducer.isLogin);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const config = {
-    headers: {Authorization: `Bearer ${token}`},
-  };
-
-  const bodyParameters = {
-    key: 'value',
-  };
 
   useEffect(() => {
-    axios
-      .post(
-        'http://10.0.2.2:3000/api/patient/user/refresh',
-        bodyParameters,
-        config,
-      )
+    axiosRefreshPatient
+      .post('/patient/user/refresh', token)
       .then(response => {
         AsyncStorage.removeItem(AsyncKeys.accessToken);
         AsyncStorage.removeItem(AsyncKeys.refreshToken);
@@ -50,24 +35,27 @@ const PatientScreen = ({route}) => {
         );
 
         dispatch({
-          type: ActionsName.setPatientData,
-          payload: {
-            id: response.data.user.patient._id,
-            name: response.data.user.patient.name,
-            email: response.data.user.patient.email,
-            age: response.data.user.patient.age,
-            sexe: response.data.user.patient.sexe,
-          },
+          type: ActionsName.connectePatient,
         });
 
         dispatch({
-          type: ActionsName.connectePatient,
+          type: ActionsName.setPatientData,
+
+          payload: {
+            id: response.data.user._id,
+            name: response.data.user.name,
+            email: response.data.user.email,
+            age: response.data.user.age,
+            sexe: response.data.user.sexe,
+          },
         });
+
         setTimeout(() => {
           navigation.navigate('PatientProfile');
         }, 1000);
       })
       .catch(err => {
+        console.log('erreur in login patient');
         console.log(err);
       });
   }, []);

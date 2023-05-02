@@ -1,33 +1,52 @@
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Image} from '@rneui/themed';
+import {Icon} from '@rneui/themed';
 import colors from '../../assets/colors';
-import MaladiesList from '../components/MaladiesList';
-import {useSelector} from 'react-redux';
+import PatientMaladiesList from '../components/PatientMaladiesList';
+import {useDispatch, useSelector} from 'react-redux';
 import {axiosPrivateUser} from '../config/axios';
+import {ScrollView} from 'react-native-gesture-handler';
+
+import {useNavigation} from '@react-navigation/native';
+import {showError} from '../utils/messages';
 
 const PatientProfile = () => {
+  const navigation = useNavigation();
+
   const name = useSelector(state => state.PatientReducer.name);
+  const sexe = useSelector(state => state.PatientReducer.sexe);
   const [maladies, setMaladies] = useState([]);
+
+  const pressedProfile = () => {
+    navigation.navigate('PatientProfileScreen');
+  };
 
   useEffect(() => {
     axiosPrivateUser
       .get('/patient/user/allmaladie')
       .then(res => {
-        setMaladies(res.data);
-        console.log(res.data);
+        if (!res.data) {
+          showError('Ce patient ne possede pas de maladies');
+          setMaladies([]);
+        } else {
+          setMaladies(res.data);
+        }
       })
 
       .catch(err => {
+        console.log('erreur in getting maladie patient side');
         console.log(err);
       });
   }, []);
+
+  const bgColor = useBackGroundColor(sexe);
+  const textColor = useTextColor(sexe);
 
   function useBackGroundColor(sexe) {
     const [bgColor, setBgColor] = useState(colors.blue);
 
     useEffect(() => {
-      if (sexe === 'woman') {
+      if (sexe === 'Féminin') {
         setBgColor(colors.pink);
       } else {
         setBgColor(colors.blue);
@@ -41,7 +60,7 @@ const PatientProfile = () => {
     const [textColor, setTextColor] = useState(colors.white);
 
     useEffect(() => {
-      if (sexe === 'woman') {
+      if (sexe === 'Féminin') {
         setTextColor(colors.red);
       } else {
         setTextColor(colors.white);
@@ -51,8 +70,6 @@ const PatientProfile = () => {
     return textColor;
   }
 
-  const bgColor = useBackGroundColor('man'); //TODO: add man or woman
-  const textColor = useTextColor('man');
   return (
     <View
       style={[
@@ -65,29 +82,29 @@ const PatientProfile = () => {
         <Text style={{color: textColor, fontSize: 30, flex: 6}}>
           Bonjour, {name}
         </Text>
-        <TouchableOpacity onPress={() => console.log('Picture Pressed')}>
-          <Image
-            source={{
-              uri: 'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5789.jpg',
-            }}
-            style={{width: 60, height: 70, borderRadius: 20}}
+        <TouchableOpacity onPress={pressedProfile}>
+          <Icon
+            reverse
+            name="user-alt"
+            type="font-awesome-5"
+            size={35}
+            color={colors.whiteAlpha}
           />
         </TouchableOpacity>
       </View>
-      <Text style={[styles.doctitle, {color: textColor}]}>
-        Vous êtes suivi par le médecin:{' ' + name}
+
+      <Text style={[styles.Subtitle, {color: textColor}]}>
+        Voici la liste de vos maladies:{' '}
       </Text>
-      <View style={styles.listContainer}>
-        <Text style={[styles.Subtitle, {color: textColor}]}>
-          Voici la liste de vos maladies:{' '}
-        </Text>
-        <FlatList
-          data={maladies}
-          renderItem={item => {
-            return <MaladiesList data={item.item} />;
-          }}
-        />
-      </View>
+      {}
+      <ScrollView style={styles.listContainer}>
+        <View
+          style={{flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 50}}>
+          {maladies.map(item => (
+            <PatientMaladiesList key={item._id} data={item} />
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -101,16 +118,11 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 16,
   },
-  doctitle: {
-    color: colors.white,
-    fontSize: 19,
-    paddingVertical: 10,
-  },
+
   Subtitle: {
     color: colors.white,
     marginTop: 30,
     fontFamily: fonts.bold,
     fontSize: 22,
   },
-  listContainer: {},
 });

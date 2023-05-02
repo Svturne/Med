@@ -23,6 +23,8 @@ import OfflineScreen from './src/screens/OfflineScreen';
 import NetInfo from '@react-native-community/netinfo';
 import ProfilePatientScreen from './src/screens/ProfilePatientScreen';
 import PatientProfile from './src/screens/PatientProfile';
+import PatientVisite from './src/screens/PatientVisite';
+import PatientProfileScreen from './src/screens/PatientProfileScreen';
 
 function Navigation() {
   const config = {
@@ -90,6 +92,7 @@ function Navigation() {
           <Stack.Screen name="VisitesDetail" component={VisitesDetail} />
           <Stack.Screen name="CameraScreen" component={CameraScreen} />
           <Stack.Screen name="RestPassword" component={RestPassword} />
+
           <Stack.Screen
             name="ProfilePatientScreen"
             component={ProfilePatientScreen}
@@ -108,7 +111,11 @@ function Navigation() {
       ) : (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="PatientProfile" component={PatientProfile} />
-
+          <Stack.Screen name="PatientVisite" component={PatientVisite} />
+          <Stack.Screen
+            name="PatientProfileScreen"
+            component={PatientProfileScreen}
+          />
           <Stack.Screen name="PatientScreen" component={PatientScreen} />
         </Stack.Navigator>
       )}
