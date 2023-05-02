@@ -9,14 +9,13 @@ import {axiosPrivateUser} from '../config/axios';
 import {format} from 'fecha';
 
 const PatientVisite = ({route}) => {
+  const data = route.params.data;
+
   const [visitesDetails, setVisitesDetails] = useState([]);
   useEffect(() => {
     axiosPrivateUser
-      .get(`/patient/user/allvisite`, {
-        maladieId: route.params.data._id,
-      })
+      .get(`/patient/user/allvisite/${data._id}`)
       .then(response => {
-        console.log(response);
         setVisitesDetails(response.data);
       })
       .catch(err => {
@@ -24,7 +23,7 @@ const PatientVisite = ({route}) => {
         console.log(err);
       });
   }, []);
-
+  console.log(visitesDetails);
   const date = format(new Date(data.createdAt), 'DD-MM-YYYY');
 
   return (

@@ -65,7 +65,6 @@ const axiosPrivateUser = axios.create({
 
 axiosPrivateUser.interceptors.request.use(async function (config) {
   const accessToken = await AsyncStorage.getItem(AsyncKeys.accessTokenUser);
-  console.log(accessToken);
   config.headers['Authorization'] = `Bearer ${accessToken}`;
   return config;
 });
