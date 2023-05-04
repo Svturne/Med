@@ -30,6 +30,7 @@ const PatientsCard = props => {
   const [email, setEmail] = useState('');
   const [age, setAge] = useState('');
   const [sexe, setSexe] = useState('');
+  const [qrCode, setQrCode] = useState('');
   const data = [
     {key: '1', value: 'Masculin'},
     {key: '2', value: 'Féminin'},
@@ -113,7 +114,7 @@ const PatientsCard = props => {
         sexe: props.data.sexe,
       })
       .then(response => {
-        console.log(response.data);
+        setQrCode(response.data.qrCode);
         setVisibleQr(true);
         showInfo('Un nouveau QR code a été envoyé au patient.');
       })
@@ -217,9 +218,9 @@ const PatientsCard = props => {
 
           <QRCode
             enableLinearGradient={true}
-            linearGradient={[colors.lightblue, colors.pink]}
+            linearGradient={[colors.bleu, colors.lightblue]}
             size={windowWidth * 0.6 > 300 ? 300 : windowWidth * 0.6}
-            value="med:/patient/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRpZW50Ijp7Il9pZCI6IjY0NTA3MWY3YmY0MDA4NzFmNWQ5ZmJkMyIsIm5hbWUiOiJBemVkaW4iLCJlbWFpbCI6ImF6ZWRpbkBnbWFpbC5jb20iLCJhZ2UiOjI1LCJzZXhlIjoiTWFzY3VsaW4iLCJpZE1lZGVjaW4iOiI2NDNkZjRkZTcxMmIwOTM1MTZiMjgyOWUifSwiaWF0IjoxNjgzMjA2NjE2LCJleHAiOjE3MTQ3NDI2MTZ9.x1dDeOzliqtn_eXMEc0cwdiFxG4McV_cTwKOLgNx_ag"
+            value={qrCode}
           />
 
           <Dialog.Button
