@@ -79,7 +79,9 @@ const PatientsCard = props => {
         });
 
         setVisibleEdit(false);
-        showSuccess('Patient mise à jour');
+        setTimeout(() => {
+          showSuccess('Patient mise à jour');
+        }, 500);
       })
       .catch(error => {
         console.log(error);
