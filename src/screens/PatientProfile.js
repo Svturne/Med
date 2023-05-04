@@ -12,7 +12,7 @@ import {showError} from '../utils/messages';
 
 const PatientProfile = () => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
   const name = useSelector(state => state.PatientReducer.name);
   const sexe = useSelector(state => state.PatientReducer.sexe);
   const [maladies, setMaladies] = useState([]);
@@ -35,6 +35,25 @@ const PatientProfile = () => {
 
       .catch(err => {
         console.log('erreur in getting maladie patient side');
+        console.log(err);
+      });
+
+    axiosPrivateUser
+      .get('/patient/user')
+      .then(res => {
+        dispatch({
+          type: ActionsName.setPatientData,
+
+          payload: {
+            id: res.data._id,
+            name: res.data.name,
+            email: res.data.email,
+            age: res.data.age,
+            sexe: res.data.sexe,
+          },
+        });
+      })
+      .catch(err => {
         console.log(err);
       });
   }, []);
