@@ -102,6 +102,7 @@ const PatientsCard = props => {
         sexe: props.data.sexe,
       })
       .then(response => {
+        console.log(response.data);
         showInfo('Un nouveau QR code a été envoyé au patient.');
       })
       .catch(error => {

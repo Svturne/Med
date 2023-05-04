@@ -37,6 +37,11 @@ const CreatePatient = () => {
       return;
     }
 
+    if (age == 0 || age > 100 || age < 0) {
+      showError('Age invalid');
+      return;
+    }
+
     setCreatePatientLoader(true);
     axiosPrivate
       .post('/patient/', {
