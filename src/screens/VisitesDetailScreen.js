@@ -3,13 +3,15 @@ import {Icon} from '@rneui/themed';
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
 
 const iconDimension = 50;
 const VisitesDetail = ({route}) => {
   const data = route.params.data;
-  const photos = data.pictures;
+  const photos = useSelector(state => state.VisitPicturesReducer.picturesData);
+  console.log({photos});
   const navigation = useNavigation();
 
   return (
@@ -18,12 +20,13 @@ const VisitesDetail = ({route}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.title}>{data.remarque}</Text>
           <Text style={styles.remarque}>{data.desc}</Text>
-          {photos.map((photo, index) => (
-            <View key={index} style={styles.photoContainer}>
-              <Image source={{uri: photo.uri}} style={styles.photo} />
-              <Text style={styles.description}>{photo.description}</Text>
-            </View>
-          ))}
+          {photos &&
+            photos.map((photo, index) => (
+              <View key={index} style={styles.photoContainer}>
+                <Image source={{uri: photo.uri}} style={styles.photo} />
+                <Text style={styles.description}>{photo.description}</Text>
+              </View>
+            ))}
         </ScrollView>
       </View>
       <TouchableOpacity

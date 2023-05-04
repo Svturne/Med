@@ -13,4 +13,7 @@ export default ActionsName = {
   disconnect: 'disconnect',
   finishSplash: 'finishSplash',
   changeStatus: 'changeStatus',
+  setPicturesData: 'setPicturesData',
+  addPicturesData: 'addPicturesData',
+  resetPicturesData: 'resetPicturesData',
 };

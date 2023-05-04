@@ -9,11 +9,12 @@ import Dialog from 'react-native-dialog';
 import {axiosPrivate} from '../config/axios';
 import {showError, showSuccess} from '../utils/messages';
 import {format} from 'fecha';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Visites = ({route}) => {
   const data = route.params.data;
   const iconDimension = 50;
+  const dispatch = useDispatch();
 
   const [visible, setVisible] = useState(false);
   const [visitesDetails, setVisitesDetails] = useState([]);
@@ -59,6 +60,13 @@ const Visites = ({route}) => {
       .get(`/visite/${data._id}`)
       .then(response => {
         setVisitesDetails(response.data);
+
+        dispatch({
+          type: ActionsName.setPicturesData,
+          payload: {
+            picturesData: response.data[0].pictures,
+          },
+        });
       })
       .catch(err => {
         console.log('erreur in get visite from medecin');

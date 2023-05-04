@@ -8,9 +8,12 @@ import Dialog from 'react-native-dialog';
 import {showError, showSuccess} from '../utils/messages';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../../assets/colors';
+import {useDispatch} from 'react-redux';
+import ActionsName from '../redux/reducers/ActionsName';
 
 const CameraScreen = ({route}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [{cameraRef}, {takePicture}] = useCamera(null);
   const [visibleEdite, setVisibleEdit] = useState(false);
   const [visibleDesc, setVisibleDesc] = useState(false);
@@ -53,7 +56,21 @@ const CameraScreen = ({route}) => {
             'Content-Type': 'multipart/form-data',
           },
         })
-        .then(response => {})
+        .then(async response => {
+          await axiosPrivate
+            .get(`/visite/${route.params.data.maladieId}`)
+            .then(response => {
+              dispatch({
+                type: ActionsName.setPicturesData,
+                payload: {
+                  picturesData: response.data[0].pictures,
+                },
+              });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
         .catch(error => {
           console.log(error);
         });
