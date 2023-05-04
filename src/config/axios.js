@@ -20,7 +20,7 @@ axiosPrivate.interceptors.response.use(
   async response => {
     return response;
   },
-  error => {
+  async error => {
     const originalRequest = error.config;
     if (error.response) {
       if (
@@ -28,8 +28,11 @@ axiosPrivate.interceptors.response.use(
         !originalRequest._retry
       ) {
         originalRequest._retry = true;
+        const access_token = await refresh();
 
-        refresh();
+        originalRequest.headers['Authorization'] = 'Bearer ' + access_token;
+
+        return axiosPrivate(originalRequest);
       }
     }
     return error;
@@ -46,17 +49,22 @@ axiosRefresh.interceptors.request.use(async function (config) {
   return config;
 });
 
-const refresh = () => {
-  console.log('refreshing');
-  axiosRefresh
-    .post('/medecin/refreshtoken')
-    .then(response => {
-      AsyncStorage.setItem(AsyncKeys.accessToken, response.data.accessToken);
-      AsyncStorage.setItem(AsyncKeys.refreshToken, response.data.refreshToken);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+const refresh = async () => {
+  try {
+    const response = await axiosRefresh.post('/medecin/refreshtoken');
+    await AsyncStorage.setItem(
+      AsyncKeys.accessToken,
+      response.data.accessToken,
+    );
+    await AsyncStorage.setItem(
+      AsyncKeys.refreshToken,
+      response.data.refreshToken,
+    );
+    return response.data.accessToken;
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
 };
 
 const axiosPrivateUser = axios.create({
@@ -74,7 +82,7 @@ axiosPrivateUser.interceptors.response.use(
   async response => {
     return response;
   },
-  error => {
+  async error => {
     const originalRequest = error.config;
 
     if (error.response) {
@@ -84,7 +92,11 @@ axiosPrivateUser.interceptors.response.use(
       ) {
         originalRequest._retry = true;
 
-        refreshUser();
+        const access_token = await refreshUser();
+
+        axios.axiosPrivateUser.headers.common['Authorization'] =
+          'Bearer ' + access_token;
+        return axiosPrivateUser(originalRequest);
       }
     }
     return error;
@@ -102,24 +114,22 @@ axiosRefreshPatient.interceptors.request.use(async function (config) {
   return config;
 });
 
-const refreshUser = () => {
-  console.log('Refreshing patient token');
-
-  axiosRefreshPatient
-    .post('/patient/user/refresh')
-    .then(response => {
-      AsyncStorage.setItem(
-        AsyncKeys.accessTokenUser,
-        response.data.accessToken,
-      );
-      AsyncStorage.setItem(
-        AsyncKeys.refreshTokenUser,
-        response.data.refreshToken,
-      );
-    })
-    .catch(error => {
-      console.log(error);
-    });
+const refreshUser = async () => {
+  try {
+    const response = axiosRefreshPatient.post('/patient/user/refresh');
+    await AsyncStorage.setItem(
+      AsyncKeys.accessTokenUser,
+      response.data.accessToken,
+    );
+    await AsyncStorage.setItem(
+      AsyncKeys.refreshTokenUser,
+      response.data.refreshToken,
+    );
+    return response.data.accessToken;
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
 };
 
 export {
