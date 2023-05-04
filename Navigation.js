@@ -59,6 +59,12 @@ function Navigation() {
       .finally(() => {
         dispatch({type: ActionsName.finishSplash});
       });
+
+    AsyncStorage.getItem(AsyncKeys.accessTokenUser).then(value => {
+      if (value) {
+        dispatch({type: ActionsName.connectePatient});
+      }
+    });
   }, []);
 
   useEffect(() => {
