@@ -79,7 +79,7 @@ const CameraScreen = ({route}) => {
 
       navigation.goBack();
 
-      showSuccess('Votre photo a été enregistrée avec succès'); //TODO: fix go back and upadate
+      showSuccess('Votre photo a été enregistrée avec succès');
     }
   };
 
