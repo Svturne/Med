@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
@@ -10,6 +16,8 @@ import {axiosPrivate} from '../config/axios';
 import {TextInput} from 'react-native-gesture-handler';
 import {SelectList} from 'react-native-dropdown-select-list';
 import {useDispatch} from 'react-redux';
+import DialogContainer from 'react-native-dialog/lib/Container';
+import QRCode from 'react-native-qrcode-svg';
 
 const PatientsCard = props => {
   const iconeSize = 28;
@@ -17,6 +25,7 @@ const PatientsCard = props => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [visibleEdite, setVisibleEdit] = useState(false);
+  const [visibleQr, setVisibleQr] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [age, setAge] = useState('');
@@ -25,6 +34,8 @@ const PatientsCard = props => {
     {key: '1', value: 'Masculin'},
     {key: '2', value: 'Féminin'},
   ];
+  const windowWidth = Dimensions.get('window').width;
+
   const showDialog = () => {
     setVisible(true);
   };
@@ -103,6 +114,7 @@ const PatientsCard = props => {
       })
       .then(response => {
         console.log(response.data);
+        setVisibleQr(true);
         showInfo('Un nouveau QR code a été envoyé au patient.');
       })
       .catch(error => {
@@ -198,6 +210,28 @@ const PatientsCard = props => {
             size={iconeSize}
           />
         </TouchableOpacity>
+        <DialogContainer
+          visible={visibleQr}
+          contentStyle={{alignItems: 'center', justifyContent: 'center'}}>
+          <Dialog.Title>Voici le code QR</Dialog.Title>
+
+          <QRCode
+            enableLinearGradient={true}
+            linearGradient={[colors.lightblue, colors.pink]}
+            size={windowWidth * 0.6 > 300 ? 300 : windowWidth * 0.6}
+            value="med:/patient/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRpZW50Ijp7Il9pZCI6IjY0NTA3MWY3YmY0MDA4NzFmNWQ5ZmJkMyIsIm5hbWUiOiJBemVkaW4iLCJlbWFpbCI6ImF6ZWRpbkBnbWFpbC5jb20iLCJhZ2UiOjI1LCJzZXhlIjoiTWFzY3VsaW4iLCJpZE1lZGVjaW4iOiI2NDNkZjRkZTcxMmIwOTM1MTZiMjgyOWUifSwiaWF0IjoxNjgzMjA2NjE2LCJleHAiOjE3MTQ3NDI2MTZ9.x1dDeOzliqtn_eXMEc0cwdiFxG4McV_cTwKOLgNx_ag"
+          />
+
+          <Dialog.Button
+            label="Fermer"
+            bold={true}
+            color={colors.red}
+            onPress={() => {
+              setVisibleQr(false);
+            }}
+          />
+        </DialogContainer>
+
         <Dialog.Container visible={visible}>
           <Dialog.Title>
             Êtes-vous sûr de vouloir supprimer le patient ?
