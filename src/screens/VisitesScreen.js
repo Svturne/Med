@@ -39,6 +39,15 @@ const Visites = ({route}) => {
         showSuccess('Visite ajoutée avec succès');
         setTitle('');
         setRemarque('');
+        axiosPrivate
+          .get(`/visite/${data._id}`)
+          .then(response => {
+            setVisitesDetails(response.data);
+          })
+          .catch(err => {
+            console.log('erreur in get visite from medecin');
+            console.log(err);
+          });
       })
       .catch(err => {
         console.log(err);
@@ -55,7 +64,7 @@ const Visites = ({route}) => {
         console.log('erreur in get visite from medecin');
         console.log(err);
       });
-  }, [handleValidate]);
+  }, []);
 
   const handleCancel = () => {
     setVisible(false);
