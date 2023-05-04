@@ -10,9 +10,7 @@ const ScanScreen = () => {
   const getProfile = () => {
     axiosPrivatePatient
       .get('/patient')
-      .then(response => {
-        console.log(response);
-      })
+      .then(response => {})
       .catch(error => {
         console.log('error in get profile patient');
         console.log(error);

@@ -18,7 +18,7 @@ const CustomDropList = props => {
           borderColor: colors.white,
           marginVertical: 16,
         }}
-        dropdownStyles={{backgroundColor: colors.lightgreen}}
+        dropdownStyles={{backgroundColor: colors.white}}
         dropdownTextStyles={{color: colors.black}}
         fontFamily={fonts.regular}
         inputStyles={{color: colors.black, padding: 5}}

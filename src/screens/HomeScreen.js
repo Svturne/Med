@@ -116,7 +116,9 @@ const HomeScreen = () => {
       />
       <FlatList
         contentContainerStyle={{paddingBottom: 60}}
-        data={patients.filter(patients => patients.name.includes(search))}
+        data={patients.filter(patients =>
+          patients.name.toLowerCase().includes(search.toLowerCase()),
+        )}
         renderItem={item => {
           return <PatientsCard data={item.item} />;
         }}

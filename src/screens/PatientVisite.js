@@ -24,7 +24,6 @@ const PatientVisite = ({route}) => {
         console.log(err);
       });
   }, []);
-  console.log(visitesDetails);
   const date = format(new Date(data.createdAt), 'DD-MM-YYYY');
 
   return (

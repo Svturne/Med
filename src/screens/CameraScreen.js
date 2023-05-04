@@ -24,12 +24,10 @@ const CameraScreen = ({route}) => {
   const handleEdit = () => {
     setVisibleEdit(false);
     setVisibleDesc(true);
-    console.log('valide');
   };
 
   const handleCancelDesc = () => {
     setVisibleDesc(false);
-    console.log('cancel');
   };
 
   const handleEditDesc = () => {
@@ -55,13 +53,10 @@ const CameraScreen = ({route}) => {
             'Content-Type': 'multipart/form-data',
           },
         })
-        .then(response => {
-          console.log(response.data);
-        })
+        .then(response => {})
         .catch(error => {
           console.log(error);
         });
-      console.log(JSON.stringify(formData));
 
       setVisibleDesc(false);
 

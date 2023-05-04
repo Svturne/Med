@@ -72,7 +72,6 @@ function Navigation() {
       unsubscribe();
     };
   }, []);
-  console.log({isLogin});
   return (
     <NavigationContainer linking={linking}>
       {isSplash ? (

@@ -32,7 +32,6 @@ const MailPassword = () => {
         email,
       })
       .then(response => {
-        console.log(response.data);
         navigation.navigate('CodePassword', {email});
         showInfo(
           "Un code de confirmation vient d'être envoyé sur votre boite mail",

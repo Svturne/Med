@@ -39,7 +39,6 @@ const CodePassword = ({route}) => {
       showError('Remplissez tous les champs requis');
     } else {
       const code = firstInput + secondInput + thirdInput + fourthInput;
-      console.log(code);
 
       setSendEmailCodeLoader(true);
       axiosInstance
@@ -70,7 +69,6 @@ const CodePassword = ({route}) => {
         email,
       })
       .then(response => {
-        console.log(response.data);
         showInfo("Un nouveau Email vient d'être envoyé.");
       })
       .catch(error => {

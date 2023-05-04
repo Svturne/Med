@@ -10,6 +10,7 @@ import fonts from '../../assets/fonts/fonts';
 import AsyncKeys from '../constant/AsyncKeys';
 import ActionsName from '../redux/reducers/ActionsName';
 import {axiosRefreshPatient} from '../config/axios';
+import {showError} from '../utils/messages';
 
 const PatientScreen = ({route}) => {
   const token = route.params.token;
@@ -18,8 +19,9 @@ const PatientScreen = ({route}) => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    AsyncStorage.setItem(AsyncKeys.refreshTokenUser, token);
     axiosRefreshPatient
-      .post('/patient/user/refresh', token)
+      .post('/patient/user/refresh')
       .then(response => {
         AsyncStorage.removeItem(AsyncKeys.accessToken);
         AsyncStorage.removeItem(AsyncKeys.refreshToken);
@@ -51,12 +53,31 @@ const PatientScreen = ({route}) => {
         });
 
         setTimeout(() => {
-          navigation.navigate('PatientProfile');
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'PatientProfile'}],
+          });
         }, 1000);
       })
-      .catch(err => {
+      .catch(async err => {
         console.log('erreur in login patient');
+
+        dispatch({type: ActionsName.resetPatientData});
+        dispatch({type: ActionsName.disconnect});
+
+        AsyncStorage.removeItem(AsyncKeys.accessTokenUser);
+        AsyncStorage.removeItem(AsyncKeys.refreshTokenUser);
+
+        setTimeout(() => {
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Login'}],
+          });
+        }, 1000);
+
         console.log(err);
+
+        showError('Impossible de se connecter');
       });
   }, []);
 

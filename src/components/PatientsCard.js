@@ -45,7 +45,6 @@ const PatientsCard = props => {
             },
           });
         });
-        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -78,7 +77,7 @@ const PatientsCard = props => {
             },
           });
         });
-        console.log(response.data);
+
         setVisibleEdit(false);
         showSuccess('Patient mise à jour');
       })
@@ -94,13 +93,13 @@ const PatientsCard = props => {
   const qrCodeHandled = () => {
     axiosPrivate
       .post(`/patient/resendqr/${props.data._id}`, {
+        id: props.data._id,
         name: props.data.name,
         email: props.data.email,
         age: props.data.age,
         sexe: props.data.sexe,
       })
       .then(response => {
-        console.log(response.data);
         showInfo('Un nouveau QR code a été envoyé au patient.');
       })
       .catch(error => {

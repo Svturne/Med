@@ -4,7 +4,7 @@ import colors from '../../assets/colors';
 function showSuccess(message) {
   Snackbar.show({
     text: message,
-    textColor: colors.black,
+    textColor: colors.white,
     backgroundColor: colors.green,
     duration: Snackbar.LENGTH_SHORT,
   });

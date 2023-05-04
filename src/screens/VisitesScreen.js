@@ -9,6 +9,7 @@ import Dialog from 'react-native-dialog';
 import {axiosPrivate} from '../config/axios';
 import {showError, showSuccess} from '../utils/messages';
 import {format} from 'fecha';
+import {useSelector} from 'react-redux';
 
 const Visites = ({route}) => {
   const data = route.params.data;
@@ -25,7 +26,6 @@ const Visites = ({route}) => {
 
   const handleValidate = () => {
     if (!title || !remarque) {
-      console.log(data);
       return showError('Information manquante');
     }
     axiosPrivate

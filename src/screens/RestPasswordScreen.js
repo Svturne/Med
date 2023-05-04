@@ -37,7 +37,6 @@ const RestPassword = ({route}) => {
               password,
             })
             .then(response => {
-              console.log(response.data);
               navigation.navigate('Login');
               showSuccess('Votre mot de passe a été modifié avec succès.');
             })

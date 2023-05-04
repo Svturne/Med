@@ -70,7 +70,6 @@ const ProfileDoctor = () => {
             newPassword: newPass,
           })
           .then(response => {
-            console.log(response.data);
             disconnect();
           })
           .catch(error => {
