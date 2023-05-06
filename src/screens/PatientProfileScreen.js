@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import colors from '../../assets/colors';
 import ActionsName from '../redux/reducers/ActionsName';
 import {useDispatch, useSelector} from 'react-redux';
@@ -13,6 +13,24 @@ const ProfileDoctor = () => {
 
   const dispatch = useDispatch();
   const name = useSelector(state => state.PatientReducer.name);
+  const sexe = useSelector(state => state.PatientReducer.sexe);
+
+  function useBackGroundColor(sexe) {
+    const [bgColor, setBgColor] = useState('bleu');
+
+    useEffect(() => {
+      if (sexe === 'Féminin') {
+        setBgColor(colors.pink);
+      } else {
+        setBgColor(colors.blue);
+      }
+    }, [sexe]);
+
+    return bgColor;
+  }
+
+  const bgColor = useBackGroundColor(sexe);
+
   const disconnect = async () => {
     await axiosRefreshPatient.post('/patient/user/logout');
     dispatch({type: ActionsName.resetPatientData});
@@ -22,7 +40,7 @@ const ProfileDoctor = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: bgColor}]}>
       <Icon
         reverse
         name="user-alt"
@@ -51,7 +69,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
-    backgroundColor: colors.blue,
     justifyContent: 'center',
   },
 

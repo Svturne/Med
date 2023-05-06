@@ -15,11 +15,41 @@ const Visites = ({route}) => {
   const data = route.params.data;
   const iconDimension = 50;
   const dispatch = useDispatch();
-
+  const sexe = useSelector(state => state.PatientReducer.sexe);
   const [visible, setVisible] = useState(false);
   const [visitesDetails, setVisitesDetails] = useState([]);
   const [title, setTitle] = useState('');
   const [remarque, setRemarque] = useState('');
+
+  function useTextColor(sexe) {
+    const [textColor, setTextColor] = useState('white');
+
+    useEffect(() => {
+      if (sexe === 'Féminin') {
+        setTextColor('red');
+      } else {
+        setTextColor('white');
+      }
+    }, [sexe]);
+
+    return textColor;
+  }
+
+  function useBackGroundColor(sexe) {
+    const [bgColor, setBgColor] = useState('bleu');
+
+    useEffect(() => {
+      if (sexe === 'Féminin') {
+        setBgColor(colors.pink);
+      } else {
+        setBgColor(colors.blue);
+      }
+    }, [sexe]);
+
+    return bgColor;
+  }
+  const textColor = useTextColor(sexe);
+  const bgColor = useBackGroundColor(sexe);
 
   const showDialog = () => {
     setVisible(true);
@@ -81,12 +111,16 @@ const Visites = ({route}) => {
   const date = format(new Date(data.createdAt), 'DD-MM-YYYY');
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, , {backgroundColor: bgColor}]}>
       <View style={styles.head}>
-        <Text style={styles.textTitle}>Maladie: {data.maladie}</Text>
-        <Text style={styles.textTitle}>Date de création: {date}</Text>
+        <Text style={[styles.textTitle, {color: textColor}]}>
+          Maladie: {data.maladie}
+        </Text>
+        <Text style={[styles.textTitle, {color: textColor}]}>
+          Date de création: {date}
+        </Text>
       </View>
-      <Text style={styles.Subtitle}>Visites: </Text>
+      <Text style={[styles.Subtitle, {color: textColor}]}>Visites: </Text>
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
         {visitesDetails.map(item => {
           return <VisitesList key={item._id} data={item} />;
@@ -123,7 +157,6 @@ export default Visites;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.blue,
     width: '100%',
     height: '100%',
     paddingTop: 50,
@@ -137,10 +170,8 @@ const styles = StyleSheet.create({
   textTitle: {
     fontFamily: fonts.bold,
     fontSize: 18,
-    color: colors.black,
   },
   Subtitle: {
-    color: colors.white,
     marginTop: 30,
     fontFamily: fonts.bold,
     fontSize: 22,

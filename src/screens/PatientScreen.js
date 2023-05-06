@@ -14,7 +14,6 @@ import {showError} from '../utils/messages';
 
 const PatientScreen = ({route}) => {
   const token = route.params.token;
-  const isLogin = useSelector(state => state.AuthReducer.isLogin);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 

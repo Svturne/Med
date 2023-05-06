@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
@@ -11,20 +11,60 @@ const iconDimension = 50;
 const VisitesDetail = ({route}) => {
   const data = route.params.data;
   const photos = useSelector(state => state.VisitPicturesReducer.picturesData);
-  console.log({photos});
+  const sexe = useSelector(state => state.PatientReducer.sexe);
   const navigation = useNavigation();
 
+  function useTextColor(sexe) {
+    const [textColor, setTextColor] = useState('white');
+
+    useEffect(() => {
+      if (sexe === 'Féminin') {
+        setTextColor('red');
+      } else {
+        setTextColor('white');
+      }
+    }, [sexe]);
+
+    return textColor;
+  }
+
+  function useBackGroundColor(sexe) {
+    const [bgColor, setBgColor] = useState('bleu');
+
+    useEffect(() => {
+      if (sexe === 'Féminin') {
+        setBgColor(colors.pink);
+      } else {
+        setBgColor(colors.blue);
+      }
+    }, [sexe]);
+
+    return bgColor;
+  }
+  const textColor = useTextColor(sexe);
+  const bgColor = useBackGroundColor(sexe);
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: bgColor,
+        },
+      ]}>
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>{data.remarque}</Text>
-          <Text style={styles.remarque}>{data.desc}</Text>
+          <Text style={[styles.title, {color: textColor}]}>
+            {data.remarque}
+          </Text>
+          <Text style={[styles.remarque, {color: textColor}]}>{data.desc}</Text>
           {photos &&
             photos.map((photo, index) => (
               <View key={index} style={styles.photoContainer}>
                 <Image source={{uri: photo.uri}} style={styles.photo} />
-                <Text style={styles.description}>{photo.description}</Text>
+                <Text style={[styles.description, , {color: textColor}]}>
+                  {photo.description}
+                </Text>
               </View>
             ))}
         </ScrollView>
@@ -55,7 +95,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.blue,
     width: '100%',
     padding: 16,
   },
@@ -63,7 +102,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: fonts.bold,
     marginBottom: 20,
-    color: colors.black,
     alignSelf: 'center',
   },
   photoContainer: {
@@ -77,7 +115,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   remarque: {
-    color: colors.white,
     padding: 20,
     marginVertical: 20,
     fontFamily: fonts.regular,
@@ -87,7 +124,6 @@ const styles = StyleSheet.create({
   },
   description: {
     marginTop: 10,
-    color: colors.white,
     fontFamily: fonts.regular,
   },
 });

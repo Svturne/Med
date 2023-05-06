@@ -2,11 +2,10 @@ import ActionsName from './ActionsName';
 
 const INITIAL_STATE = {
   id: 0,
-  firstName: '',
-  lastName: '',
+  name: '',
   email: '',
   age: 0,
-  sex: '',
+  sexe: '',
 };
 
 export default (state = INITIAL_STATE, actions) => {
@@ -24,11 +23,10 @@ export default (state = INITIAL_STATE, actions) => {
       return {
         ...state,
         id: 0,
-        firstName: '',
-        lastName: '',
+        name: '',
         email: '',
         age: 0,
-        sex: '',
+        sexe: '',
       };
     default:
       return state;

@@ -102,6 +102,17 @@ const PatientsCard = props => {
 
   const showPatient = () => {
     navigation.navigate('ProfilePatient', {data: props.data});
+    dispatch({
+      type: ActionsName.setPatientData,
+
+      payload: {
+        id: props.data._id,
+        name: props.data.name,
+        email: props.data.email,
+        age: props.data.age,
+        sexe: props.data.sexe,
+      },
+    });
   };
 
   const qrCodeHandled = () => {

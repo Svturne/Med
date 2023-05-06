@@ -15,6 +15,7 @@ const PatientProfile = () => {
   const dispatch = useDispatch();
   const name = useSelector(state => state.PatientReducer.name);
   const sexe = useSelector(state => state.PatientReducer.sexe);
+
   const [maladies, setMaladies] = useState([]);
 
   const pressedProfile = () => {
