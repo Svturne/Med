@@ -20,6 +20,7 @@ const Visites = ({route}) => {
   const [visitesDetails, setVisitesDetails] = useState([]);
   const [title, setTitle] = useState('');
   const [remarque, setRemarque] = useState('');
+  const [loader, setLoader] = useState(false);
 
   function useTextColor(sexe) {
     const [textColor, setTextColor] = useState('white');
@@ -55,34 +56,38 @@ const Visites = ({route}) => {
     setVisible(true);
   };
 
-  const handleValidate = () => {
+  const handleValidate = async () => {
     if (!title || !remarque) {
       return showError('Information manquante');
     }
-    axiosPrivate
-      .post('/visite', {
-        maladieId: data._id,
-        remarque: title,
-        desc: remarque,
-      })
-      .then(response => {
-        setVisible(false);
-        showSuccess('Visite ajoutée avec succès');
-        setTitle('');
-        setRemarque('');
-        axiosPrivate
-          .get(`/visite/${data._id}`)
-          .then(response => {
-            setVisitesDetails(response.data);
-          })
-          .catch(err => {
-            console.log('erreur in get visite from medecin');
-            console.log(err);
-          });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (!loader) {
+      setLoader(true);
+      await axiosPrivate
+        .post('/visite', {
+          maladieId: data._id,
+          remarque: title,
+          desc: remarque,
+        })
+        .then(response => {
+          setVisible(false);
+          showSuccess('Visite ajoutée avec succès');
+          setTitle('');
+          setRemarque('');
+          axiosPrivate
+            .get(`/visite/${data._id}`)
+            .then(response => {
+              setVisitesDetails(response.data);
+            })
+            .catch(err => {
+              console.log('erreur in get visite from medecin');
+              console.log(err);
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      setLoader(false);
+    }
   };
 
   useEffect(() => {
