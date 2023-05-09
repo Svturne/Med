@@ -20,6 +20,8 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState('');
+  const maintenant = new Date();
+  const heureActuelle = maintenant.getHours();
 
   const patients = useSelector(state => state.PatientListReducer.patientsList);
 
@@ -37,6 +39,13 @@ const HomeScreen = () => {
   const handlePLUSPress = () => {
     navigation.navigate('CreatePatient');
   };
+
+  let salutation;
+  if (heureActuelle >= 13) {
+    salutation = 'Bonjour';
+  } else {
+    salutation = 'Bonsoir';
+  }
 
   useEffect(() => {
     axiosPrivate
@@ -83,7 +92,7 @@ const HomeScreen = () => {
             fontSize: 30,
             flex: 6,
           }}>
-          Bonjour, {name}
+          {salutation}, {name}
         </Text>
         <TouchableOpacity onPress={handleIMGPress}>
           {profilePicture && (
