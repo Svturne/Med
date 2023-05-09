@@ -174,18 +174,21 @@ const ProfileDoctor = () => {
           style={styles.editPass}
           onChangeText={setOldPass}
           placeholder={'Ancien mot de passe'}
+          placeholderTextColor={colors.whiteAlpha}
           secureTextEntry={true}></TextInput>
 
         <TextInput
           style={styles.editPass}
           onChangeText={setNewPass}
           placeholder={'Nouveau mot de passe'}
+          placeholderTextColor={colors.whiteAlpha}
           secureTextEntry={true}></TextInput>
 
         <TextInput
           style={styles.editPass}
           onChangeText={setConfirmPass}
           placeholder={'Confirmer votre mot de passe'}
+          placeholderTextColor={colors.whiteAlpha}
           secureTextEntry={true}></TextInput>
 
         <View style={{flexDirection: 'row-reverse'}}>
