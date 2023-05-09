@@ -15,12 +15,20 @@ const PatientProfile = () => {
   const dispatch = useDispatch();
   const name = useSelector(state => state.PatientReducer.name);
   const sexe = useSelector(state => state.PatientReducer.sexe);
-
+  const maintenant = new Date();
+  const heureActuelle = maintenant.getHours();
   const [maladies, setMaladies] = useState([]);
 
   const pressedProfile = () => {
     navigation.navigate('PatientProfileScreen');
   };
+
+  let salutation;
+  if (heureActuelle >= 13) {
+    salutation = 'Bonjour';
+  } else {
+    salutation = 'Bonsoir';
+  }
 
   useEffect(() => {
     axiosPrivateUser
@@ -100,7 +108,7 @@ const PatientProfile = () => {
       ]}>
       <View style={{flexDirection: 'row', alignItems: 'center', margin: 25}}>
         <Text style={{color: textColor, fontSize: 30, flex: 6}}>
-          Bonjour, {name}
+          {salutation}, {name}
         </Text>
         <TouchableOpacity onPress={pressedProfile}>
           <Icon
