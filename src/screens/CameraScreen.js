@@ -10,6 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 import colors from '../../assets/colors';
 import {useDispatch} from 'react-redux';
 import ActionsName from '../redux/reducers/ActionsName';
+import {ActivityIndicator} from 'react-native';
 
 const CameraScreen = ({route}) => {
   const navigation = useNavigation();
@@ -19,6 +20,7 @@ const CameraScreen = ({route}) => {
   const [visibleDesc, setVisibleDesc] = useState(false);
   const [desc, setDesc] = useState('');
   const [pictureUrl, setPictureUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCancelEdit = () => {
     setVisibleEdit(false);
@@ -37,6 +39,7 @@ const CameraScreen = ({route}) => {
     if (desc === '') {
       showError('Description obligatoire');
     } else {
+      setIsLoading(true);
       const uri = pictureUrl;
       const name = 'test.jpg';
       const type = 'image/jpeg';
@@ -66,13 +69,16 @@ const CameraScreen = ({route}) => {
                   picturesData: response.data[0].pictures,
                 },
               });
+              setIsLoading(false);
             })
             .catch(err => {
               console.log(err);
+              setIsLoading(false);
             });
         })
         .catch(error => {
           console.log(error);
+          setIsLoading(false);
         });
 
       setVisibleDesc(false);
@@ -119,12 +125,18 @@ const CameraScreen = ({route}) => {
           }}
           style={styles.picture}
         />
-        <Dialog.Button
-          label="Annuler"
-          color={colors.grey}
-          onPress={handleCancelEdit}
-        />
-        <Dialog.Button label="Valider" bold={true} onPress={handleEdit} />
+        <View style={{flexDirection: 'row-reverse'}}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#0000ff" />
+          ) : (
+            <Dialog.Button label="Valider" bold={true} onPress={handleEdit} />
+          )}
+          <Dialog.Button
+            label="Annuler"
+            color={'red'}
+            onPress={handleCancelEdit}
+          />
+        </View>
       </Dialog.Container>
 
       <Dialog.Container visible={visibleDesc}>

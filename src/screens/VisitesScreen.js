@@ -7,9 +7,10 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Icon} from '@rneui/themed';
 import Dialog from 'react-native-dialog';
 import {axiosPrivate} from '../config/axios';
-import {showError, showSuccess} from '../utils/messages';
+import {showError, showInfo, showSuccess} from '../utils/messages';
 import {format} from 'fecha';
 import {useDispatch, useSelector} from 'react-redux';
+import {ActivityIndicator} from 'react-native';
 
 const Visites = ({route}) => {
   const data = route.params.data;
@@ -20,7 +21,7 @@ const Visites = ({route}) => {
   const [visitesDetails, setVisitesDetails] = useState([]);
   const [title, setTitle] = useState('');
   const [remarque, setRemarque] = useState('');
-  const [loader, setLoader] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function useTextColor(sexe) {
     const [textColor, setTextColor] = useState('white');
@@ -60,34 +61,35 @@ const Visites = ({route}) => {
     if (!title || !remarque) {
       return showError('Information manquante');
     }
-    if (!loader) {
-      setLoader(true);
-      await axiosPrivate
-        .post('/visite', {
-          maladieId: data._id,
-          remarque: title,
-          desc: remarque,
-        })
-        .then(response => {
-          setVisible(false);
-          showSuccess('Visite ajoutée avec succès');
-          setTitle('');
-          setRemarque('');
-          axiosPrivate
-            .get(`/visite/${data._id}`)
-            .then(response => {
-              setVisitesDetails(response.data);
-            })
-            .catch(err => {
-              console.log('erreur in get visite from medecin');
-              console.log(err);
-            });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      setLoader(false);
-    }
+    setIsLoading(true);
+    await axiosPrivate
+      .post('/visite', {
+        maladieId: data._id,
+        remarque: title,
+        desc: remarque,
+      })
+      .then(response => {
+        setVisible(false);
+        showSuccess('Visite ajoutée avec succès');
+        setTitle('');
+        setRemarque('');
+        axiosPrivate
+          .get(`/visite/${data._id}`)
+          .then(response => {
+            setVisitesDetails(response.data);
+            setIsLoading(false);
+          })
+
+          .catch(err => {
+            console.log('erreur in get visite from medecin');
+            console.log(err);
+            setIsLoading(false);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -95,7 +97,9 @@ const Visites = ({route}) => {
       .get(`/visite/${data._id}`)
       .then(response => {
         setVisitesDetails(response.data);
-
+        if (response.data.length == 0) {
+          return showInfo('Aucune visite pour ce patient');
+        }
         dispatch({
           type: ActionsName.setPicturesData,
           payload: {
@@ -151,8 +155,19 @@ const Visites = ({route}) => {
         <Dialog.Title>Ajout d'une nouvelle visite</Dialog.Title>
         <Dialog.Input onChangeText={setTitle} label="Titre:" />
         <Dialog.Input onChangeText={setRemarque} label="Remarque:" />
-        <Dialog.Button label="Annuler" color={'red'} onPress={handleCancel} />
-        <Dialog.Button label="Valider" bold={true} onPress={handleValidate} />
+
+        <View style={{flexDirection: 'row-reverse'}}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#0000ff" />
+          ) : (
+            <Dialog.Button
+              label="Valider"
+              bold={true}
+              onPress={handleValidate}
+            />
+          )}
+          <Dialog.Button label="Annuler" color={'red'} onPress={handleCancel} />
+        </View>
       </Dialog.Container>
     </View>
   );

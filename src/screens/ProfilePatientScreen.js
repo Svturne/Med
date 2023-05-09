@@ -9,17 +9,24 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Icon} from '@rneui/themed';
 import Dialog from 'react-native-dialog';
 import {axiosPrivate} from '../config/axios';
+import {ActivityIndicator} from 'react-native';
+import {showError} from '../utils/messages';
 
 const ProfilePatient = ({route}) => {
   const [visible, setVisible] = useState(false);
   const [maladies, setMaladies] = useState([]);
   const [maladieName, setMaladieName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const showDialog = () => {
     setVisible(true);
   };
 
   const handleValidate = () => {
+    if (!maladieName) {
+      return showError('Information manquante');
+    }
+    setIsLoading(true);
     axiosPrivate
       .post('/maladie', {
         patientId: route.params.data._id,
@@ -30,6 +37,7 @@ const ProfilePatient = ({route}) => {
         console.log(err);
       });
     setVisible(false);
+    setIsLoading(false);
   };
 
   const handleCancel = () => {
@@ -149,9 +157,18 @@ const ProfilePatient = ({route}) => {
           onChangeText={setMaladieName}
           label="Nom de la maladie:"
         />
-
-        <Dialog.Button label="Annuler" color={'red'} onPress={handleCancel} />
-        <Dialog.Button label="Valider" bold={true} onPress={handleValidate} />
+        <View style={{flexDirection: 'row-reverse'}}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#0000ff" />
+          ) : (
+            <Dialog.Button
+              label="Valider"
+              bold={true}
+              onPress={handleValidate}
+            />
+          )}
+          <Dialog.Button label="Annuler" color={'red'} onPress={handleCancel} />
+        </View>
       </Dialog.Container>
     </View>
   );

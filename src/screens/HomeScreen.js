@@ -20,6 +20,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState('');
+
   const patients = useSelector(state => state.PatientListReducer.patientsList);
 
   const name = useSelector(state => state.MedecinReducer.name);

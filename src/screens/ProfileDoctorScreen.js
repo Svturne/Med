@@ -18,6 +18,7 @@ import {showError, showSuccess} from '../utils/messages';
 import Dialog from 'react-native-dialog';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsyncKeys from '../constant/AsyncKeys';
+import {ActivityIndicator} from 'react-native';
 
 const ProfileDoctor = () => {
   const iconsize = 25;
@@ -29,6 +30,7 @@ const ProfileDoctor = () => {
   const [oldPass, setOldPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const name = useSelector(state => state.MedecinReducer.name);
   const profilePicture = useSelector(
@@ -64,17 +66,20 @@ const ProfileDoctor = () => {
       if (regularMdp.test(newPass) == false) {
         showError('Mauvais format de mot de passe');
       } else {
+        setIsLoading(true);
         axiosPrivate
           .post('/medecin/newpassword', {
             password: oldPass,
             newPassword: newPass,
           })
           .then(response => {
+            setIsLoading(false);
             disconnect();
           })
           .catch(error => {
             console.log('erreur in update password');
             console.log(error);
+            setIsLoading(false);
           });
       }
     }
@@ -183,17 +188,18 @@ const ProfileDoctor = () => {
           placeholder={'Confirmer votre mot de passe'}
           secureTextEntry={true}></TextInput>
 
-        <Dialog.Button
-          label="Annuler"
-          color={colors.grey}
-          onPress={handleCancelEdit}
-        />
-        <Dialog.Button
-          label="Valider"
-          bold={true}
-          color={colors.blue}
-          onPress={handleEdit}
-        />
+        <View style={{flexDirection: 'row-reverse'}}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#0000ff" />
+          ) : (
+            <Dialog.Button label="Valider" bold={true} onPress={handleEdit} />
+          )}
+          <Dialog.Button
+            label="Annuler"
+            color={'red'}
+            onPress={handleCancelEdit}
+          />
+        </View>
       </Dialog.Container>
       <TouchableOpacity style={styles.button} onPress={disconnect}>
         <Icon
