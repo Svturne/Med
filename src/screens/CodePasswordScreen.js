@@ -22,6 +22,7 @@ const CodePassword = ({route}) => {
   const [thirdInput, setThirdInput] = useState('');
   const [fourthInput, setFourthInput] = useState('');
   const [sendEmailCodeLoader, setSendEmailCodeLoader] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const textInputRef2 = useRef(null);
   const textInputRef3 = useRef(null);
@@ -69,12 +70,19 @@ const CodePassword = ({route}) => {
         email,
       })
       .then(response => {
-        showInfo("Un nouveau Email vient d'être envoyé.");
+        setIsDisabled(true);
+        showInfo(
+          "Un nouveau Email vient d'être envoyé, patientez 10sec avant de renvoyer un autre code",
+        );
       })
       .catch(error => {
         console.log(error);
       })
-      .finally(() => {});
+      .finally(() => {
+        setTimeout(() => {
+          setIsDisabled(false);
+        }, 10000);
+      });
   };
 
   return (
@@ -172,7 +180,7 @@ const CodePassword = ({route}) => {
         isLoading={sendEmailCodeLoader}
         func={sendCode}
       />
-      <TouchableOpacity onPress={resendEmail}>
+      <TouchableOpacity onPress={resendEmail} disabled={isDisabled}>
         <Text style={styles.desc}>Renvoyer le code</Text>
       </TouchableOpacity>
     </View>
