@@ -60,15 +60,28 @@ const CameraScreen = ({route}) => {
           },
         })
         .then(async response => {
+          console.log(route.params.data._id);
           await axiosPrivate
-            .get(`/visite/${route.params.data.maladieId}`)
+            .get(`/visite/${route.params.data._id}`)
             .then(response => {
-              dispatch({
-                type: ActionsName.setPicturesData,
-                payload: {
-                  picturesData: response.data[0].pictures,
-                },
-              });
+              axiosPrivate
+                .get(`/visite/pictures/${route.params.data._id}`)
+                .then(response => {
+                  if (response.data.length == 0) {
+                    return showInfo('Aucune photo pour cette visite');
+                  }
+
+                  dispatch({
+                    type: ActionsName.setPicturesData,
+                    payload: {
+                      picturesData: response.data[0].pictures,
+                    },
+                  });
+                })
+                .catch(err => {
+                  console.log('erreur in get photos visite from medecin');
+                  console.log(err);
+                });
               setIsLoading(false);
             })
             .catch(err => {

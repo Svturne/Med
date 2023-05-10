@@ -3,13 +3,16 @@ import {Icon} from '@rneui/themed';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import colors from '../../assets/colors';
 import fonts from '../../assets/fonts/fonts';
+import {axiosPrivate} from '../config/axios';
 
 const iconDimension = 50;
 const VisitesDetail = ({route}) => {
   const data = route.params.data;
+  const dispatch = useDispatch();
+
   const photos = useSelector(state => state.VisitPicturesReducer.picturesData);
   const sexe = useSelector(state => state.PatientReducer.sexe);
   const navigation = useNavigation();
@@ -27,6 +30,27 @@ const VisitesDetail = ({route}) => {
 
     return textColor;
   }
+
+  useEffect(() => {
+    axiosPrivate
+      .get(`/visite/pictures/${data._id}`)
+      .then(response => {
+        if (response.data.length == 0) {
+          return showInfo('Aucune photo pour cette visite');
+        }
+
+        dispatch({
+          type: ActionsName.setPicturesData,
+          payload: {
+            picturesData: response.data[0].pictures,
+          },
+        });
+      })
+      .catch(err => {
+        console.log('erreur in get photos visite from medecin');
+        console.log(err);
+      });
+  }, []);
 
   function useBackGroundColor(sexe) {
     const [bgColor, setBgColor] = useState('bleu');

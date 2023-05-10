@@ -14,6 +14,7 @@ import {ActivityIndicator} from 'react-native';
 
 const Visites = ({route}) => {
   const data = route.params.data;
+  console.log(data);
   const iconDimension = 50;
   const dispatch = useDispatch();
   const sexe = useSelector(state => state.PatientReducer.sexe);
@@ -97,15 +98,17 @@ const Visites = ({route}) => {
       .get(`/visite/${data._id}`)
       .then(response => {
         setVisitesDetails(response.data);
+
         if (response.data.length == 0) {
-          return showInfo('Aucune visite pour ce patient');
+          return showInfo('Aucune visite pour cette maladie');
         }
-        dispatch({
-          type: ActionsName.setPicturesData,
-          payload: {
-            picturesData: response.data[0].pictures,
-          },
-        });
+
+        // dispatch({
+        //   type: ActionsName.setPicturesData,
+        //   payload: {
+        //     picturesData: response.data[0].pictures,
+        //   },
+        // });
       })
       .catch(err => {
         console.log('erreur in get visite from medecin');
