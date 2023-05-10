@@ -14,7 +14,6 @@ import {ActivityIndicator} from 'react-native';
 
 const Visites = ({route}) => {
   const data = route.params.data;
-  console.log(data);
   const iconDimension = 50;
   const dispatch = useDispatch();
   const sexe = useSelector(state => state.PatientReducer.sexe);

@@ -60,7 +60,6 @@ const CameraScreen = ({route}) => {
           },
         })
         .then(async response => {
-          console.log(route.params.data._id);
           await axiosPrivate
             .get(`/visite/${route.params.data._id}`)
             .then(response => {
